@@ -18,6 +18,8 @@ using Orchard.Taxonomies.Fields;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
 using Orchard.Taxonomies.Settings;
+using Orchard.UI.Notify;
+using Orchard.Widgets.Models;
 
 namespace Contrib.Widgets.Handlers {
     public class WidgetsContainerPartHandler : ContentHandler {
@@ -27,6 +29,8 @@ namespace Contrib.Widgets.Handlers {
         private readonly ShellSettings _shellSettings;
         private readonly ITaxonomyService _taxonomyService;
         private readonly UrlPrefix _urlPrefix;
+        private readonly INotifier _notifier;
+
         public Localizer T { get; set; }
 
         public WidgetsContainerPartHandler(
@@ -34,12 +38,15 @@ namespace Contrib.Widgets.Handlers {
             IWidgetManager widgetManager,
             ILocalizationService localizationService,
             ShellSettings shellSettings,
-            ITaxonomyService taxonomyService) {
+            ITaxonomyService taxonomyService,
+            INotifier notifier) {
             _contentManager = contentManager;
             _widgetManager = widgetManager;
             _localizationService = localizationService;
             _shellSettings = shellSettings;
             _taxonomyService = taxonomyService;
+            _notifier = notifier;
+
             if (!string.IsNullOrEmpty(_shellSettings.RequestUrlPrefix))
                 _urlPrefix = new UrlPrefix(_shellSettings.RequestUrlPrefix);
             T = NullLocalizer.Instance;
@@ -49,12 +56,12 @@ namespace Contrib.Widgets.Handlers {
             });
             OnUpdateEditorShape<WidgetsContainerPart>((context, part) => {
                 var lPart = part.ContentItem.As<LocalizationPart>();
-                if(lPart != null) {
+                if (lPart != null) {
                     var settings = part.Settings.GetModel<WidgetsContainerSettings>();
                     if (settings.TryToLocalizeItems) {
                         var culture = lPart.Culture;
                         var widgets = _widgetManager.GetWidgets(part.ContentItem.Id, part.ContentItem.IsPublished())
-                            .Where(p => p.ContentItem.Has<LocalizationPart>() 
+                            .Where(p => p.ContentItem.Has<LocalizationPart>()
                             && p.ContentItem.Get<LocalizationPart>().Culture == null);
                         foreach (var widget in widgets) {
                             var ci = widget.ContentItem;
@@ -77,20 +84,61 @@ namespace Contrib.Widgets.Handlers {
                     }
                 }
             });
+
+            OnUpdated<WidgetsContainerPart>(KeepLocalizationInSync);
+
         }
+
+        //TODO: When the widget has been updated and the settings of the WidgetContainer tell us to keep localizations syncronized,
+        //      we need to place it, coherently with its culture, within the right translated host if possible.
+        private void KeepLocalizationInSync(UpdateContentContext context, WidgetsContainerPart part) {
+            var settings = part.Settings.GetModel<WidgetsContainerSettings>();
+            if (settings.TryToLocalizeItems) {
+                var hostLocalizationPart = part.As<LocalizationPart>();
+                if (hostLocalizationPart != null) {
+                    // Gets all widgets and checks if they have a coherent translation
+                    // if a coherent translation is found, we replace the widget with its coherent localized version
+                    var widgets = _widgetManager.GetWidgets(part.ContentItem.Id, false)
+                        .Where(p => p.ContentItem.Has<LocalizationPart>());
+                    var listOfSubstituteIds = new List<int>();
+                    foreach (var widget in widgets) {
+                        var widgetLocalizationPart = widget.As<LocalizationPart>();
+                        if (widgetLocalizationPart != null) {
+                            var widgetDuplicatedTransaltions = _localizationService.GetLocalizations(widget, VersionOptions.Latest)
+                                .Where(x => x.Culture?.Culture == hostLocalizationPart.Culture.Culture);//Gets the other Translations with the same culture, excluding itself
+                            var widgetContentForContainerCulture = widgetDuplicatedTransaltions
+                                .FirstOrDefault();
+                            if (widgetContentForContainerCulture != null) {
+                                if (!listOfSubstituteIds.Contains(widgetContentForContainerCulture.Id)) {
+                                    if (widgetContentForContainerCulture.As<WidgetExPart>().Host.Id != part.ContentItem.Id) {
+                                        widgetContentForContainerCulture.As<WidgetExPart>().Host = part.ContentItem;
+                                        _contentManager.Publish(widgetContentForContainerCulture.ContentItem);
+                                        _contentManager.Remove(widget.ContentItem);
+                                        listOfSubstituteIds.Add(widgetContentForContainerCulture.Id);
+                                        _notifier.Add(NotifyType.Information, T("The widget '{0}' has been replaced by its '{1}' version", widgetContentForContainerCulture.As<WidgetPart>().Title, hostLocalizationPart.Culture.Culture));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
         // static method because it is called in the contructor
         private static Dictionary<string, List<TermPart>> TranslateTaxonomies(ContentItem ci, CultureRecord culture, ILocalizationService localizationService) {
             var translations = new Dictionary<string, List<TermPart>>();
             var taxoFields = ci.Parts.SelectMany(p => p.Fields.Where(f => f is TaxonomyField).Select(f => f as TaxonomyField));
-            foreach(var field in taxoFields) {
+            foreach (var field in taxoFields) {
                 var settings = field.PartFieldDefinition.Settings.GetModel<TaxonomyFieldLocalizationSettings>();
-                if(settings != null && settings.TryToLocalize) {
+                if (settings != null && settings.TryToLocalize) {
                     // translate terms
                     var newTerms = new List<TermPart>();
                     foreach (var term in field.Terms) {
                         // adds translated term if it exists (same ogic of LocalizedTaxonomyFieldHandler.BuildEditorShape)
                         var translatedTerm = localizationService.GetLocalizedContentItem(term, culture.Culture);
-                        if(translatedTerm != null) {
+                        if (translatedTerm != null) {
                             newTerms.Add(translatedTerm.ContentItem.As<TermPart>());
                         }
                     }
@@ -132,11 +180,11 @@ namespace Contrib.Widgets.Handlers {
                 _shapes = new Dictionary<string, dynamic>();
                 _culture = culture;
                 _logger = loggger;
-                foreach(var item in shape.Content.Items) {
+                foreach (var item in shape.Content.Items) {
                     try {
                         var key = ComposeKey(item);
-                        if( !_shapes.ContainsKey(key)) {
-                            if(key.StartsWith("- ")) {
+                        if (!_shapes.ContainsKey(key)) {
+                            if (key.StartsWith("- ")) {
                                 _shapes.Add(key, item);
                             }
                             else {
@@ -160,17 +208,17 @@ namespace Contrib.Widgets.Handlers {
                         // copies each property without modifing 'model' variable
                         try {
                             foreach (var prop in model.GetType().GetProperties()) {
-                                if(prop.CanRead && prop.CanWrite) {
+                                if (prop.CanRead && prop.CanWrite) {
                                     prop.SetValue(model, prop.GetValue(_shapes[key]));
                                 }
                             }
                         }
-                        catch(Exception e) {
+                        catch (Exception e) {
                             _logger.Error(e, "Error copying properties into model.");
                         }
                     }
                 }
-                catch(Exception e) {
+                catch (Exception e) {
                     _logger.Error(e, "Error in TryUpdateModel() of EmptyUpdater.");
                 }
                 return true;
