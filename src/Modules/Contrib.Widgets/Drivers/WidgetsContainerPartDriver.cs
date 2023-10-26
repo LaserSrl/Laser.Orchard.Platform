@@ -286,25 +286,25 @@ namespace Contrib.Widgets.Drivers {
                     widgetExPart.Host = destination;
                     _contentManager.Publish(widgetExPart.ContentItem);
                 }
-
-                var clonedWisgetLocalization = clonedWidget.As<LocalizationPart>();
-                // if the widegt has a LocalizationPart, we manage it
-                if (clonedWisgetLocalization != null) {
-                    if (destinationLocalization != null) {
-                        clonedWisgetLocalization.Culture.Culture = destinationLocalization.Culture.Culture;
-                    }
-                    var originalWidgetLocalization = widget.ContentItem.As<LocalizationPart>();
-                    //We need to manage the MasterContentItem only if we are translating the widget;
-                    //On the contrary if we are cloning it, we have nothing to do.
-                    if (IsTranslating()) {
-                        if (originalWidgetLocalization.MasterContentItem == null) {
-                            clonedWisgetLocalization.MasterContentItem = widget.ContentItem;
+                if (tryLocalizeitems ?? false) {
+                    var clonedWisgetLocalization = clonedWidget.As<LocalizationPart>();
+                    // if the widegt has a LocalizationPart, we manage it
+                    if (clonedWisgetLocalization != null) {
+                        if (destinationLocalization != null) {
+                            clonedWisgetLocalization.Culture.Culture = destinationLocalization.Culture.Culture;
                         }
-                        else {
-                            clonedWisgetLocalization.MasterContentItem = originalWidgetLocalization.MasterContentItem;
+                        var originalWidgetLocalization = widget.ContentItem.As<LocalizationPart>();
+                        //We need to manage the MasterContentItem only if we are translating the widget;
+                        //On the contrary if we are cloning it, we have nothing to do.
+                        if (IsTranslating()) {
+                            if (originalWidgetLocalization.MasterContentItem == null) {
+                                clonedWisgetLocalization.MasterContentItem = widget.ContentItem;
+                            }
+                            else {
+                                clonedWisgetLocalization.MasterContentItem = originalWidgetLocalization.MasterContentItem;
+                            }
                         }
                     }
-
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Contrib.Widgets.Models;
 using Contrib.Widgets.Services;
+using Contrib.Widgets.Settings;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
@@ -12,7 +13,7 @@ namespace Contrib.Widgets.Handlers {
         private readonly IWidgetManager _widgetManager;
         private readonly IWorkContextAccessor _wca;
 
-        public WidgetsContainerPartLocalizationHandler (
+        public WidgetsContainerPartLocalizationHandler(
             IWidgetManager widgetManager,
             IWorkContextAccessor wca) {
 
@@ -35,12 +36,14 @@ namespace Contrib.Widgets.Handlers {
                         routeData.TryGetValue("area", out area) &&
                         action.ToString().ToUpperInvariant() == "TRANSLATE" &&
                         area.ToString().ToUpperInvariant() == "ORCHARD.LOCALIZATION") {
-                    var widgetsLocParts = _widgetManager
+                    if (part.Settings.GetModel<WidgetsContainerSettings>()?.TryToLocalizeItems ?? false) {
+                        var widgetsLocParts = _widgetManager
                         .GetWidgets(context.CloneContentItem.Id, context.CloneContentItem.IsPublished())
                         .Select(wi => wi.ContentItem.As<LocalizationPart>())
                         .Where(pa => pa != null);
-                    foreach (var wLocPart in widgetsLocParts) {
-                        wLocPart.Culture = null;
+                        foreach (var wLocPart in widgetsLocParts) {
+                            wLocPart.Culture = null;
+                        }
                     }
                 }
             }
