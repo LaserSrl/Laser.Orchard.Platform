@@ -55,7 +55,9 @@ namespace Contrib.Widgets.Handlers {
         }
 
         private void PublishWidget(UpdateContentContext context, WidgetExPart part) {
-            if (!context.ContentItem.TypeDefinition.Settings.ContainsKey("Stereotype") || context.ContentItem.TypeDefinition.Settings["Stereotype"] != "Widget" || part.ContentItem.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable || part.ContentItem.Has<IPublishingControlAspect>())
+            if (!context.ContentItem.TypeDefinition.Settings.ContainsKey("Stereotype") || 
+                context.ContentItem.TypeDefinition.Settings["Stereotype"] != "Widget" || 
+                part.ContentItem.Has<IPublishingControlAspect>())
                 return;
 
             //TODO: When the widget has been updated and the settings of the WidgetContainer tell us to keep localizations syncronized,
