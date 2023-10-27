@@ -164,7 +164,7 @@ namespace Contrib.Widgets.Drivers {
             if (updater.TryUpdateModel(viewModel, null, null, null)) {
                 UpdatePositions(viewModel);
                 RemoveWidgets(viewModel);
-                CloneWidgets(viewModel.CloneFrom >= 0 ? _contentManager.Get(viewModel.CloneFrom, VersionOptions.Latest) : null, part.ContentItem, part.Settings.GetModel<WidgetsContainerSettings>()?.TryToLocalizeItems);
+                CloneWidgets(viewModel.CloneFrom >= 0 ? _contentManager.Get(viewModel.CloneFrom, VersionOptions.Latest) : null, part.ContentItem, part.Settings.GetModel<WidgetsContainerSettings>()?.TryToLocalizeItems, viewModel.CloneFrom >= 0);
 
             }
 
@@ -226,7 +226,7 @@ namespace Contrib.Widgets.Drivers {
 
         #region [ Clone Functionality ]
 
-        private void CloneWidgets(ContentItem source, ContentItem destination, bool? tryLocalizeitems) {
+        private void CloneWidgets(ContentItem source, ContentItem destination, bool? tryLocalizeitems, bool forceTranslating) {
             if (source == null || destination == null) return;
 
             // recupero i WidgetExPart del Content selezionato come source
@@ -248,7 +248,10 @@ namespace Contrib.Widgets.Drivers {
                             clonedWidget = _contentManager.Clone(widget.ContentItem);
                             var clonedWidgetLocalizationPart = clonedWidget.As<LocalizationPart>();
                             if (clonedWidgetLocalizationPart != null) {
-                                clonedWidgetLocalizationPart.Culture.Culture = destinationLocalization.Culture.Culture;
+                                if (forceTranslating) {
+                                    _localizationService.SetContentCulture(clonedWidgetLocalizationPart, destinationLocalization.Culture.Culture);
+                                    clonedWidgetLocalizationPart.MasterContentItem = widget;
+                                }
                             }
                         }
                         else {
@@ -322,7 +325,7 @@ namespace Contrib.Widgets.Drivers {
         #endregion
 
         protected override void Cloning(WidgetsContainerPart originalPart, WidgetsContainerPart clonePart, CloneContentContext context) {
-            CloneWidgets(context.ContentItem, context.CloneContentItem, clonePart.Settings.GetModel<WidgetsContainerSettings>()?.TryToLocalizeItems);
+            CloneWidgets(context.ContentItem, context.CloneContentItem, clonePart.Settings.GetModel<WidgetsContainerSettings>()?.TryToLocalizeItems, false);
         }
     }
 }
