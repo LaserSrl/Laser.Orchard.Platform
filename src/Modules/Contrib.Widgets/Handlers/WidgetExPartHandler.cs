@@ -56,12 +56,11 @@ namespace Contrib.Widgets.Handlers {
 
         private void PublishWidget(UpdateContentContext context, WidgetExPart part) {
             if (!context.ContentItem.TypeDefinition.Settings.ContainsKey("Stereotype") || 
-                context.ContentItem.TypeDefinition.Settings["Stereotype"] != "Widget" || 
-                part.ContentItem.Has<IPublishingControlAspect>())
+                context.ContentItem.TypeDefinition.Settings["Stereotype"] != "Widget")
                 return;
 
-            //TODO: When the widget has been updated and the settings of the WidgetContainer tell us to keep localizations syncronized,
-            //      we need to place it, coherently with its culture, within the right translated host if possible.
+            //When the widget has been updated and the settings of the WidgetContainer tell us to keep localizations syncronized,
+            //we need to place it, coherently with its culture, within the right translated host if possible.
             if (part.Host != null) {
                 var settings = part.Host.As<WidgetsContainerPart>().Settings.GetModel<WidgetsContainerSettings>();
                 if (settings.TryToLocalizeItems) {
@@ -84,11 +83,6 @@ namespace Contrib.Widgets.Handlers {
             // Then we publish the widget
             _contentManager.Publish(part.ContentItem);
 
-        }
-
-        private bool KeepLocalizationsInSync(WidgetExPart part) {
-            // TODO: read this from settings
-            return true;
         }
 
         protected override void GetItemMetadata(GetContentItemMetadataContext context) {

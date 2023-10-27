@@ -89,8 +89,8 @@ namespace Contrib.Widgets.Handlers {
 
         }
 
-        //TODO: When the widget has been updated and the settings of the WidgetContainer tell us to keep localizations syncronized,
-        //      we need to place it, coherently with its culture, within the right translated host if possible.
+        //When the widget has been updated and the settings of the WidgetContainer tell us to keep localizations syncronized,
+        //we need to place it, coherently with its culture, within the right translated host if possible.
         private void KeepLocalizationInSync(UpdateContentContext context, WidgetsContainerPart part) {
             var settings = part.Settings.GetModel<WidgetsContainerSettings>();
             if (settings.TryToLocalizeItems) {
