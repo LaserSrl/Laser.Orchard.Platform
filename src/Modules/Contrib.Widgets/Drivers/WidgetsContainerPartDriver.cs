@@ -20,6 +20,7 @@ using Contrib.Widgets.Settings;
 using Orchard.Security;
 using Orchard.Localization;
 using Orchard.UI.Notify;
+using System.Runtime.Remoting.Contexts;
 
 namespace Contrib.Widgets.Drivers {
     [OrchardFeature("Contrib.Widgets")]
@@ -36,14 +37,14 @@ namespace Contrib.Widgets.Drivers {
         private readonly INotifier _notifier;
 
         public WidgetsContainerPartDriver(
-            ISiteThemeService siteThemeService, 
-            IWidgetsService widgetsService, 
-            IVirtualPathProvider virtualPathProvider, 
-            IShapeFactory shapeFactory, 
-            IWidgetManager widgetManager, 
-            IWorkContextAccessor wca, 
-            IContentManager contentManager, 
-            ILocalizationService localizationService, 
+            ISiteThemeService siteThemeService,
+            IWidgetsService widgetsService,
+            IVirtualPathProvider virtualPathProvider,
+            IShapeFactory shapeFactory,
+            IWidgetManager widgetManager,
+            IWorkContextAccessor wca,
+            IContentManager contentManager,
+            ILocalizationService localizationService,
             ICultureManager cultureManager,
             IAuthorizer authorizer,
             INotifier notifier) {
@@ -85,7 +86,8 @@ namespace Contrib.Widgets.Drivers {
                     widgetParts = widgetParts.Where(x => settings.AllowedWidgets.Split(',').Contains(x.TypeDefinition.Name));
                 if (!string.IsNullOrWhiteSpace(settings.AllowedZones))
                     widgetParts = widgetParts.Where(x => settings.AllowedZones.Split(',').Contains(x.Zone));
-            } else if (settings.HierarchicalAssociation != null && settings.HierarchicalAssociation.Count() > 0) {
+            }
+            else if (settings.HierarchicalAssociation != null && settings.HierarchicalAssociation.Count() > 0) {
                 widgetParts = widgetParts.Where(wp => settings.HierarchicalAssociation.Any(z => z.ZoneName.Equals(wp.Zone) && z.Widgets.Any(w => w.WidgetType == wp.TypeDefinition.Name || w.WidgetType == "All")));
             }
             // Build and add shape to zone.
@@ -114,7 +116,8 @@ namespace Contrib.Widgets.Drivers {
                         currentThemesZones = currentThemesZones.Where(x => settings.AllowedZones.Split(',').Contains(x)).ToList();
                     if (!string.IsNullOrWhiteSpace(settings.AllowedWidgets))
                         widgetTypes = widgetTypes.Where(x => settings.AllowedWidgets.Split(',').Contains(x)).ToList();
-                } else if (settings.HierarchicalAssociation != null && settings.HierarchicalAssociation.Count() > 0) {
+                }
+                else if (settings.HierarchicalAssociation != null && settings.HierarchicalAssociation.Count() > 0) {
                     currentThemesZones = currentThemesZones.Where(ctz => settings.HierarchicalAssociation.Select(x => x.ZoneName).Contains(ctz)).ToList();
                     widgetTypes = widgetTypes.Where(w => settings.HierarchicalAssociation.Any(x => x.Widgets.Any(a => a.WidgetType == w || a.WidgetType == "All"))).ToList();
                 }
@@ -135,7 +138,8 @@ namespace Contrib.Widgets.Drivers {
                             lp.Culture != null && !string.IsNullOrWhiteSpace(lp.Culture.Culture))
                         .OrderBy(o => o.Culture.Culture)
                         .ToList();
-                } catch {
+                }
+                catch {
                     contentLocalizations = null;
                 }
 
@@ -184,7 +188,8 @@ namespace Contrib.Widgets.Drivers {
                 if (currentWidget != null && _authorizer.Authorize(
                     Orchard.Core.Contents.Permissions.DeleteContent, currentWidget)) {
                     _widgetsService.DeleteWidget(widgetId);
-                } else {
+                }
+                else {
                     // If current widget is null, it means it has already been removed (perhaps a concurrent delete call - e.g. when two browser tabs are open?).
                     // It is not a permission issue, so nothing should really be notified to the user.
                     unableToDeleteSome = (currentWidget != null);
@@ -280,17 +285,27 @@ namespace Contrib.Widgets.Drivers {
                     _contentManager.Publish(widgetExPart.ContentItem);
                 }
 
-                // se il widget ha una LocalizationPart, la gestisco
                 var clonedLocalization = clonedContentitem.As<LocalizationPart>();
+                // se il widget ha una LocalizationPart, la gestisco
                 if (clonedLocalization != null) {
+                    var routeData = _wca.GetContext().HttpContext.Request.RequestContext.RouteData.Values;
+                    object action, area;
                     clonedLocalization.Culture = destination.As<LocalizationPart>().Culture;
                     var originalLocalization = widget.ContentItem.As<LocalizationPart>();
-                    if(originalLocalization.MasterContentItem == null) {
-                        clonedLocalization.MasterContentItem = widget.ContentItem;
+                    //We need to manage the MasterContentItem only we are translating the widget;
+                    //On the contrary if we are cloning it, we have nothing to do.
+                    if (routeData.TryGetValue("action", out action) &&
+                        routeData.TryGetValue("area", out area) &&
+                        action.ToString().ToUpperInvariant() == "TRANSLATE" &&
+                        area.ToString().ToUpperInvariant() == "ORCHARD.LOCALIZATION") {
+                        if (originalLocalization.MasterContentItem == null) {
+                            clonedLocalization.MasterContentItem = widget.ContentItem;
+                        }
+                        else {
+                            clonedLocalization.MasterContentItem = originalLocalization.MasterContentItem;
+                        }
                     }
-                    else {
-                        clonedLocalization.MasterContentItem = originalLocalization.MasterContentItem;
-                    }
+
                 }
             }
         }

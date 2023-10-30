@@ -11,7 +11,7 @@
 @using System.Web.Routing;
 @using Orchard.Mvc.Html;
 @using Orchard.Core.Contents;
-
+@using System.Linq;
 
 @{
     Style.Require("TheAdminWidgetContainerStyle");
@@ -35,15 +35,19 @@
     RouteValueDictionary createRouteValues = metadata.CreateRouteValues;
 
     var inCreateRoute = Url.RouteUrl(ViewContext.RouteData.Values) == Url.RouteUrl(createRouteValues);
-
+    var contentItemLocalizationIsComplete = false;
+    var localizationPart = ((ContentItem)contentItem).As<LocalizationPart>();
+    if (localizationPart == null || (localizationPart != null && localizationPart.Culture != null)) {
+        contentItemLocalizationIsComplete = true;
+    }
 }
 @{
     using (Script.Foot()) {
         <script type="text/javascript">
             $(document).ready(function () {
                 if (localStorage.getItem("widget-container-state") === "open") {
-                    $(".expando-widget-container","#widgetsPlacement").show();
-                    $(".expando-glyph-container","#widgetsPlacement").removeClass("closed").addClass("open");
+                    $(".expando-widget-container", "#widgetsPlacement").show();
+                    $(".expando-glyph-container", "#widgetsPlacement").removeClass("closed").addClass("open");
                 }
             });
         </script>
@@ -94,12 +98,13 @@
                                                     onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">
                                                 @T("Add")
                                             </button>
-                                        } else {
+                                        }
+                                        else {
 
                                             /**/
-                        <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId"
-                           onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
-                    }
+                                            <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId"
+                                               onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
+                                        }
                                     </div>
                                     <ul class="widgets" data-zone="@zone" id="@zone">
                                         @foreach (var widget in widgets) {
@@ -133,8 +138,7 @@
                                                     int numberLocPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "LocalizationPart").Count();
                                                     String culture = "";
                                                     if (numberLocPart > 0) {
-                                                        dynamic localizationPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "LocalizationPart").First();
-                                                        if (localizationPart.Culture != null) {
+                                                        if (localizationPart != null && localizationPart.Culture != null) {
                                                             culture = "(" + localizationPart.Culture.Culture + ")";
                                                         }
                                                     }
@@ -143,15 +147,18 @@
                                                     <div class="row">
                                                         <div class="col-sm-8">
                                                             <h3 class="display-content">
-                                                                @if (Authorizer.Authorize(Permissions.EditContent, widget)) {
-                                                                    <a class="margin-left-5" 
+                                                                @if (Authorizer.Authorize(Permissions.EditContent, widget) &&
+                                                                                contentItemLocalizationIsComplete) {
+                                                                    <a class="margin-left-5"
                                                                        href="@Url.Action("EditWidget", "Admin",
                                                                             new { area = "Contrib.Widgets",
                                                                                 hostId = contentItem.Id,
                                                                                 id = widget.Id,
                                                                                 returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">
-                                                                        @Html.ItemDisplayText(widget) @culture</a>
-                                                                } else {
+                                                                        @Html.ItemDisplayText(widget) @culture
+                                                                    </a>
+                                                                }
+                                                                else {
                                                                     <span class="margin-left-5">@Html.ItemDisplayText(widget) @culture</span>
                                                                 }
                                                             </h3>
@@ -164,26 +171,29 @@
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="widget-action float-right">
-                                                                @if (widget.IsPublished) {
-                                                                    if (widget.HasDraft) {
+                                                                @if (contentItemLocalizationIsComplete) {
+                                                                    if (widget.IsPublished) {
+                                                                        if (widget.HasDraft) {
+                                                                            if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
+                                                                                @Html.Link(T("Publish Draft").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
+                                                                                @T(" | ")
+                                                                            }
+                                                                        }
+
                                                                         if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
-                                                                            @Html.Link(T("Publish Draft").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
+                                                                            @Html.Link(T("Unpublish").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
                                                                             @T(" | ")
                                                                         }
                                                                     }
-
-                                                                    if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
-                                                                        @Html.Link(T("Unpublish").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
-                                                                        @T(" | ")
+                                                                    else {
+                                                                        if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
+                                                                            @Html.Link(T("Publish").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
+                                                                            @T(" | ")
+                                                                        }
                                                                     }
-                                                                } else {
-                                                                    if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
-                                                                        @Html.Link(T("Publish").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
-                                                                        @T(" | ")
+                                                                    if (Authorizer.Authorize(Permissions.DeleteContent, widget)) {
+                                                                        <a href="#" class="remove-widget" data-confirm="@T("Are you sure you want to delete this widget? Note: the widget will be removed permanently when you save the content item.")">@T("Remove")</a>
                                                                     }
-                                                                }
-                                                                @if (Authorizer.Authorize(Permissions.DeleteContent, widget)) {
-                                                                    <a href="#" class="remove-widget" data-confirm="@T("Are you sure you want to delete this widget? Note: the widget will be removed permanently when you save the content item.")">@T("Remove")</a>
                                                                 }
                                                             </div>
                                                         </div>

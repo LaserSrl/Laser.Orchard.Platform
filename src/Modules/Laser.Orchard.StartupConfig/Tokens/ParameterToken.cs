@@ -42,7 +42,7 @@ namespace Laser.Orchard.StartupConfig.Tokens {
         private string FindProperty(string fullToken, IContent data, EvaluateContext context) {
 
             dynamic property = FindTypedProperty(fullToken, data, context);
-            return property.ToString();            
+            return property?.ToString();            
         }
 
         private DateTime? FindDateTimeProperty(string fullToken, IContent data, EvaluateContext context) {
