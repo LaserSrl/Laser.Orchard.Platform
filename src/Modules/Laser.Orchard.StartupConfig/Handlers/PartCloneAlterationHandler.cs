@@ -47,7 +47,7 @@ namespace Laser.Orchard.StartupConfig.Handlers {
             // We prevent that, cloning a content, the cloned content results as a duplicated translation of the orginal content
             if (clonedPart != null) {
                 if (_localizationService.GetLocalizations(clonedPart, VersionOptions.Latest)
-                    .Any(l => l.Culture.Culture == clonedPart.Culture.Culture && l.Id != clonedPart.Id)) {
+                    .Any(l => string.Equals(l.Culture?.Culture, clonedPart.Culture?.Culture) && l.Id != clonedPart.Id)) {
                     clonedPart.MasterContentItem = clonedPart;
                 }
             }
