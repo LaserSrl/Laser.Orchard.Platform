@@ -18,6 +18,10 @@ using Orchard.Localization;
 using Laser.Orchard.StartupConfig.FileDownloader.ViewModels;
 using Orchard.Environment.Configuration;
 using System.Text;
+using Laser.Orchard.Questionnaires.Models;
+using NHibernate.Linq;
+using System.Runtime.ConstrainedExecution;
+using Orchard.Widgets.Models;
 
 namespace Laser.Orchard.Questionnaires.Controllers {
     public class QuestionnaireStatsController : Controller {
@@ -39,13 +43,8 @@ namespace Laser.Orchard.Questionnaires.Controllers {
 
         [HttpGet]
         [Admin]
-        public ActionResult QuestionDetail(int idQuestionario, int idDomanda, int? page, int? pageSize, string from = null, string to = null) {
-            DateTime fromDate, toDate;
-            CultureInfo provider = CultureInfo.GetCultureInfo(_orchardServices.WorkContext.CurrentCulture);
-            DateTime.TryParse(from, provider, DateTimeStyles.None, out fromDate);
-            DateTime.TryParse(to, provider, DateTimeStyles.None, out toDate);
-
-            var stats = _questionnairesServices.GetStats(idQuestionario, (DateTime?)fromDate, (DateTime?)toDate).QuestionsStatsList.Where(x => x.QuestionId == idDomanda).FirstOrDefault();
+        public ActionResult QuestionDetail(int idQuestionario, int idDomanda, int? page, int? pageSize, StatsDetailFilterContext filterContext) {
+            var stats = _questionnairesServices.GetStats(idQuestionario, filterContext).QuestionsStatsList.Where(x => x.QuestionId == idDomanda).FirstOrDefault();
 
             var orderedAnswers = stats.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(o => o.Count).ThenBy(o => o.Answer).ToList();
 
@@ -63,15 +62,11 @@ namespace Laser.Orchard.Questionnaires.Controllers {
 
         [HttpGet]
         [Admin]
-        public ActionResult Detail(int idQuestionario, string from = null, string to = null, bool export = false) {
-            DateTime fromDate, toDate;
-            CultureInfo provider = CultureInfo.GetCultureInfo(_orchardServices.WorkContext.CurrentCulture);
-            DateTime.TryParse(from, provider, DateTimeStyles.None, out fromDate);
-            DateTime.TryParse(to, provider, DateTimeStyles.None, out toDate);
-            var model = _questionnairesServices.GetStats(idQuestionario, (DateTime?)fromDate, (DateTime?)toDate);
-            if (export == true) {
+        public ActionResult Detail(int idQuestionario, StatsDetailFilterContext filterContext) {
+            var model = _questionnairesServices.GetStats(idQuestionario, filterContext);
+            if (filterContext.Export == true) {
                 ContentItem filters = _orchardServices.ContentManager.Create("QuestionnaireStatsExport");
-                filters.As<TitlePart>().Title = string.Format("id={0}&from={1:yyyyMMdd}&to={2:yyyyMMdd}", idQuestionario, fromDate, toDate);
+                filters.As<TitlePart>().Title = string.Format("id={0}&from={1:yyyyMMdd}&to={2:yyyyMMdd}&filtercontext={3}", idQuestionario, filterContext.DateFrom.HasValue? filterContext.DateFrom.Value:new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime(), filterContext.Context);
                 _orchardServices.ContentManager.Publish(filters);
                 _taskManager.CreateTask(StasExportScheduledTaskHandler.TaskType, DateTime.UtcNow.AddSeconds(-1), filters);
                 //_questionnairesServices.SaveQuestionnaireUsersAnswers(idQuestionario, fromDate, toDate);
@@ -82,35 +77,47 @@ namespace Laser.Orchard.Questionnaires.Controllers {
 
         [HttpGet]
         [Admin]
-        public ActionResult Index(int? page, int? pageSize, string searchExpression) {
+        public ActionResult Index(int? page, int? pageSize, StatsSearchContext searchContext) {
             if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics))
                 return new HttpUnauthorizedResult();
             return Index(new PagerParameters {
                 Page = page,
                 PageSize = pageSize
-            }, searchExpression);
+            }, searchContext);
         }
 
         [HttpPost]
         [Admin]
-        public ActionResult Index(PagerParameters pagerParameters, string searchExpression) {
+        public ActionResult Index(PagerParameters pagerParameters, StatsSearchContext searchContext) {
             if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics))
                 return new HttpUnauthorizedResult();
+            var contentQuery = _orchardServices.ContentManager.Query()
+                .ForVersion(VersionOptions.Latest);
+            contentQuery = contentQuery
+                .Join<QuestionnairePartRecord>();
+            if (!string.IsNullOrEmpty(searchContext.SearchText)) {
+                if (searchContext.SearchType == StatsSearchContext.SearchTypeOptions.Contents) {
+                    contentQuery = contentQuery
+                        .Where<TitlePartRecord>(w => w.Title.Contains(searchContext.SearchText));
+                }
+                else {
+                    contentQuery = contentQuery
+                        .Where<WidgetPartRecord>(w => w.Title.Contains(searchContext.SearchText));
+                }
+            }
 
-            IContentQuery<ContentItem> contentQuery = _orchardServices.ContentManager.Query()
-                                                                                     .ForType("Questionnaire")
-                                                                                     .ForVersion(VersionOptions.Latest)
-                                                                                     .OrderByDescending<CommonPartRecord>(cpr => cpr.ModifiedUtc);
-            if (!string.IsNullOrEmpty(searchExpression))
-                contentQuery = contentQuery.Where<TitlePartRecord>(w => w.Title.Contains(searchExpression));
+            contentQuery = contentQuery
+                .OrderByDescending<CommonPartRecord>(cpr => cpr.ModifiedUtc);
 
             Pager pager = new Pager(_orchardServices.WorkContext.CurrentSite, pagerParameters);
             var pagerShape = _orchardServices.New.Pager(pager).TotalItemCount(contentQuery.Count());
+
             var pageOfContentItems = contentQuery.Slice(pager.GetStartIndex(), pager.PageSize);
 
             var model = new QuestionnaireSearchViewModel();
             model.Pager = pagerShape;
-            model.Questionnaires = pageOfContentItems;
+            model.SearchContext = searchContext;
+            model.Questionnaires = pageOfContentItems.Select(x => x);
 
             return View((object)model);
         }
