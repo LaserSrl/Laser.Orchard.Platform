@@ -110,6 +110,7 @@
                                         @foreach (var widget in widgets) {
                                             <li data-widget-id="@widget.Id">
                                                 @{
+                                                    var widgetLocalizationPart = widget.As<LocalizationPart>();
                                                     int numberPLPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "PublishLaterPart").Count();
                                                     bool scheduledTime = false;
                                                     String scheduledTitle = "";
@@ -138,8 +139,8 @@
                                                     int numberLocPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "LocalizationPart").Count();
                                                     String culture = "";
                                                     if (numberLocPart > 0) {
-                                                        if (localizationPart != null && localizationPart.Culture != null) {
-                                                            culture = "(" + localizationPart.Culture.Culture + ")";
+                                                        if (widgetLocalizationPart != null && widgetLocalizationPart.Culture != null) {
+                                                            culture = "(" + widgetLocalizationPart.Culture.Culture + ")";
                                                         }
                                                     }
                                                 }
