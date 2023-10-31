@@ -550,7 +550,7 @@ legend {
     color: #405993 !important;
 }
 
-.breadcrumb a::before {
+.breadcrumb a:first-child::before {
     content: "\f015";
     font-family: FontAwesome;
     padding-right: 8px;

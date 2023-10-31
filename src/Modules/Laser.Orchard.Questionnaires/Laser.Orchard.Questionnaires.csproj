@@ -113,6 +113,8 @@
     <Compile Include="ViewModels\ExternalAnswerWithResultViewModel.cs" />
     <Compile Include="ViewModels\GamePartVM.cs" />
     <Compile Include="ViewModels\RankingTemplateVM.cs" />
+    <Compile Include="ViewModels\StatsDetailFilterContext.cs" />
+    <Compile Include="ViewModels\StatsSearchContext.cs" />
     <Compile Include="ViewModels\ValidationProvider.cs" />
     <Content Include="Styles\questionnaire-admin.css" />
     <Compile Include="ViewModels\AnswerEditModel.cs" />
@@ -303,6 +305,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Users\Orchard.Users.csproj">
       <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
       <Name>Orchard.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Widgets\Orchard.Widgets.csproj">
+      <Project>{194D3CCC-1153-474D-8176-FDE8D7D0D0BD}</Project>
+      <Name>Orchard.Widgets</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Workflows\Orchard.Workflows.csproj">
       <Project>{7059493c-8251-4764-9c1e-2368b8b485bc}</Project>

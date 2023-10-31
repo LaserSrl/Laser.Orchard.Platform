@@ -1,18 +1,32 @@
 ﻿@using Orchard.ContentManagement;
 @using Orchard.Core.Common.Models;
+@using Orchard.Core.Title.Models;
 @using Orchard.Security;
 @using Orchard.Localization.Models;
+@using Orchard.Widgets.Models;
+@using Laser.Orchard.Questionnaires.ViewModels;
 
 @model Laser.Orchard.Questionnaires.ViewModels.QuestionnaireSearchViewModel
 
 @{
     Layout.Title = T("Questionnaire Statistics");
+    var options = new List<SelectListItem>();
+
+    var availableOptions = Enum.GetNames(typeof(Laser.Orchard.Questionnaires.ViewModels.StatsSearchContext.SearchTypeOptions));
+    foreach(var option in availableOptions) {
+        options.Add(new SelectListItem {
+            Value = option,
+            Text = ((Laser.Orchard.Questionnaires.ViewModels.StatsSearchContext.SearchTypeOptions)Enum.Parse(typeof(Laser.Orchard.Questionnaires.ViewModels.StatsSearchContext.SearchTypeOptions), option)).Text(T).Text,
+            Selected = option.Equals(Model.SearchContext.SearchType.ToString(), StringComparison.InvariantCultureIgnoreCase)
+        }); ;
+    }
 }
 
 @using (Html.BeginForm("Index", "QuestionnaireStats", FormMethod.Get)) {
     <fieldset class="bulk-actions">
         <label for="search">@T("Search:")</label>
-        @Html.TextBoxFor(m => m.SearchExpression)
+        @Html.TextBoxFor(m => m.SearchContext.SearchText)
+        @Html.DropDownListFor(m=>m.SearchContext.SearchType, options, Model.SearchContext.SearchType)
 
         <button type="submit">@T("Search")</button>
         <a href="@Url.Action("Index")" class="button">@T("Clear")</a>
@@ -22,13 +36,20 @@
 <fieldset class="contentItems bulk-items">
     <ul>
         @{
-            foreach(var questionnaire in Model.Questionnaires) {
+            foreach (var questionnaire in Model.Questionnaires) {
                 <li>
                     <div class="summary" itemscope="itemscope" itemid="@questionnaire.Id" itemtype="http://orchardproject.net/data/ContentItem">
                         <div class="properties">
                             <h3>
                                 <a href="@Url.Action("Detail", "QuestionnaireStats", new { area = "Laser.Orchard.Questionnaires", idQuestionario = questionnaire.Id })">
-                                    @(((dynamic)questionnaire).TitlePart.Title)
+                                    @{
+                                        if (questionnaire.As<TitlePart>() != null) {
+                                            @(((dynamic)questionnaire).TitlePart.Title)
+                                        }
+                                        else if (questionnaire.As<WidgetPart>() != null) {
+                                            @(((dynamic)questionnaire).WidgetPart.Title)
+                                        }
+                                    }
                                 </a>
                             </h3>
                             <div class="metadata">
@@ -37,9 +58,9 @@
                                     DateTime? modifiedUtc = commonPart.As<CommonPart>() == null ? null : commonPart.As<CommonPart>().ModifiedUtc;
                                     IUser owner = commonPart.As<CommonPart>() == null ? null : commonPart.As<CommonPart>().Owner;
                                     //string language = commonPart.As<LocalizationPart>() == null ? null : commonPart.As<LocalizationPart>().Culture.Culture;
-                                    string language = (commonPart.As<LocalizationPart>() == null || commonPart.As<LocalizationPart>().Culture == null) ? 
+                                    string language = (commonPart.As<LocalizationPart>() == null || commonPart.As<LocalizationPart>().Culture == null) ?
                                         null : commonPart.As<LocalizationPart>().Culture.Culture;
-                                    
+
                                     <ul class="pageStatus">
                                         <li>
                                             @if (modifiedUtc.HasValue) {
@@ -55,7 +76,7 @@
                                             <li>@T("Language: {0}", language)</li>
                                         </ul>
                                     }
-                                 }
+                                }
                             </div>
                         </div>
                     </div>

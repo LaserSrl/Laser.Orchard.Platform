@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.Questionnaires.Services;
+using Laser.Orchard.Questionnaires.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
@@ -26,31 +27,37 @@ namespace Laser.Orchard.Questionnaires.Handlers {
             if (context.Task.TaskType == TaskType) {
                 try {
                     int id = 0;
-                    DateTime? from = null;
-                    DateTime? to = null;
                     // ricava i parametri
+                    var filterContext = new StatsDetailFilterContext();
                     string filters = context.Task.ContentItem.As<TitlePart>().Title;
                     string[] pars = filters.Split('&');
                     foreach (var parameter in pars) {
                         string[] keyValue = parameter.Split('=');
-                        switch (keyValue[0]) {
+                        switch (keyValue[0].ToLower()) {
                             case "id":
                                 id = Convert.ToInt32(keyValue[1]);
                                 break;
                             case "from":
                                 if (string.IsNullOrWhiteSpace(keyValue[1]) == false) {
-                                    from = DateTime.ParseExact(keyValue[1], "yyyyMMdd", CultureInfo.InvariantCulture);
+                                    filterContext.DateFrom = DateTime.ParseExact(keyValue[1], "yyyyMMdd", CultureInfo.InvariantCulture);
                                 }
                                 break;
                             case "to":
                                 if (string.IsNullOrWhiteSpace(keyValue[1]) == false) {
-                                    to = DateTime.ParseExact(keyValue[1], "yyyyMMdd", CultureInfo.InvariantCulture);
+                                    filterContext.DateTo = DateTime.ParseExact(keyValue[1], "yyyyMMdd", CultureInfo.InvariantCulture);
                                 }
+                                break;
+                            case "filtercontext":
+                                    filterContext.Context = keyValue[1];
                                 break;
                         }
                     }
                     // estrae le statistiche su file
-                    _questionnairesServices.SaveQuestionnaireUsersAnswers(id, from, to);
+                    _questionnairesServices.SaveQuestionnaireUsersAnswers(id, new ViewModels.StatsDetailFilterContext {
+                        DateFrom = filterContext.DateFrom,
+                        DateTo = filterContext.DateTo,
+                        Context = filterContext.Context
+                    });
                 }
                 catch (Exception ex) {
                     string idcontenuto = "nessun id ";
