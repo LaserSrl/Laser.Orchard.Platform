@@ -11,6 +11,7 @@ using Orchard.ContentTypes.Settings;
 using Orchard.DisplayManagement;
 using Orchard.DisplayManagement.Descriptors;
 using Orchard.Environment.Configuration;
+using Orchard.Environment.Extensions;
 using Orchard.Logging;
 using Orchard.UI.Zones;
 using System;
@@ -19,6 +20,7 @@ using System.Linq;
 using System.Web.Script.Serialization;
 
 namespace Laser.Orchard.StartupConfig.Settings {
+    [OrchardFeature("Laser.Orchard.StartupConfig.FrontendEditorConfiguration")]
     public class FrontendEditorConfigurationSettingsEvents : ContentDefinitionEditorEventsBase {
         private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly IContentManager _contentManager;
