@@ -267,7 +267,9 @@ namespace Contrib.Widgets.Controllers {
                 var widgetExPart = widgetPart.As<WidgetExPart>();
 
                 widgetPart.LayerPart = _widgetManager.GetContentLayer();
-                widgetExPart.Host = contentItem;
+                if (widgetExPart.Host == null) {
+                    widgetExPart.Host = contentItem;
+                }
 
                 if (!ModelState.IsValid) {
                     _services.TransactionManager.Cancel();

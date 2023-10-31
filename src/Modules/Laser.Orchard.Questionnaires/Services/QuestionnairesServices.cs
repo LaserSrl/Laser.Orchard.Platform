@@ -1080,7 +1080,9 @@ namespace Laser.Orchard.Questionnaires.Services {
             else if (ci.As<WidgetPart>() != null) {
                 fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", "questionnaire", context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
             }
-            string filePath = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSettings.Name + @"\Export\QuestionnairesStatistics\" + fileName;
+            string filePath = HostingEnvironment.MapPath(
+                string.Format("~/App_Data/Sites/{0}/Export/QuestionnairesStatistics/{1}",
+                    _shellSettings.Name, fileName));
             // Creo la directory Export
             FileInfo fi = new FileInfo(filePath);
             if (fi.Directory.Parent.Exists == false) {
