@@ -496,6 +496,8 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Handlers\PartCloneAlterationHandler.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
+    <Compile Include="Projections\ContentTypeNamesFilter.cs" />
+    <Compile Include="Projections\ContentTypeNamesFilterForm.cs" />
     <Compile Include="Projections\DateTimeFilterForm.cs" />
     <Compile Include="Projections\UseOtherQueriesFilterProvider.cs" />
     <Compile Include="RazorBase\Models\KeyNameResolveContext.cs" />
