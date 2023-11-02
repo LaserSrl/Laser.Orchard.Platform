@@ -11,7 +11,7 @@ Features:
         Name:  Laser Orchard Template Management
         Description: Template Management features.
 		Category: Content
-		Dependencies: Orchard.Tokens, Orchard.JobsQueue, Orchard.Email		
+		Dependencies: Orchard.Tokens, Orchard.JobsQueue, Orchard.Email, Laser.Orchard.StartupConfig		
 	Laser.Orchard.TemplateManagement.Parsers.Razor:
         Name:  Laser Orchard Template Management Razor Parser
         Description: Implements Razor as the parser engine for  templates.

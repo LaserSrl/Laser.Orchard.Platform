@@ -2,7 +2,9 @@
 @using System.Linq
 @model QuestionnaireStatsViewModel
 @{
-    var dateFormat = "dd/MM/yyyy";
+    var dateContext = new DateContext {
+        Format = "dd/MM/yyyy"
+    };
     Style.Require("Bootstrap").AtHead();
     Style.Include("~/themes/theadmin/styles/site.css").AtHead(); // needs to be rendered after bootstrap
     Style.Require("FontAwesome").AtHead();
@@ -39,6 +41,23 @@
     }
 }
 
+@functions{
+    public class DateContext {
+        public string Format { get; set; }
+        public string Separator {
+            get {
+                if (this.Format.Contains("/"))
+                    return "/";
+                else if (this.Format.Contains("."))
+                    return ".";
+                else if (this.Format.Contains("-"))
+                    return "-";
+                else
+                    return "";
+            }
+        }
+    }
+}
 <p class="breadcrumb">
     <a href="@Url.Action("Index", "QuestionnaireStats", new { area = "Laser.Orchard.Questionnaires" })">@T("Questionnaire Statistics")</a>
     &#62; @Layout.Title
@@ -58,12 +77,12 @@
                             <fieldset class="bulk-actions">
                                 <label for="dateFromResults" class="bulk-filter">@T("Date From")</label>
                                 <span class="date">
-                                    @Html.TextBox("from", Model.FilterContext.DateFrom.HasValue ? Model.FilterContext.DateFrom.Value.ToString(dateFormat) : "", new { id = "dateFromResults", @class = "text" })
+                                    @Html.TextBox("from", Model.FilterContext.DateFrom.HasValue ? Model.FilterContext.DateFrom.Value.ToString(dateContext.Format) : "", new { id = "dateFromResults", @class = "text" })
                                     @Html.HiddenFor(m => m.FilterContext.DateFrom)
                                 </span>
                                 <label for="dateToResults" class="bulk-filter">@T("Date To")</label>
                                 <span class="date">
-                                    @Html.TextBox("to", Model.FilterContext.DateTo.HasValue ? Model.FilterContext.DateTo.Value.ToString(dateFormat) : "", new { id = "dateToResults", @class = "text" })
+                                    @Html.TextBox("to", Model.FilterContext.DateTo.HasValue ? Model.FilterContext.DateTo.Value.ToString(dateContext.Format) : "", new { id = "dateToResults", @class = "text" })
                                     @Html.HiddenFor(m => m.FilterContext.DateTo)
                                 </span>
                                 <label for="dateToResults" class="bulk-filter">@T("Context")</label>
@@ -218,63 +237,88 @@
 @{
     using (Script.Foot()) {
         <script type="text/javascript">
-            $(document).ready(function () {
+                    $(document).ready(function () {
                 @{ <Text>
 
                 $("#dateFromResults,#dateToResults").calendarsPicker({
                     showAnim: "",
-                    dateFormat: "@(dateFormat.ToLower())",
+                    dateFormat: "@(dateContext.Format.ToLower())",
                     onSelect: function (dates) {
-                        // MVC binding needs the dates to be in the global accepted format "yyyy-mm-dd"
-                        if (this.id.toLowerCase() == 'datetoresults') {
+                            // MVC binding needs the dates to be in the global accepted format "yyyy-mm-dd"
+                            if (this.id.toLowerCase() == 'datetoresults') {
                             $('#@(Html.FieldIdFor(m=>m.FilterContext.DateTo))').val(dates);
-                        }
-                        else if (this.id.toLowerCase() == 'datefromresults') {
+                            }
+                            else if (this.id.toLowerCase() == 'datefromresults') {
                             $('#@(Html.FieldIdFor(m=>m.FilterContext.DateFrom))').val(dates);
-                        }
-                    },
+                            }
+                        },
                     renderer: $.extend({}, $.calendarsPicker.themeRollerRenderer, {
                         picker: "<div {popup:start} id='ui-datepicker-div'{popup:end} class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all{inline:start} ui-datepicker-inline{inline:end}'><div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>{link:prev}{link:today}{link:next}</div>{months}{popup:start}{popup:end}<div class='ui-helper-clearfix'></div></div>",
                         month: "<div class='ui-datepicker-group'><div class='ui-datepicker-month ui-helper-clearfix'>{monthHeader:dd MM yyyy}</div><table class='ui-datepicker-calendar'><thead>{weekHeader}</thead><tbody>{weeks}</tbody></table></div>"
                     })
-                });
+                }).on("change", function () {
+                        // not getting fired when using button instead of text input
+                        let val = $(this).val();
+                    var dateFormat = "@(dateContext.Format)";
+                    var splitDateFormat = dateFormat.split("@(dateContext.Separator)");
+                    var yearPosition = splitDateFormat.indexOf("yyyy");
+                    var monthPosition = splitDateFormat.indexOf("MM");
+                    var dayPosition = splitDateFormat.indexOf("dd");
+
+                        var splittedDate = val.split("@dateContext.Separator");
+                    if (splittedDate.length == 3 && /^\d+$/.test(splittedDate.join(""))) {
+                            if (this.id.toLowerCase() == 'datetoresults') {
+                                $('#@(Html.FieldIdFor(m=>m.FilterContext.DateTo))').val(splittedDate[yearPosition] + "-" + splittedDate[monthPosition] + "-" + splittedDate[dayPosition]);
+                            }
+                            else if (this.id.toLowerCase() == 'datefromresults') {
+                                $('#@(Html.FieldIdFor(m=>m.FilterContext.DateFrom))').val(splittedDate[yearPosition] + "-" + splittedDate[monthPosition] + "-" + splittedDate[dayPosition]);
+                            }
+                        } else {
+                            if (this.id.toLowerCase() == 'datetoresults') {
+                            $('#@(Html.FieldIdFor(m=>m.FilterContext.DateTo))').val("");
+                            }
+                            else if (this.id.toLowerCase() == 'datefromresults') {
+                            $('#@(Html.FieldIdFor(m=>m.FilterContext.DateFrom))').val("");
+                            }
+                        }
+                    });
                 </Text>
                 }
                 @foreach (var question in Model.QuestionsStatsList) {
                     if (question.QuestionType != Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
                         <Text>
                 var data = [];
-                var tooltips = [];
-                @if (question.Answers != null) {
-                    foreach (var answer in question.Answers) {
-                        var legendLabel = answer.Answer;
-                        if(legendLabel.Length > 20) {
-                            legendLabel = legendLabel.Substring(0, 9) + "..." + legendLabel.Substring(legendLabel.Length - 8);
-                        }
+                        var tooltips = [];
+                        @if (question.Answers != null) {
+                            foreach (var answer in question.Answers) {
+                                var legendLabel = answer.Answer;
+                                if(legendLabel.Length > 20) {
+                                    legendLabel = legendLabel.Substring(0, 9) + "..." + legendLabel.Substring(legendLabel.Length - 8);
+                                }
                                 <Text>data.push(['@HttpUtility.JavaScriptStringEncode(legendLabel)', @answer.Count]);</Text>
                                 <Text>tooltips.push('@HttpUtility.JavaScriptStringEncode(answer.Answer)');</Text>
-                            }
+                                    }
                         }
                 $.jqplot('answerchart-@question.QuestionId', [data], {
-                    width: @width,
+                        width: @width,
                     height: @height,
                     seriesDefaults: {
-                        renderer: jQuery.jqplot.PieRenderer,
+                            renderer: jQuery.jqplot.PieRenderer,
                         rendererOptions: {
-                            showDataLabels: true,
+                                showDataLabels: true,
                             //dataLabelFormatString: '%.2f'
                         }
-                    },
+                            },
                     legend: {
-                        show: true,
+                            show: true,
                         location: 'e',
                         renderer: $.jqplot.EnhancedPieLegendRenderer,
                         rendererOptions: {
-                            numberColumns: 1,
+                                numberColumns: 1,
                             toolTips: tooltips
                         }
-                    }
-                });
+                            }
+                        });
                 </Text>
 
                     }
