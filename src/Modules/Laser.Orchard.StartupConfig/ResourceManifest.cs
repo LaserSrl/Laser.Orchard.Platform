@@ -18,7 +18,7 @@ namespace Laser.Orchard.StartupConfig {
             // color picker
             manifest.DefineScript("spectrum").SetUrl("spectrum.js").SetDependencies("jQuery");
 
-            // tabulator (currently v3.4.4)
+            // tabulator (currently v5.5.2)
             manifest.DefineScript("tabulator")
                 .SetUrl("tabulator\\tabulator.min.js", "tabulator\\tabulator.js")
                 .SetDependencies("jQueryUI");
@@ -27,6 +27,10 @@ namespace Laser.Orchard.StartupConfig {
             manifest.DefineStyle("tabulatorBootstrap")
                 .SetUrl("tabulator\\bootstrap\\tabulator_bootstrap.min.css", "tabulator\\bootstrap\\tabulator_bootstrap.css")
                 .SetDependencies("Bootstrap");
+
+            // luxon (used by tabulator to format datetime columns)
+            manifest.DefineScript("luxon")
+                .SetUrl("tabulator\\luxon.min.js", "tabulator\\luxon.js");
 
             // content picker creation
             manifest.DefineScript("ContentPickerCreation")
