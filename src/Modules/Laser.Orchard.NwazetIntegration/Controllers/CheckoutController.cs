@@ -318,8 +318,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             // Enumerate so the methods are actually executed
                             .ToList();
                 }
-                //if Addresses have errors show them 
-                foreach (var error in model.ShippingAddressVM.Errors) {
+                //if Addresses have errors show them;
+                foreach (var error in model.ShippingAddressVM?.Errors
+                                      ?? Enumerable.Empty<string>()) {
                     ModelState.AddModelError("_FORM", error);
                 }
                 foreach (var error in model.BillingAddressVM.Errors) {
