@@ -12,17 +12,21 @@ using Orchard.Core.Contents.Settings;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
+namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers
+{
     [OrchardFeature("Laser.Orchard.StartupConfig.ContentPickerContentCreation")]
 
-    public class ContentPickerFieldCreateItemDriver : ContentFieldDriver<ContentPickerField> {
+    public class ContentPickerFieldCreateItemDriver : ContentFieldDriver<ContentPickerField>
+    {
         private readonly IContentManager _contentManager;
         private readonly IContentDefinitionManager _contentDefinitionManager;
 
-        public ContentPickerFieldCreateItemDriver(IContentManager contentManager, IOrchardServices orchardServices, IContentDefinitionManager contentDefinitionManager) {
+        public ContentPickerFieldCreateItemDriver(IContentManager contentManager, IOrchardServices orchardServices, IContentDefinitionManager contentDefinitionManager)
+        {
             _contentManager = contentManager;
             Services = orchardServices;
             _contentDefinitionManager = contentDefinitionManager;
@@ -33,47 +37,78 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
 
         public IOrchardServices Services { get; private set; }
 
-        private static string GetPrefix(ContentPickerField field, ContentPart part) {
+        private static string GetPrefix(ContentPickerField field, ContentPart part)
+        {
             return part.PartDefinition.Name + "." + field.Name;
         }
 
-        private static string GetDifferentiator(ContentPickerField field, ContentPart part) {
+        private static string GetDifferentiator(ContentPickerField field, ContentPart part)
+        {
             return field.Name;
         }
 
-        private IEnumerable<ContentTypeDefinition> GetCreatableTypes(bool andContainable) {
+        private IEnumerable<ContentTypeDefinition> GetCreatableTypes(bool andContainable)
+        {
             return _contentDefinitionManager.ListTypeDefinitions().Where(ctd =>
                 Services.Authorizer.Authorize(Permissions.EditContent, _contentManager.New(ctd.Name)) &&
                 ctd.Settings.GetModel<ContentTypeSettings>().Creatable &&
                 (!andContainable || ctd.Parts.Any(p => p.PartDefinition.Name == "ContainablePart")));
         }
 
-        protected override DriverResult Editor(ContentPart part, ContentPickerField field, dynamic shapeHelper) {
+        protected override DriverResult Editor(ContentPart part, ContentPickerField field, dynamic shapeHelper)
+        {
 
             var settings = field.PartFieldDefinition.Settings.GetModel<CPContentCreationSettings>();
             var fieldSettings = field.PartFieldDefinition.Settings.GetModel<ContentPickerFieldSettings>();
 
-            if (!settings.EnableContentCreation) {
+            if (!settings.EnableContentCreation)
+            {
                 return null;
             }
 
             List<string> contentTypeNames = new List<string>();
             List<string> creatableTypes = GetCreatableTypes(false).Select(x => x.Name).ToList();
 
-            if (fieldSettings != null && !string.IsNullOrWhiteSpace(fieldSettings.DisplayedContentTypes)) {
-                var associatedContentTypes = fieldSettings.DisplayedContentTypes.Split(',');
-                foreach (string contentTypeName in associatedContentTypes) {
+            if (fieldSettings != null && !string.IsNullOrWhiteSpace(fieldSettings.DisplayedContentTypes))
+            {
+                //begin make the list for associated parts
+                var types = fieldSettings.DisplayedContentTypes;
+
+                IEnumerable<String> contentTypes;
+                if (!String.IsNullOrEmpty(types))
+                {
+                    var rawTypes = types.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                    contentTypes = _contentDefinitionManager
+                        .ListTypeDefinitions()
+                        .Where(x => x.Parts.Any(p => rawTypes.Contains(p.PartDefinition.Name)) || rawTypes.Contains(x.Name))
+                        .Select(x => x.Name)
+                        .ToArray();
+                }
+                else
+                {
+                    contentTypes = creatableTypes;
+                }
+                //end  list for associated parts
+
+
+                foreach (string contentTypeName in contentTypes)
+                {
                     if (!string.IsNullOrWhiteSpace(contentTypeName)) contentTypeNames.Add(contentTypeName.Trim());
                 }
-            } else {
-                foreach (var creatableTypeName in creatableTypes) {
+            }
+            else
+            {
+                foreach (var creatableTypeName in creatableTypes)
+                {
                     contentTypeNames.Add(creatableTypeName);
                 }
             }
 
             return ContentShape("Fields_ContentPickerCreateItem_Edit", GetDifferentiator(field, part),
-                () => {
-                    var model = new ContentPickerCreateItemVM {
+                () =>
+                {
+                    var model = new ContentPickerCreateItemVM
+                    {
                         contentTypeList = contentTypeNames,
                         nameCPField = field.Name,
                         multiple = fieldSettings.Multiple
@@ -82,7 +117,8 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
                 });
         }
 
-        protected override DriverResult Editor(ContentPart part, ContentPickerField field, IUpdateModel updater, dynamic shapeHelper) {
+        protected override DriverResult Editor(ContentPart part, ContentPickerField field, IUpdateModel updater, dynamic shapeHelper)
+        {
             return Editor(part, field, shapeHelper);
         }
     }
