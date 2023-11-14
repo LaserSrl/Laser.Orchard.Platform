@@ -607,6 +607,7 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
         [HttpPost, ActionName("List")]
         [Mvc.FormValueRequired("submit.BulkEdit")]
         public ActionResult ListPOST(ContentOptions options, IEnumerable<int> itemIds, string returnUrl) {
+            
             if (itemIds != null) {
                 var checkedContentItems = _contentManager.GetMany<ContentItem>(itemIds, VersionOptions.Latest, QueryHints.Empty);
                 switch (options.BulkAction) {
@@ -650,7 +651,12 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 }
             }
 
-            return this.RedirectLocal(returnUrl, () => RedirectToAction("List"));
+            var routeValues = new RouteValueDictionary();
+            foreach (var key in Request.QueryString.AllKeys)
+            {
+                routeValues[key] = Request.QueryString[key];
+            }
+            return this.RedirectLocal(returnUrl, () => RedirectToAction("List", routeValues)); 
         }
 
         ActionResult CreatableTypeList(int? containerId) {
