@@ -2,7 +2,7 @@
 using Orchard;
 using Orchard.UI.Resources;
 using Orchard.ContentManagement;
-
+using System.Reflection;
 
 namespace Laser.Orchard.Maps {
 
@@ -73,6 +73,11 @@ namespace Laser.Orchard.Maps {
 
             manifest.DefineScript("OpenStreetMapAPI")
              .SetUrl("http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
+
+            // Leaflet
+            manifest.DefineStyle("LeafletStyle").SetUrl("leaflet.css");
+
+            manifest.DefineScript("LeafletScript").SetUrl("leaflet.js");
         }
     }
 }
