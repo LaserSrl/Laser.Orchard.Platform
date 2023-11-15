@@ -83,12 +83,6 @@ button, .button, a.button {
   padding: 6px 12px !important;
 }
 
-    button.remove, .remove.button, .remove.button:link, .remove.button:visited {
-        background-color: #ef2108;
-        border-color: #cc240f;
-        background-image: none;
-    }
-
 .widgets-actions {
   font-size: 14px;
 }
