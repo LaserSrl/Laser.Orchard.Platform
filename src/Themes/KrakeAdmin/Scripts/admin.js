@@ -72,7 +72,7 @@
     //});
 
     $(".check-all").change(function () {
-        $("input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"))
+        $(".bulk-items input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"))
     });
 })(jQuery);
 
