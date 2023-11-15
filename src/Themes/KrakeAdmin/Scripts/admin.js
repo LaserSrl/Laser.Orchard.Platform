@@ -71,8 +71,16 @@
     //    return confirm(confirmRemoveMessage);
     //});
 
+    // Advanced search select all check box.
+    // Check all checkboxes inside the bulk-items area.
     $(".check-all").change(function () {
-        $(".bulk-items input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"))
+        $(".bulk-items input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"));
+    });
+
+    // Table head select all check box (e.g. taxonomies or terms)
+    // Check all checkboxes inside the table body
+    $("thead .check-all").change(function () {
+        $("tbody input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"));
     });
 })(jQuery);
 
