@@ -940,6 +940,7 @@ namespace Laser.Orchard.AdvancedSearch.Controllers
                     advancedOptions.SelectedOwner = Services.WorkContext.CurrentUser.UserName;
                 }
 
+
                 routeValues["Options.OrderBy"] = options.OrderBy; //todo: don't hard-code the key
                 routeValues["Options.ContentsStatus"] = options.ContentsStatus; //todo: don't hard-code the key
                 routeValues["AdvancedOptions.SelectedLanguageId"] = advancedOptions.SelectedLanguageId; //todo: don't hard-code the key
