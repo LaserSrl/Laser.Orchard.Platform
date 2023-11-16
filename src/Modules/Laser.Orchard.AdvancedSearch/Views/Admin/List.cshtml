@@ -229,7 +229,7 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="row">
-                            <label class="ml-3 col-form-label align-right gray-label"><input type="checkbox" class="check-all mr-1">@T("Select all")</label>
+                            <label class="ml-3 col-form-label align-right gray-label"><input type="checkbox" class="check-all mr-1" data-checkboxcontainer="bulk-items">@T("Select all")</label>
                             <span class="col-form-label pl-2 pr-2"> | </span>
                             <label class="col-form-label align-right gray-label">@T("Builk actions:")</label>
                             <div class="col-sm-8">
@@ -486,7 +486,7 @@
         </div>
     </div>
 
-    <fieldset class="contentItems bulk-items">
+    <fieldset class="contentItems bulk-items" id="bulk-items">
         @Display(Model.ContentItems)
     </fieldset>
     @Display(Model.Pager)

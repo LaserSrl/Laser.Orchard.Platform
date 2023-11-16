@@ -71,16 +71,14 @@
     //    return confirm(confirmRemoveMessage);
     //});
 
-    // Advanced search select all check box.
-    // Check all checkboxes inside the bulk-items area.
+    // Using a data element to get the correct checkboxes to check / uncheck.
     $(".check-all").change(function () {
-        $(".bulk-items input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"));
-    });
-
-    // Table head select all check box (e.g. taxonomies or terms)
-    // Check all checkboxes inside the table body
-    $("thead .check-all").change(function () {
-        $("tbody input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"));
+        var target = $(this).data("checkboxcontainer");
+        if (target) {
+            $("#" + target + " input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"));
+        } else {
+            $("input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"));
+        }
     });
 })(jQuery);
 
