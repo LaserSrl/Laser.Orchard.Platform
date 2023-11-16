@@ -45,8 +45,10 @@ using Mvc = Orchard.Mvc;
 
 //using System.Diagnostics;
 
-namespace Laser.Orchard.AdvancedSearch.Controllers {
-    public class AdminController : Controller, IUpdateModel {
+namespace Laser.Orchard.AdvancedSearch.Controllers
+{
+    public class AdminController : Controller, IUpdateModel
+    {
         private readonly IContentManager _contentManager;
         private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly IContentDefinitionService _contentDefinitionService;
@@ -80,7 +82,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             ITaxonomyService taxonomyService,
             IRepository<FieldIndexPartRecord> cpfRepo,
             ILocalizationService localizationService,
-            ICommonsServices commonService) {
+            ICommonsServices commonService)
+        {
             Services = orchardServices;
             _contentManager = contentManager;
             _contentDefinitionManager = contentDefinitionManager;
@@ -107,11 +110,13 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
         public ILogger Logger { get; set; }
 
         [Admin]
-        public ActionResult List(ListContentsViewModelExtension model, PagerParameters pagerParameters) {
+        public ActionResult List(ListContentsViewModelExtension model, PagerParameters pagerParameters)
+        {
             Pager pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
 
             var versionOptions = VersionOptions.Latest;
-            switch (model.Options.ContentsStatus) {
+            switch (model.Options.ContentsStatus)
+            {
                 case ContentsStatus.Published:
                     versionOptions = VersionOptions.Published;
                     break;
@@ -132,7 +137,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             //we create it here and build is as we build the other
             var lQuery = _contentManager.Query(versionOptions, GetListableTypes(false).Select(ctd => ctd.Name).ToArray());
 
-            if (!string.IsNullOrEmpty(model.TypeName)) {
+            if (!string.IsNullOrEmpty(model.TypeName))
+            {
                 var contentTypeDefinition = _contentDefinitionManager.GetTypeDefinition(model.TypeName);
                 if (contentTypeDefinition == null)
                     return HttpNotFound();
@@ -147,7 +153,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             // FILTER QUERIES: START //
 
             // terms query
-            if (model.AdvancedOptions.SelectedTermIds != null && model.AdvancedOptions.SelectedTermIds.Count() > 0) {
+            if (model.AdvancedOptions.SelectedTermIds != null && model.AdvancedOptions.SelectedTermIds.Count() > 0)
+            {
                 var termIds = model.AdvancedOptions.SelectedTermIds;
                 query = query.Join<TermsPartRecord>().Where(x => x.Terms.Any(a => termIds.Contains(a.TermRecord.Id)));
                 lQuery = lQuery.Join<TermsPartRecord>().Where(x => x.Terms.Any(a => termIds.Contains(a.TermRecord.Id)));
@@ -164,7 +171,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                         || (Services.Authorizer.Authorize(AdvancedSearchPermissions.CanSeeOwnContents)
                         && !Services.Authorizer.Authorize(AdvancedSearchPermissions.MayChooseToSeeOthersContent))
                     )
-                ) {
+                )
+            {
                 //this user can only see the contents they own
                 var lowerName = Services.WorkContext.CurrentUser.UserName.ToLowerInvariant();
                 var email = Services.WorkContext.CurrentUser.Email;
@@ -172,44 +180,53 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 query = query.Join<CommonPartRecord>().Where(x => x.OwnerId == user.Id);
                 lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.OwnerId == user.Id);
             }
-            else if (!String.IsNullOrWhiteSpace(model.AdvancedOptions.SelectedOwner)) {
+            else if (!String.IsNullOrWhiteSpace(model.AdvancedOptions.SelectedOwner))
+            {
                 var lowerName = model.AdvancedOptions.SelectedOwner == null ? "" : model.AdvancedOptions.SelectedOwner.ToLowerInvariant();
                 var email = model.AdvancedOptions.SelectedOwner;
                 var user = _contentManager.Query<UserPart, UserPartRecord>().Where(u => u.NormalizedUserName == lowerName || u.Email == email).List().FirstOrDefault();
-                if (user != null) {
+                if (user != null)
+                {
                     query = query.Join<CommonPartRecord>().Where(x => x.OwnerId == user.Id);
                     lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.OwnerId == user.Id);
                 }
-                else {
+                else
+                {
                     _notifier.Add(NotifyType.Warning, T("No user found. Ownership filter not applied."));
                 }
             }
 
             //date query
-            if (model.AdvancedOptions.SelectedFromDate != null || model.AdvancedOptions.SelectedToDate != null) {
+            if (model.AdvancedOptions.SelectedFromDate != null || model.AdvancedOptions.SelectedToDate != null)
+            {
                 //set default dates for From and To if they are null.
                 var fromD = _dataLocalization.StringToDatetime(model.AdvancedOptions.SelectedFromDate, "") ?? _dataLocalization.StringToDatetime("09/05/1985", "");
                 var toD = _dataLocalization.StringToDatetime(model.AdvancedOptions.SelectedToDate, "") ?? DateTime.Now;
 
-                if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Created) {
+                if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Created)
+                {
                     query = query.Join<CommonPartRecord>().Where(x => x.CreatedUtc >= fromD && x.CreatedUtc <= toD);
                     lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.CreatedUtc >= fromD && x.CreatedUtc <= toD);
                 }
-                else if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Modified) {
+                else if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Modified)
+                {
                     query = query.Join<CommonPartRecord>().Where(x => x.ModifiedUtc >= fromD && x.ModifiedUtc <= toD);
                     lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.ModifiedUtc >= fromD && x.ModifiedUtc <= toD);
                 }
-                else if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Published) {
+                else if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Published)
+                {
                     query = query.Join<CommonPartRecord>().Where(x => x.PublishedUtc >= fromD && x.PublishedUtc <= toD);
                     lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.PublishedUtc >= fromD && x.PublishedUtc <= toD);
                 }
             }
 
             // Has media query
-            if (model.AdvancedOptions.HasMedia) {
+            if (model.AdvancedOptions.HasMedia)
+            {
                 var allCt = GetListableTypes(false);
                 var listFields = new List<string>();
-                foreach (var ct in allCt) {
+                foreach (var ct in allCt)
+                {
                     var allMediaFld = _contentDefinitionService.GetType(ct.Name).Fields.Where(w =>
                         w._Definition.FieldDefinition.Name == "MediaLibraryPickerField");
                     var allFieldNames = allMediaFld.Select(s => ct.Name + "." + s.Name + ".");
@@ -225,7 +242,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             }
 
             // Extended Status query
-            if (!String.IsNullOrWhiteSpace(model.AdvancedOptions.SelectedStatus)) {
+            if (!String.IsNullOrWhiteSpace(model.AdvancedOptions.SelectedStatus))
+            {
                 query = query.Join<FieldIndexPartRecord>().Where(w => w.StringFieldIndexRecords.Any(
                     w2 => w2.PropertyName == "PublishExtensionPart.PublishExtensionStatus." && w2.Value == model.AdvancedOptions.SelectedStatus
                     ));
@@ -236,7 +254,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             // FILTER QUERIES: END //
 
 
-            switch (model.Options.OrderBy) {
+            switch (model.Options.OrderBy)
+            {
                 case ContentsOrder.Modified:
                     //query = query.OrderByDescending<ContentPartRecord, int>(ci => ci.ContentItemRecord.Versions.Single(civr => civr.Latest).Id);
                     query = query.OrderByDescending<CommonPartRecord>(cr => cr.ModifiedUtc);
@@ -274,7 +293,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                                         _contentDefinitionManager.ListTypeDefinitions().Where(x => x.Name.Equals(model.TypeName, StringComparison.InvariantCultureIgnoreCase)) :
                                         GetListableTypes(false);
 
-            foreach (var ct in listContentTypes) {
+            foreach (var ct in listContentTypes)
+            {
                 var contentType = _contentDefinitionService.GetType(ct.Name);
                 var taxFields = contentType.Fields.Where(w =>
                     w._Definition.FieldDefinition.Name == "TaxonomyField").ToList(); //TaxonomyFields within the content
@@ -283,17 +303,21 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                     .SelectMany(x => x.PartDefinition.Fields).Where(x => x.FieldDefinition.Name == "TaxonomyField"); //TaxonomyFields within the parts of the content
                 taxFields.AddRange(taxPartFields);
 
-                foreach (var tf in taxFields) {
+                foreach (var tf in taxFields)
+                {
                     var taxName = tf.Settings.GetModel<TaxonomyFieldSettings>().Taxonomy;
-                    if (string.IsNullOrWhiteSpace(taxName)) {
+                    if (string.IsNullOrWhiteSpace(taxName))
+                    {
                         continue;//TaxonomyField is not yet set
                     }
-                    else {
+                    else
+                    {
                         var taxonomySetForField = _taxonomyService.GetTaxonomyByName(tf.Settings.GetModel<TaxonomyFieldSettings>().Taxonomy);
                         if (taxonomySetForField == null) continue; //handles missing taxonomy name
                                                                    // show taxonomies and their localizations 
                         listTaxonomyIds.Add(taxonomySetForField.Id);
-                        if (taxonomySetForField.As<LocalizationPart>() != null) {
+                        if (taxonomySetForField.As<LocalizationPart>() != null)
+                        {
                             listTaxonomyIds.AddRange(_localizationService.GetLocalizations(taxonomySetForField).Select(x => x.Id));
                         }
                     }
@@ -302,12 +326,15 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
             }
             //TODO: optimize code 
-            foreach (var taxonomy in _taxonomyService.GetTaxonomies().Where(x => listTaxonomyIds.Contains(x.Id))) {
+            foreach (var taxonomy in _taxonomyService.GetTaxonomies().Where(x => listTaxonomyIds.Contains(x.Id)))
+            {
                 termList.Add(new KeyValuePair<int, string>(-1, taxonomy.Name));
-                foreach (var term in _taxonomyService.GetTerms(taxonomy.Id)) {
+                foreach (var term in _taxonomyService.GetTerms(taxonomy.Id))
+                {
                     var gap = new string('-', term.GetLevels());
 
-                    if (gap.Length > 0) {
+                    if (gap.Length > 0)
+                    {
                         gap += " ";
                     }
                     termList.Add(new KeyValuePair<int, string>(term.Id, gap + term.Name));
@@ -320,7 +347,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
             // extended status
             var partDefinition = _contentDefinitionService.GetPart("PublishExtensionPart");
-            if (partDefinition != null) {
+            if (partDefinition != null)
+            {
 
                 var partField = partDefinition.Fields.Where(w => w.Name == "PublishExtensionStatus").SingleOrDefault();
                 var settings = partField.Settings.GetModel<EnumerationFieldSettings>().Options;
@@ -346,7 +374,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             //        }
             //    }
             //}
-            if (model.AdvancedOptions.CPFIdToSearch != null && !String.IsNullOrWhiteSpace(model.AdvancedOptions.CPFName)) {
+            if (model.AdvancedOptions.CPFIdToSearch != null && !String.IsNullOrWhiteSpace(model.AdvancedOptions.CPFName))
+            {
                 //given an Id, search for all items that have a Content Picker Field whose PropertyName is PCFName and that have the
                 //Id among the corresponding values.
                 string fieldName = (string)model.AdvancedOptions.CPFName;
@@ -459,19 +488,23 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             //}
             #endregion
 
-            if (Services.Authorizer.Authorize(AdvancedSearchPermissions.CanSeeOwnContents)) {
+            if (Services.Authorizer.Authorize(AdvancedSearchPermissions.CanSeeOwnContents))
+            {
                 // language queries
                 //For any language query, remember that Orchard's localization table, as of Orchard 1.8, has an issue where the content
                 //created but never translated does not have the default Culture assigned to it.
                 Expression<Func<LocalizationPartRecord, bool>> selLangPredicate = null;
-                if (model.AdvancedOptions.SelectedLanguageId > 0) {
+                if (model.AdvancedOptions.SelectedLanguageId > 0)
+                {
                     bool siteCultureSelected = _cultureManager.GetSiteCulture() == _cultureManager.GetCultureById(model.AdvancedOptions.SelectedLanguageId).Culture;
-                    if (siteCultureSelected) {
+                    if (siteCultureSelected)
+                    {
                         selLangPredicate =
                             x => x.CultureId == model.AdvancedOptions.SelectedLanguageId ||
                                 x.CultureId == 0;
                     }
-                    else {
+                    else
+                    {
                         selLangPredicate =
                             x => x.CultureId == model.AdvancedOptions.SelectedLanguageId;
                     }
@@ -479,14 +512,17 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                     query = query.Join<LocalizationPartRecord>().Where(selLangPredicate);
                 }
                 Expression<Func<LocalizationPartRecord, bool>> untranLangPredicate = null;
-                if (model.AdvancedOptions.SelectedUntranslatedLanguageId > 0) {
+                if (model.AdvancedOptions.SelectedUntranslatedLanguageId > 0)
+                {
                     bool siteCultureSelected = _cultureManager.GetSiteCulture() == _cultureManager.GetCultureById(model.AdvancedOptions.SelectedUntranslatedLanguageId).Culture;
-                    if (siteCultureSelected) {
+                    if (siteCultureSelected)
+                    {
                         untranLangPredicate =
                             x => x.CultureId == model.AdvancedOptions.SelectedUntranslatedLanguageId ||
                                 x.CultureId == 0;
                     }
-                    else {
+                    else
+                    {
                         untranLangPredicate =
                             x => x.CultureId == model.AdvancedOptions.SelectedUntranslatedLanguageId;
                     }
@@ -507,14 +543,16 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 pageOfContentItems = query.Slice(pager.GetStartIndex(), pager.PageSize).ToList();
 
             }
-            else {
+            else
+            {
                 Services.Notifier.Error(T("Not authorized to visualize any item."));
             }
 
             //sw.Stop();
             //Services.Notifier.Error(new LocalizedString(sw.Elapsed.TotalMilliseconds.ToString()));
 
-            if (pageOfContentItems != null) {
+            if (pageOfContentItems != null)
+            {
                 list.AddRange(pageOfContentItems.Select(ci => _contentManager.BuildDisplay(ci, "SummaryAdmin")));
             }
 
@@ -528,14 +566,16 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             return View(viewModel);
         }
 
-        private IEnumerable<ContentTypeDefinition> GetCreatableTypes(bool andContainable) {
+        private IEnumerable<ContentTypeDefinition> GetCreatableTypes(bool andContainable)
+        {
             return _contentDefinitionManager.ListTypeDefinitions().Where(ctd =>
                 Services.Authorizer.Authorize(Permissions.EditContent, _contentManager.New(ctd.Name)) &&
                 ctd.Settings.GetModel<ContentTypeSettings>().Creatable &&
                 (!andContainable || ctd.Parts.Any(p => p.PartDefinition.Name == "ContainablePart")));
         }
 
-        private IEnumerable<ContentTypeDefinition> GetListableTypes(bool andContainable) {
+        private IEnumerable<ContentTypeDefinition> GetListableTypes(bool andContainable)
+        {
             return _contentDefinitionManager.ListTypeDefinitions().Where(ctd =>
                 Services.Authorizer.Authorize(Permissions.EditContent, _contentManager.New(ctd.Name)) &&
                 ctd.Settings.GetModel<ContentTypeSettings>().Listable &&
@@ -545,76 +585,30 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
         [Admin]
         [HttpPost, ActionName("List")]
         [Mvc.FormValueRequired("submit.Filter")]
-        public ActionResult ListFilterPOST(ContentOptions options, AdvancedContentOptions advancedOptions) {
-            var routeValues = ControllerContext.RouteData.Values;
-            if (options != null) {
-                bool seeAll = Services.Authorizer.Authorize(AdvancedSearchPermissions.SeesAllContent);
-                bool maySee = Services.Authorizer.Authorize(AdvancedSearchPermissions.MayChooseToSeeOthersContent);
-                if ((seeAll && advancedOptions.OwnedByMeSeeAll)
-                    || (!seeAll && maySee && advancedOptions.OwnedByMe)) {
-                    advancedOptions.SelectedOwner = Services.WorkContext.CurrentUser.UserName;
-                }
-
-                routeValues["Options.OrderBy"] = options.OrderBy; //todo: don't hard-code the key
-                routeValues["Options.ContentsStatus"] = options.ContentsStatus; //todo: don't hard-code the key
-                routeValues["AdvancedOptions.SelectedLanguageId"] = advancedOptions.SelectedLanguageId; //todo: don't hard-code the key
-                routeValues["AdvancedOptions.SelectedUntranslatedLanguageId"] = advancedOptions.SelectedUntranslatedLanguageId; //todo: don't hard-code the key
-                for (int i = 0; i < (advancedOptions.SelectedTermIds != null ? advancedOptions.SelectedTermIds.Count() : 0); i++) {
-                    if (advancedOptions.SelectedTermIds[i] > 0) {
-                        routeValues.Add("AdvancedOptions.SelectedTermIds[" + i + "]", advancedOptions.SelectedTermIds[i]); //todo: don't hard-code the key
-                    }
-                }
-                //condition to add the owner to the query string only if we are not going to ignore it anyway
-                if (    //user may see everything
-                        (seeAll
-                        && (!advancedOptions.OwnedByMeSeeAll))
-                        || (  //user does not have limitations
-                            (maySee)
-                            && (!advancedOptions.OwnedByMe)
-                        )
-                    ) {
-                    routeValues["AdvancedOptions.SelectedOwner"] = advancedOptions.SelectedOwner; //todo: don't hard-code the key
-                }
-                routeValues["AdvancedOptions.SelectedFromDate"] = advancedOptions.SelectedFromDate; //todo: don't hard-code the key
-                routeValues["AdvancedOptions.SelectedToDate"] = advancedOptions.SelectedToDate; //todo: don't hard-code the key
-                routeValues["AdvancedOptions.DateFilterType"] = advancedOptions.DateFilterType; //todo: don't hard-code the key
-                routeValues["AdvancedOptions.HasMedia"] = advancedOptions.HasMedia; //todo: don't hard-code the key
-                routeValues["AdvancedOptions.SelectedStatus"] = advancedOptions.SelectedStatus; //todo: don't hard-code the key
-                routeValues["AdvancedOptions.OwnedByMe"] = advancedOptions.OwnedByMe; //todo: don't hard-code the key
-                routeValues["AdvancedOptions.OwnedByMeSeeAll"] = advancedOptions.OwnedByMeSeeAll; //todo: don't hard-code the key
-
-                //Querying base off content picker field
-                if (advancedOptions.CPFIdToSearch != null) {
-                    routeValues["AdvancedOptions.CPFIdToSearch"] = advancedOptions.CPFIdToSearch;
-                    if (!String.IsNullOrWhiteSpace(advancedOptions.CPFName)) {
-                        routeValues["AdvancedOptions.CPFName"] = advancedOptions.CPFName;
-                    }
-                }
-
-
-                if (GetListableTypes(false).Any(ctd => string.Equals(ctd.Name, options.SelectedFilter, StringComparison.OrdinalIgnoreCase))) {
-                    routeValues["id"] = options.SelectedFilter;
-                }
-                else {
-                    routeValues.Remove("id");
-                }
-            }
-
+        public ActionResult ListFilterPOST(ContentOptions options, AdvancedContentOptions advancedOptions)
+        {
+            var routeValues = GetRouteValues(ControllerContext.RouteData.Values, options, advancedOptions);
             return RedirectToAction("List", routeValues);
         }
 
         [Admin]
         [HttpPost, ActionName("List")]
         [Mvc.FormValueRequired("submit.BulkEdit")]
-        public ActionResult ListPOST(ContentOptions options, IEnumerable<int> itemIds, string returnUrl) {
-            if (itemIds != null) {
+        public ActionResult ListPOST(ContentOptions options, AdvancedContentOptions advancedOptions, IEnumerable<int> itemIds, string returnUrl)
+        {
+
+            if (itemIds != null)
+            {
                 var checkedContentItems = _contentManager.GetMany<ContentItem>(itemIds, VersionOptions.Latest, QueryHints.Empty);
-                switch (options.BulkAction) {
+                switch (options.BulkAction)
+                {
                     case ContentsBulkAction.None:
                         break;
                     case ContentsBulkAction.PublishNow:
-                        foreach (var item in checkedContentItems) {
-                            if (!Services.Authorizer.Authorize(Permissions.PublishContent, item, T("Couldn't publish selected content."))) {
+                        foreach (var item in checkedContentItems)
+                        {
+                            if (!Services.Authorizer.Authorize(Permissions.PublishContent, item, T("Couldn't publish selected content.")))
+                            {
                                 _transactionManager.Cancel();
                                 return new HttpUnauthorizedResult();
                             }
@@ -624,8 +618,10 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                         Services.Notifier.Information(T("Content successfully published."));
                         break;
                     case ContentsBulkAction.Unpublish:
-                        foreach (var item in checkedContentItems) {
-                            if (!Services.Authorizer.Authorize(Permissions.PublishContent, item, T("Couldn't unpublish selected content."))) {
+                        foreach (var item in checkedContentItems)
+                        {
+                            if (!Services.Authorizer.Authorize(Permissions.PublishContent, item, T("Couldn't unpublish selected content.")))
+                            {
                                 _transactionManager.Cancel();
                                 return new HttpUnauthorizedResult();
                             }
@@ -635,8 +631,10 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                         Services.Notifier.Information(T("Content successfully unpublished."));
                         break;
                     case ContentsBulkAction.Remove:
-                        foreach (var item in checkedContentItems) {
-                            if (!Services.Authorizer.Authorize(Permissions.DeleteContent, item, T("Couldn't remove selected content."))) {
+                        foreach (var item in checkedContentItems)
+                        {
+                            if (!Services.Authorizer.Authorize(Permissions.DeleteContent, item, T("Couldn't remove selected content.")))
+                            {
                                 _transactionManager.Cancel();
                                 return new HttpUnauthorizedResult();
                             }
@@ -650,23 +648,27 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 }
             }
 
-            return this.RedirectLocal(returnUrl, () => RedirectToAction("List"));
+            var routeValues = GetRouteValues(ControllerContext.RouteData.Values, options, advancedOptions);
+            return RedirectToAction("List", routeValues);
         }
 
-        ActionResult CreatableTypeList(int? containerId) {
+        ActionResult CreatableTypeList(int? containerId)
+        {
             var viewModel = Shape.ViewModel(ContentTypes: GetCreatableTypes(containerId.HasValue), ContainerId: containerId);
 
             return View("CreatableTypeList", viewModel);
         }
 
-        ActionResult ListableTypeList(int? containerId) {
+        ActionResult ListableTypeList(int? containerId)
+        {
             var viewModel = Shape.ViewModel(ContentTypes: GetListableTypes(containerId.HasValue), ContainerId: containerId);
 
             return View("ListableTypeList", viewModel);
         }
 
         [Admin]
-        public ActionResult Create(string id, int? containerId) {
+        public ActionResult Create(string id, int? containerId)
+        {
             if (string.IsNullOrEmpty(id))
                 return CreatableTypeList(containerId);
 
@@ -675,9 +677,11 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             if (!Services.Authorizer.Authorize(Permissions.EditContent, contentItem, T("Cannot create content")))
                 return new HttpUnauthorizedResult();
 
-            if (containerId.HasValue && contentItem.Is<ContainablePart>()) {
+            if (containerId.HasValue && contentItem.Is<ContainablePart>())
+            {
                 var common = contentItem.As<CommonPart>();
-                if (common != null) {
+                if (common != null)
+                {
                     common.Container = _contentManager.Get(containerId.Value);
                 }
             }
@@ -688,8 +692,10 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
         [HttpPost, ActionName("Create")]
         [Mvc.FormValueRequired("submit.Save")]
-        public ActionResult CreatePOST(string id, string returnUrl) {
-            return CreatePOST(id, returnUrl, contentItem => {
+        public ActionResult CreatePOST(string id, string returnUrl)
+        {
+            return CreatePOST(id, returnUrl, contentItem =>
+            {
                 if (!contentItem.Has<IPublishingControlAspect>() && !contentItem.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable)
                     _contentManager.Publish(contentItem);
             });
@@ -698,7 +704,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
         [Admin]
         [HttpPost, ActionName("Create")]
         [Mvc.FormValueRequired("submit.Publish")]
-        public ActionResult CreateAndPublishPOST(string id, string returnUrl) {
+        public ActionResult CreateAndPublishPOST(string id, string returnUrl)
+        {
 
             // pass a dummy content to the authorization check to check for "own" variations
             var dummyContent = _contentManager.New(id);
@@ -709,7 +716,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             return CreatePOST(id, returnUrl, contentItem => _contentManager.Publish(contentItem));
         }
 
-        private ActionResult CreatePOST(string id, string returnUrl, Action<ContentItem> conditionallyPublish) {
+        private ActionResult CreatePOST(string id, string returnUrl, Action<ContentItem> conditionallyPublish)
+        {
             var contentItem = _contentManager.New(id);
 
             if (!Services.Authorizer.Authorize(Permissions.EditContent, contentItem, T("Couldn't create content")))
@@ -719,7 +727,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
             var model = _contentManager.UpdateEditor(contentItem, this);
 
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 _transactionManager.Cancel();
                 return View(model);
             }
@@ -729,7 +738,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             Services.Notifier.Information(string.IsNullOrWhiteSpace(contentItem.TypeDefinition.DisplayName)
                 ? T("Your content has been created.")
                 : T("Your {0} has been created.", contentItem.TypeDefinition.DisplayName));
-            if (!string.IsNullOrEmpty(returnUrl)) {
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
                 return this.RedirectLocal(returnUrl);
             }
             var adminRouteValues = _contentManager.GetItemMetadata(contentItem).AdminRouteValues;
@@ -737,7 +747,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
         }
 
         [Admin]
-        public ActionResult Edit(int id) {
+        public ActionResult Edit(int id)
+        {
             var contentItem = _contentManager.Get(id, VersionOptions.Latest);
 
             if (contentItem == null)
@@ -753,8 +764,10 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
         [Admin]
         [HttpPost, ActionName("Edit")]
         [Mvc.FormValueRequired("submit.Save")]
-        public ActionResult EditPOST(int id, string returnUrl) {
-            return EditPOST(id, returnUrl, contentItem => {
+        public ActionResult EditPOST(int id, string returnUrl)
+        {
+            return EditPOST(id, returnUrl, contentItem =>
+            {
                 if (!contentItem.Has<IPublishingControlAspect>() && !contentItem.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable)
                     _contentManager.Publish(contentItem);
             });
@@ -763,7 +776,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
         [Admin]
         [HttpPost, ActionName("Edit")]
         [Mvc.FormValueRequired("submit.Publish")]
-        public ActionResult EditAndPublishPOST(int id, string returnUrl) {
+        public ActionResult EditAndPublishPOST(int id, string returnUrl)
+        {
             var content = _contentManager.Get(id, VersionOptions.Latest);
 
             if (content == null)
@@ -776,7 +790,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
         }
 
         [Admin]
-        private ActionResult EditPOST(int id, string returnUrl, Action<ContentItem> conditionallyPublish) {
+        private ActionResult EditPOST(int id, string returnUrl, Action<ContentItem> conditionallyPublish)
+        {
             var contentItem = _contentManager.Get(id, VersionOptions.DraftRequired);
 
             if (contentItem == null)
@@ -791,12 +806,14 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 && Request.IsLocalUrl(returnUrl)
                 // only if the original returnUrl is the content itself
                 && String.Equals(returnUrl, Url.ItemDisplayUrl(contentItem), StringComparison.OrdinalIgnoreCase)
-                ) {
+                )
+            {
                 previousRoute = contentItem.As<IAliasAspect>().Path;
             }
 
             var model = _contentManager.UpdateEditor(contentItem, this);
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 _transactionManager.Cancel();
                 return View("Edit", model);
             }
@@ -805,7 +822,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
             if (!string.IsNullOrWhiteSpace(returnUrl)
                 && previousRoute != null
-                && !String.Equals(contentItem.As<IAliasAspect>().Path, previousRoute, StringComparison.OrdinalIgnoreCase)) {
+                && !String.Equals(contentItem.As<IAliasAspect>().Path, previousRoute, StringComparison.OrdinalIgnoreCase))
+            {
                 returnUrl = Url.ItemDisplayUrl(contentItem);
             }
 
@@ -818,7 +836,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
         [Admin]
         [HttpPost]
-        public ActionResult Clone(int id, string returnUrl) {
+        public ActionResult Clone(int id, string returnUrl)
+        {
             var contentItem = _contentManager.GetLatest(id);
 
             if (contentItem == null)
@@ -827,10 +846,12 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             if (!Services.Authorizer.Authorize(Permissions.EditContent, contentItem, T("Couldn't clone content")))
                 return new HttpUnauthorizedResult();
 
-            try {
+            try
+            {
                 Services.ContentManager.Clone(contentItem);
             }
-            catch (InvalidOperationException) {
+            catch (InvalidOperationException)
+            {
                 Services.Notifier.Warning(T("Could not clone the content item."));
                 return this.RedirectLocal(returnUrl, () => RedirectToAction("List"));
             }
@@ -842,13 +863,15 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
         [Admin]
         [HttpPost]
-        public ActionResult Remove(int id, string returnUrl) {
+        public ActionResult Remove(int id, string returnUrl)
+        {
             var contentItem = _contentManager.Get(id, VersionOptions.Latest);
 
             if (!Services.Authorizer.Authorize(Permissions.DeleteContent, contentItem, T("Couldn't remove content")))
                 return new HttpUnauthorizedResult();
 
-            if (contentItem != null) {
+            if (contentItem != null)
+            {
                 _contentManager.Remove(contentItem);
                 Services.Notifier.Information(string.IsNullOrWhiteSpace(contentItem.TypeDefinition.DisplayName)
                     ? T("That content has been removed.")
@@ -860,7 +883,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
         [Admin]
         [HttpPost]
-        public ActionResult Publish(int id, string returnUrl) {
+        public ActionResult Publish(int id, string returnUrl)
+        {
             var contentItem = _contentManager.GetLatest(id);
             if (contentItem == null)
                 return HttpNotFound();
@@ -877,7 +901,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
         [Admin]
         [HttpPost]
-        public ActionResult Unpublish(int id, string returnUrl) {
+        public ActionResult Unpublish(int id, string returnUrl)
+        {
             var contentItem = _contentManager.GetLatest(id);
             if (contentItem == null)
                 return HttpNotFound();
@@ -892,13 +917,86 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             return this.RedirectLocal(returnUrl, () => RedirectToAction("List"));
         }
 
-        bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties) {
+        bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)
+        {
             return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
         }
 
-        void IUpdateModel.AddModelError(string key, LocalizedString errorMessage) {
+        void IUpdateModel.AddModelError(string key, LocalizedString errorMessage)
+        {
             ModelState.AddModelError(key, errorMessage.ToString());
         }
+
+        protected RouteValueDictionary GetRouteValues(RouteValueDictionary routeValues, ContentOptions options, AdvancedContentOptions advancedOptions)
+        {
+
+            if (options != null)
+            {
+                bool seeAll = Services.Authorizer.Authorize(AdvancedSearchPermissions.SeesAllContent);
+                bool maySee = Services.Authorizer.Authorize(AdvancedSearchPermissions.MayChooseToSeeOthersContent);
+                if ((seeAll && advancedOptions.OwnedByMeSeeAll)
+                    || (!seeAll && maySee && advancedOptions.OwnedByMe))
+                {
+                    advancedOptions.SelectedOwner = Services.WorkContext.CurrentUser.UserName;
+                }
+
+
+                routeValues["Options.OrderBy"] = options.OrderBy; //todo: don't hard-code the key
+                routeValues["Options.ContentsStatus"] = options.ContentsStatus; //todo: don't hard-code the key
+                routeValues["AdvancedOptions.SelectedLanguageId"] = advancedOptions.SelectedLanguageId; //todo: don't hard-code the key
+                routeValues["AdvancedOptions.SelectedUntranslatedLanguageId"] = advancedOptions.SelectedUntranslatedLanguageId; //todo: don't hard-code the key
+                for (int i = 0; i < (advancedOptions.SelectedTermIds != null ? advancedOptions.SelectedTermIds.Count() : 0); i++)
+                {
+                    if (advancedOptions.SelectedTermIds[i] > 0)
+                    {
+                        routeValues.Add("AdvancedOptions.SelectedTermIds[" + i + "]", advancedOptions.SelectedTermIds[i]); //todo: don't hard-code the key
+                    }
+                }
+                //condition to add the owner to the query string only if we are not going to ignore it anyway
+                if (    //user may see everything
+                        (seeAll
+                        && (!advancedOptions.OwnedByMeSeeAll))
+                        || (  //user does not have limitations
+                            (maySee)
+                            && (!advancedOptions.OwnedByMe)
+                        )
+                    )
+                {
+                    routeValues["AdvancedOptions.SelectedOwner"] = advancedOptions.SelectedOwner; //todo: don't hard-code the key
+                }
+                routeValues["AdvancedOptions.SelectedFromDate"] = advancedOptions.SelectedFromDate; //todo: don't hard-code the key
+                routeValues["AdvancedOptions.SelectedToDate"] = advancedOptions.SelectedToDate; //todo: don't hard-code the key
+                routeValues["AdvancedOptions.DateFilterType"] = advancedOptions.DateFilterType; //todo: don't hard-code the key
+                routeValues["AdvancedOptions.HasMedia"] = advancedOptions.HasMedia; //todo: don't hard-code the key
+                routeValues["AdvancedOptions.SelectedStatus"] = advancedOptions.SelectedStatus; //todo: don't hard-code the key
+                routeValues["AdvancedOptions.OwnedByMe"] = advancedOptions.OwnedByMe; //todo: don't hard-code the key
+                routeValues["AdvancedOptions.OwnedByMeSeeAll"] = advancedOptions.OwnedByMeSeeAll; //todo: don't hard-code the key
+
+                //Querying base off content picker field
+                if (advancedOptions.CPFIdToSearch != null)
+                {
+                    routeValues["AdvancedOptions.CPFIdToSearch"] = advancedOptions.CPFIdToSearch;
+                    if (!String.IsNullOrWhiteSpace(advancedOptions.CPFName))
+                    {
+                        routeValues["AdvancedOptions.CPFName"] = advancedOptions.CPFName;
+                    }
+                }
+
+
+                if (GetListableTypes(false).Any(ctd => string.Equals(ctd.Name, options.SelectedFilter, StringComparison.OrdinalIgnoreCase)))
+                {
+                    routeValues["id"] = options.SelectedFilter;
+                }
+                else
+                {
+                    routeValues.Remove("id");
+                }
+
+            }
+
+            return routeValues;
+        }
+
     }
 
 }

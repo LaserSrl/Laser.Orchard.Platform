@@ -87,6 +87,16 @@ button, .button, a.button {
     min-width: 110px;
     font-size: $fontsize-default;
     padding: 6px 12px !important;
+
+    &.remove {
+        background-color: #ef2108;
+        border-color: #cc240f;
+        background-image: none;
+
+        &:hover {
+            background-color: #d73925;
+        }
+    }
 }
 
 .widgets-actions {
