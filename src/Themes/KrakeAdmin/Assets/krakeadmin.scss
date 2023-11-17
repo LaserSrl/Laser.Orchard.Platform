@@ -11550,6 +11550,7 @@ li.L8 {
 .summary .infos .media-thumbnail {
     width: 90px;
     height: 90px;
+    background-size: contain;
 }
 
 .summary .infos .media-thumbnail:hover {
