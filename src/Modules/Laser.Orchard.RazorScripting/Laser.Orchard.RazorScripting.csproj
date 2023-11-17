@@ -101,6 +101,7 @@
     <Compile Include="Drivers\RazorScriptingFieldDriver.cs" />
     <Compile Include="Drivers\RazorValidationPartDriver.cs" />
     <Compile Include="Forms\RazorDecisionForms.cs" />
+    <Compile Include="Handlers\RazorScriptingFieldHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\RazorScriptingField.cs" />
     <Compile Include="Models\RazorValidationPart.cs" />

@@ -26,7 +26,7 @@
     <div>
         @Html.TextAreaFor(m => m.Settings.DisplayScript, new { @class = "text medium", rows = "5" })
         <span class="hint">
-            @T("The script to run everytime the content item is about to be displayed. If the script returns a NOT empty string, it will be logged as an error.")
+            @T("The script to run everytime the content item is about to be displayed. IMPORTANT NOTE: this includes every attempt to display the content, so also summaries in the backend. If the script returns a NOT empty string, it will be logged as an error.")
         </span>
     </div>
 </fieldset>
