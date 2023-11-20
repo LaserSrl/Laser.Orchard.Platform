@@ -2705,7 +2705,9 @@ a:hover, a:active, a:focus {
 }
 
 .nav-tabs-custom > .nav-tabs > li {
-    border-top: 3px solid transparent;
+    border-top: 3px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
     margin-bottom: -2px;
     margin-right: 5px;
 }
@@ -2736,8 +2738,9 @@ a:hover, a:active, a:focus {
     border-color: transparent;
 }
 
-.nav-tabs-custom > .nav-tabs > li.active {
+.nav-tabs-custom > .nav-tabs > li.active, .nav-tabs-custom > .nav-tabs > li:has(> a.active) {
     border-top-color: #3c8dbc;
+    border-bottom: 2px solid white;
 }
 
 .nav-tabs-custom > .nav-tabs > li.active > a, .nav-tabs-custom > .nav-tabs > li.active:hover > a {
