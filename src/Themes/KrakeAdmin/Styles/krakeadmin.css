@@ -82,6 +82,14 @@ button, .button, a.button {
   font-size: 14px;
   padding: 6px 12px !important;
 }
+button.remove, .button.remove, a.button.remove {
+  background-color: #ef2108;
+  border-color: #cc240f;
+  background-image: none;
+}
+button.remove:hover, .button.remove:hover, a.button.remove:hover {
+  background-color: #d73925;
+}
 
 .widgets-actions {
   font-size: 14px;
@@ -11274,6 +11282,7 @@ li.L8 {
 .summary .infos .media-thumbnail {
   width: 90px;
   height: 90px;
+  background-size: contain;
 }
 
 .summary .infos .media-thumbnail:hover {

@@ -71,8 +71,14 @@
     //    return confirm(confirmRemoveMessage);
     //});
 
+    // Using a data element to get the correct checkboxes to check / uncheck.
     $(".check-all").change(function () {
-        $("input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"))
+        var target = $(this).data("checkboxcontainer");
+        if (target) {
+            $("#" + target + " input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"));
+        } else {
+            $("input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop("checked"));
+        }
     });
 })(jQuery);
 

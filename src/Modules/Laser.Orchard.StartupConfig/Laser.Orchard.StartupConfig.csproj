@@ -163,6 +163,10 @@
     <Content Include="Scripts\datetime-editor-filter.min.js">
       <DependentUpon>datetime-editor-filter.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\tabulator\luxon.js" />
+    <Content Include="Scripts\tabulator\luxon.min.js">
+      <DependentUpon>luxon.js</DependentUpon>
+    </Content>
     <Content Include="Styles\tinymce-enhancement.css" />
     <Content Include="Styles\tinymce-enhancement.min.css">
       <DependentUpon>tinymce-enhancement.css</DependentUpon>
@@ -492,6 +496,8 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Handlers\PartCloneAlterationHandler.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
+    <Compile Include="Projections\ContentTypeNamesFilter.cs" />
+    <Compile Include="Projections\ContentTypeNamesFilterForm.cs" />
     <Compile Include="Projections\DateTimeFilterForm.cs" />
     <Compile Include="RazorBase\Models\KeyNameResolveContext.cs" />
     <Compile Include="RazorBase\Models\TemplateSourceResolveContext.cs" />
