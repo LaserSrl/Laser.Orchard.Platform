@@ -20,7 +20,7 @@ namespace Laser.Orchard.StartupConfig {
 
             // tabulator (currently v5.5.2)
             manifest.DefineScript("tabulator")
-                .SetUrl("tabulator\\tabulator.min.js", "tabulator\\tabulator.js")
+                .SetUrl("tabulator\\tabulator.js", "tabulator\\tabulator.js")
                 .SetDependencies("jQueryUI");
             manifest.DefineStyle("tabulator")
                 .SetUrl("tabulator\\tabulator.min.css", "tabulator\\tabulator.css");
