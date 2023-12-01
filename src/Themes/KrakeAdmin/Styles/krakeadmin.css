@@ -1651,11 +1651,10 @@ input[type=file] {
   position: relative;
 }
 
-/*
 html.media-library-modal-window #menubar {
-    display: none;
+  display: none;
 }
-*/
+
 html.media-library-modal-window .menubar-pin #base {
   padding-left: 0px;
 }
