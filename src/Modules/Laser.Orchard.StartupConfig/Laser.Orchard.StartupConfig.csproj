@@ -287,7 +287,6 @@
     <Content Include="Styles\font-awesome\css\font-awesome.min.css" />
     <Content Include="Styles\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Styles\spectrum.css" />
-    <Content Include="Styles\tabulator.min.css" />
     <Content Include="Styles\tabulator\bootstrap\tabulator_bootstrap.css" />
     <Content Include="Styles\tabulator\bootstrap\tabulator_bootstrap.min.css" />
     <Content Include="Styles\tabulator\bootstrap\tabulator_bootstrap4.css" />
@@ -295,7 +294,9 @@
     <Content Include="Styles\tabulator\semantic-ui\tabulator_semantic-ui.css" />
     <Content Include="Styles\tabulator\semantic-ui\tabulator_semantic-ui.min.css" />
     <Content Include="Styles\tabulator\tabulator.css" />
-    <Content Include="Styles\tabulator\tabulator.min.css" />
+    <Content Include="Styles\tabulator\tabulator.min.css">
+      <DependentUpon>tabulator.css</DependentUpon>
+    </Content>
     <Content Include="Styles\tabulator\tabulator_midnight.css" />
     <Content Include="Styles\tabulator\tabulator_midnight.min.css" />
     <Content Include="Styles\tabulator\tabulator_modern.css" />
