@@ -22,7 +22,8 @@ namespace Laser.Orchard.Mobile.Routes {
                         new RouteValueDictionary {
                                                     {"area", "Laser.Orchard.Mobile"},
                                                     {"controller", "ManifestAppFile"},
-                                                    {"action", "Index"}
+                                                    {"action", "Index"},
+                                                    {"apptype",AppType.Apple}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
@@ -37,7 +38,24 @@ namespace Laser.Orchard.Mobile.Routes {
                         new RouteValueDictionary {
                                                     {"area", "Laser.Orchard.Mobile"},
                                                     {"controller", "ManifestAppFile"},
-                                                    {"action", "Index"}
+                                                    {"action", "Index"},
+                                                    {"apptype",AppType.Apple}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.Mobile"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Priority = 5,
+                    Route = new Route(
+                        ".well-known/assetlinks.json",
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.Mobile"},
+                                                    {"controller", "ManifestAppFile"},
+                                                    {"action", "Index"},
+                                                    {"apptype",AppType.Google}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
