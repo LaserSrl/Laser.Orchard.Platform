@@ -30,6 +30,8 @@ namespace Laser.Orchard.Mobile.Controllers {
             return View(new ManifestAppFileViewModel() {
                 Text = manifest.FileContent,
                 Enable = manifest.Enable,
+                GoogleText = manifest.GoogleFileContent,
+                GoogleEnable = manifest.GoogleEnable,
                 DeveloperDomainText = manifest.DeveloperDomainText,
                 EnableDeveloperDomain = manifest.EnableDeveloperDomain
             });
