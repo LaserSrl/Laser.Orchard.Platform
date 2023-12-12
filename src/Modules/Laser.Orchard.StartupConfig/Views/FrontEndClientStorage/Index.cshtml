@@ -12,6 +12,25 @@
 
         Script.Require("jQueryFileUpload").AtFoot();
         Script.Require("Knockout").AtFoot();
+
+        var acceptString = string.Empty;
+        if (!string.IsNullOrWhiteSpace(Model.Type)) {
+            // TODO: refine this, properly tieing ContentTypes to mime
+            if (Model.Type.Contains("Image") || Model.Type.Contains("VectorImage")) {
+                acceptString += "image/*";
+            }
+            if (Model.Type.Contains("Audio")) {
+                acceptString += "audio/*";
+            }
+            if (Model.Type.Contains("Video")) {
+                acceptString += "video/*";
+            }
+            if (Model.Type.Contains("Document")) {
+                // allow anything
+                acceptString = string.Empty;
+            }
+
+        }
     }
 
     @Display.Metas()
@@ -23,7 +42,9 @@
     <div id="clientstorage-main">
         <div id="message">@T("Click here, Drop files or Paste images")</div>
         <div id="fileupload">
-            <input type="file" name="files[]" @if(Model.Replace == null) { <text>multiple="multiple"</text> } >
+            <input type="file" name="files[]" 
+                   @if(Model.Replace == null) { <text>multiple="multiple"</text> } 
+                   @if(!string.IsNullOrWhiteSpace(acceptString)) { <text> accept="image/*" </text> }>
             <ul id="fileupload-transfers" data-bind="foreach: transfers">
                 <li data-bind="css: status()" class="transfer">
                     <div class="media-thumbnail" data-bind="html: thumbnail(), visible: status() == 'success'"></div>
