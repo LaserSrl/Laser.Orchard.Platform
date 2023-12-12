@@ -2,8 +2,25 @@
 
 <h1>@Html.TitleForPage(T("Manage Manifest Files").ToString())</h1>
 @Html.ValidationSummary()
-@using (Html.BeginFormAntiForgeryPost()) {
+@using (Html.BeginFormAntiForgeryPost())
+{
     <fieldset>
+        <legend>Google</legend>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.GoogleText)">@T("File Content for /.well-known/assetlinks.json")</label>
+            @Html.TextAreaFor(m => m.GoogleText, new { @class = "textMedium", rows = "16" })
+            @Html.ValidationMessageFor(m => m.GoogleText, "*")
+            <span class="hint">@T("Google /.well-known/assetlinks.json content")</span>
+            <div class="checkbox-and-label">
+                @Html.CheckBoxFor(m => m.GoogleEnable)
+                <label for="@Html.FieldIdFor(m => m.GoogleEnable)" class="forcheckbox">@T("Enable route /.well-known/assetlinks.json") </label>
+                <span class="hint">@T("Enable the /.well-known/assetlinks.json route")</span>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Apple</legend>
         <div>
             <label for="@Html.FieldIdFor(m => m.Text)">@T("File Content for apple-app-site-association")</label>
             @Html.TextAreaFor(m => m.Text, new { @class = "textMedium", rows = "16" })
