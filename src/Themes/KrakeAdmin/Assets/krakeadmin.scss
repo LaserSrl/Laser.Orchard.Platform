@@ -11630,8 +11630,9 @@ ul.widgets h3 {
 }
 /*Media Library*/
 
-.media-library-main-list-overlay p {
+.media-library-main-list-overlay {
     margin: 0;
+    display: block;
 }
 
 #media-library-main-editor {
