@@ -141,6 +141,7 @@
     <Content Include="Module.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\StaticContentsController.cs" />
     <Compile Include="Controllers\DynamicProjectionDisplayController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
@@ -159,10 +160,14 @@
     <Compile Include="Permissions\DynamicProjectionPermission.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="DynamicProjectionResourceManifest.cs" />
+    <Compile Include="Services\DefaultStaticContentsService.cs" />
     <Compile Include="Services\DynamicProjectionService.cs" />
     <Compile Include="Services\IContentTypePermissionSettingsService.cs" />
     <Compile Include="Services\IContentExtensionService.cs" />
     <Compile Include="Services\IDynamicProjectionService.cs" />
+    <Compile Include="Services\IStaticContentsService.cs" />
+    <Compile Include="Services\StaticContentsConstraint.cs" />
+    <Compile Include="StaticContentsRoutes.cs" />
     <Compile Include="ViewModels\DynamicProjectionVM.cs" />
     <Compile Include="ViewModels\ContentTypePermissionVM.cs" />
     <Compile Include="ViewModels\UploadFileVM.cs" />
