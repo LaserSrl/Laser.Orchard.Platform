@@ -1671,6 +1671,18 @@ html.media-library-modal-window .button-cancel {
   width: unset;
   height: unset;
 }
+#media-library-main-list li .media-thumbnail {
+  min-width: 200px;
+  min-height: 200px;
+  width: unset;
+  height: unset;
+}
+#media-library-main-list li img {
+  min-width: 200px;
+  min-height: 200px;
+  width: unset;
+  height: unset;
+}
 
 #header {
   overflow: visible;
@@ -11283,6 +11295,7 @@ li.L8 {
 .summary .infos .media-thumbnail {
   width: 90px;
   height: 90px;
+  background-size: contain;
 }
 
 .summary .infos .media-thumbnail:hover {
@@ -11357,7 +11370,7 @@ ul.widgets h3 {
 }
 
 /*Media Library*/
-.media-library-main-list-overlay p {
+.media-library-main-list-overlay {
   margin: 0;
   display: block;
 }

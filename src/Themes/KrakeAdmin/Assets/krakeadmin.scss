@@ -1763,6 +1763,20 @@ html.media-library-modal-window .button-cancel {
         min-height: 200px;
         width: unset;
         height: unset;
+
+        .media-thumbnail {
+            min-width: 200px;
+            min-height: 200px;
+            width: unset;
+            height: unset;
+        }
+
+        img {
+            min-width: 200px;
+            min-height: 200px;
+            width: unset;
+            height: unset;
+        }
     }
 }
 
@@ -11561,6 +11575,7 @@ li.L8 {
 .summary .infos .media-thumbnail {
     width: 90px;
     height: 90px;
+    background-size: contain;
 }
 
 .summary .infos .media-thumbnail:hover {
@@ -11630,10 +11645,9 @@ ul.widgets h3 {
 }
 /*Media Library*/
 
-.media-library-main-list-overlay p {
+.media-library-main-list-overlay {
     margin: 0;
     display: block;
-
 }
 
 #media-library-main-editor {

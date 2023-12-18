@@ -9,30 +9,39 @@ using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Laser.Orchard.Mobile.ViewModels;
+using System.ServiceModel.Channels;
 
-namespace Laser.Orchard.Mobile.Services {
+namespace Laser.Orchard.Mobile.Services
+{
 
-    public interface IManifestAppFileServices : IDependency {
+    public interface IManifestAppFileServices : IDependency
+    {
         ManifestAppFileRecord Get();
 
         Tuple<bool, IEnumerable<string>> Save(ManifestAppFileViewModel vieModel);
     }
 
-    public class ManifestAppFileServices : IManifestAppFileServices {
+    public class ManifestAppFileServices : IManifestAppFileServices
+    {
         private readonly IRepository<ManifestAppFileRecord> _repository;
         private readonly ISignals _signals;
 
-        public ManifestAppFileServices(IRepository<ManifestAppFileRecord> repository, ISignals signals) {
+        public ManifestAppFileServices(IRepository<ManifestAppFileRecord> repository, ISignals signals)
+        {
             _repository = repository;
             _signals = signals;
         }
 
-        public ManifestAppFileRecord Get() {
+        public ManifestAppFileRecord Get()
+        {
             var manifestAppFileRecord = _repository.Table.FirstOrDefault();
-            if (manifestAppFileRecord == null) {
+            if (manifestAppFileRecord == null)
+            {
                 manifestAppFileRecord = new ManifestAppFileRecord() {
                     FileContent = "",
                     Enable = false,
+                    GoogleFileContent = "",
+                    GoogleEnable = false,
                     DeveloperDomainText = "",
                     EnableDeveloperDomain = false
                 };
@@ -41,12 +50,16 @@ namespace Laser.Orchard.Mobile.Services {
             return manifestAppFileRecord;
         }
 
-        public Tuple<bool, IEnumerable<string>> Save(ManifestAppFileViewModel vieModel) {
+        public Tuple<bool, IEnumerable<string>> Save(ManifestAppFileViewModel vieModel)
+        {
             var validationResult = Validate(vieModel);
-            if (validationResult.Item1) {
+            if (validationResult.Item1)
+            {
                 var manifestAppFileRecord = Get();
                 manifestAppFileRecord.FileContent = vieModel.Text;
                 manifestAppFileRecord.Enable = vieModel.Enable;
+                manifestAppFileRecord.GoogleFileContent = vieModel.GoogleText;
+                manifestAppFileRecord.GoogleEnable = vieModel.GoogleEnable;
                 manifestAppFileRecord.DeveloperDomainText = vieModel.DeveloperDomainText;
                 manifestAppFileRecord.EnableDeveloperDomain = vieModel.EnableDeveloperDomain;
                 _signals.Trigger("ManifestAppFile.SettingsChanged");
@@ -54,38 +67,60 @@ namespace Laser.Orchard.Mobile.Services {
             return validationResult;
         }
 
-        private Tuple<bool, IEnumerable<string>> Validate(ManifestAppFileViewModel vieModel) {
+        private Tuple<bool, IEnumerable<string>> Validate(ManifestAppFileViewModel vieModel)
+        {
 
-            //string schemaJson = @"{
-            //        'definition': {
-            //            'webcredentials': {
-            //                'type':'object',
-            //             'properties': {
-            //              'apps': {
-            //                   'type':'array'
-            //              }
-            //                 },
-            //                'required': [ 'apps' ]
-            //            }
-            //        }
-            //    }";
-
-            if (String.IsNullOrEmpty(vieModel.Text)) {
-                return new Tuple<bool, IEnumerable<string>>(true, new List<string>() {});
+            if (String.IsNullOrEmpty(vieModel.Text) && String.IsNullOrEmpty(vieModel.GoogleText))
+            {
+                return new Tuple<bool, IEnumerable<string>>(true, new List<string>() { });
             }
 
             string schemaJson = @"{ }";
-
             JSchema schema = JSchema.Parse(schemaJson);
-            try {
-                JObject jText = JObject.Parse(vieModel.Text);
-                IList<string> message;
-                bool valid = jText.IsValid(schema, out message);
-                return new Tuple<bool, IEnumerable<string>>(valid, message);
+            var isValid = true;
+            var messages = new List<string>();
+            if (!String.IsNullOrEmpty(vieModel.Text))
+            {
+                try
+                {
+                    isValid = isValid && JsonValidate(vieModel.Text, messages);
+                }
+                catch {
+                    isValid = false;
+                }
             }
-            catch (JsonReaderException ex) {
-                return new Tuple<bool, IEnumerable<string>>(false, new List<string>(){ex.Message});
-            }                    
+            if (!String.IsNullOrEmpty(vieModel.GoogleText))
+            {
+                try
+                {
+                    isValid = isValid && JsonValidate(vieModel.GoogleText, messages);
+                }
+                catch
+                {
+                    isValid = false;
+                }
+            }
+
+            return new Tuple<bool, IEnumerable<string>>(isValid, messages);
+
+        }
+
+        private bool JsonValidate(string jsonString, List<string> messages)
+        {
+            string schemaJson = @"{ }";
+            JSchema schema = JSchema.Parse(schemaJson);
+            try
+            {
+                JToken jText = JToken.Parse(jsonString);
+                IList<string> message;
+                return jText.IsValid(schema, out message);
+            }
+            catch (JsonReaderException ex)
+            {
+                messages.Add(ex.Message);
+                return false;
+            }
+
         }
 
     }

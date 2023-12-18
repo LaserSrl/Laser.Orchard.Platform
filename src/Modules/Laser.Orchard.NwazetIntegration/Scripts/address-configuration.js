@@ -233,7 +233,7 @@
 
                     //manage VATNumber and FiscalCode
                     if (arrayOfStoredAddresses[i].AddressType == 1 /*Billing Address */) {
-                        if ($('#' + options.elementsPrefix + 'InvoiceRequest') != null) {
+                        if ($('#' + options.elementsPrefix + 'InvoiceRequest').length != 0) {
                             var customerTypeString = arrayOfStoredAddresses[i].CustomerType.toString();//sets a default value
                             if (arrayOfStoredAddresses[i].CustomerType == 1) {
                                 customerTypeString = "LegalEntity";
@@ -352,9 +352,9 @@ function EnsureInvoiceDataVisibility(options) {
             customerTypeElement.parent().hide();
             $('#' + options.elementsPrefix + "FiscalCode").parent().hide();
             $('#' + options.elementsPrefix + "VATNumber").parent().hide();
-            var isInvoiceRequested = ($('#' + options.elementsPrefix + 'InvoiceRequest').prop('checked') ||
+            var isInvoiceRequested = ($('#' + options.elementsPrefix + 'InvoiceRequest').length != 0 && ($('#' + options.elementsPrefix + 'InvoiceRequest').prop('checked') ||
                 ($('#' + options.elementsPrefix + 'InvoiceRequest').is(':checkbox') == false &&
-                    $('#' + options.elementsPrefix + 'InvoiceRequest').val().toLowerCase() == "true"));
+                    $('#' + options.elementsPrefix + 'InvoiceRequest').val().toLowerCase() == "true")));
             if (isInvoiceRequested) {
                 customerTypeElement.parent().show();
                 if (customerTypeElement.val() == "Individual") {
