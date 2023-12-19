@@ -23,11 +23,11 @@ namespace Laser.Orchard.ContentExtension.Controllers
             _staticContentsService = staticContentsService;
         }
 
-        public FileResult Display(string path)
+        public ActionResult Display(string path)
         {
             string staticContentsFolder = _staticContentsService.GetBaseFolder();
             string filePath = Path.Combine(staticContentsFolder, path.Replace("/", "\\"));
-            if (!System.IO.File.Exists(filePath)) { throw new HttpException(404, "Not found"); }
+            if (!_staticContentsService.StaticContentIsAllowed(filePath) || !System.IO.File.Exists(filePath)) { return HttpNotFound(); }
             return File(filePath, MimeMapping.GetMimeMapping(filePath));
         }
     }

@@ -165,6 +165,7 @@
     <Compile Include="Services\IContentTypePermissionSettingsService.cs" />
     <Compile Include="Services\IContentExtensionService.cs" />
     <Compile Include="Services\IDynamicProjectionService.cs" />
+    <Compile Include="Services\IStaticContentsConstraint.cs" />
     <Compile Include="Services\IStaticContentsService.cs" />
     <Compile Include="Services\StaticContentsConstraint.cs" />
     <Compile Include="StaticContentsRoutes.cs" />

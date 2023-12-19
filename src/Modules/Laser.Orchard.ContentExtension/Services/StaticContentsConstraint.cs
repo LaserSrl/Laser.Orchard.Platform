@@ -1,4 +1,5 @@
 ﻿using Orchard;
+using Orchard.Environment.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,10 +11,7 @@ using System.Web.Routing;
 namespace Laser.Orchard.ContentExtension.Services
 {
 
-    public interface IStaticContentsConstraint : IRouteConstraint, ISingletonDependency
-    {
-
-    }
+    [OrchardFeature("Laser.Orchard.ContentExtension.StaticContents")]
     public class StaticContentsConstraint : IStaticContentsConstraint
     {
         private readonly IStaticContentsService _staticContentsService;
