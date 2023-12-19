@@ -9,6 +9,14 @@
     WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
 }
 
+@using (Script.Head()) {
+    // Style fix for ContentTypeOptions list position
+    <style type="text/css">
+        .box {
+            position: unset;
+        }
+    </style>
+}
 
 <div id="divCreateNewButton_@Model.nameCPField" class="divCreateNewButton">
     <div id="divCTNewButton_@Model.nameCPField" class="divCTNewButton">
