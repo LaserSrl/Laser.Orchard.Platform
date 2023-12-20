@@ -1,20 +1,9 @@
 ﻿using Orchard;
-using Orchard.Environment.Configuration;
+using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.FileSystems.Media;
-using Orchard.Logging;
 using Orchard.MediaLibrary.Models;
-using Orchard.ContentManagement;
-using Orchard.Mvc.Routes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Hosting;
-using System.Web.Http;
-using System.Web.Routing;
 
 namespace Laser.Orchard.ContentExtension.Services
 {

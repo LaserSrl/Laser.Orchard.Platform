@@ -1,10 +1,5 @@
-﻿using Orchard;
-using Orchard.Environment.Extensions;
-using System;
-using System.Collections.Generic;
+﻿using Orchard.Environment.Extensions;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using System.Web;
 using System.Web.Routing;
 
