@@ -1,17 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Laser.Orchard.ContentExtension.Services;
+using Orchard.Environment.Extensions;
 using Orchard.Mvc.Routes;
 using Orchard.WebApi.Routes;
-using System.Web.Routing;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using System.IO;
-using System.Linq;
-using Orchard.Environment.Extensions;
-using Orchard.FileSystems.Media;
-using System.Web;
-using System.Web.Hosting;
-using Laser.Orchard.ContentExtension.Services;
-using System.Security.Policy;
-using System.Xml.Linq;
+using System.Web.Routing;
 
 namespace Laser.Orchard.ContentExtension
 {
