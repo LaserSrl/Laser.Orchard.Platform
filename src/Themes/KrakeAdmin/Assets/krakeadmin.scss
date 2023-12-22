@@ -1763,6 +1763,20 @@ html.media-library-modal-window .button-cancel {
         min-height: 200px;
         width: unset;
         height: unset;
+
+        .media-thumbnail {
+            min-width: 200px;
+            min-height: 200px;
+            width: unset;
+            height: unset;
+        }
+
+        img {
+            min-width: 200px;
+            min-height: 200px;
+            width: unset;
+            height: unset;
+        }
     }
 }
 
