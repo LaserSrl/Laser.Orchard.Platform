@@ -87,6 +87,16 @@ button, .button, a.button {
     min-width: 110px;
     font-size: $fontsize-default;
     padding: 6px 12px !important;
+
+    &.remove {
+        background-color: #ef2108;
+        border-color: #cc240f;
+        background-image: none;
+
+        &:hover {
+            background-color: #d73925;
+        }
+    }
 }
 
 .widgets-actions {
@@ -127,6 +137,7 @@ span .button {
 button:active, .button:active, a.button:active {
     background: #ee726f;
     color: #fff !important;
+    padding: 5px 11px !important;
 }
 
 button:hover, .button:hover, a.button:hover {
@@ -550,7 +561,7 @@ legend {
     color: #405993 !important;
 }
 
-.breadcrumb a::before {
+.breadcrumb a:first-child::before {
     content: "\f015";
     font-family: FontAwesome;
     padding-right: 8px;
@@ -11550,6 +11561,7 @@ li.L8 {
 .summary .infos .media-thumbnail {
     width: 90px;
     height: 90px;
+    background-size: contain;
 }
 
 .summary .infos .media-thumbnail:hover {
@@ -11619,8 +11631,9 @@ ul.widgets h3 {
 }
 /*Media Library*/
 
-.media-library-main-list-overlay p {
+.media-library-main-list-overlay {
     margin: 0;
+    display: block;
 }
 
 #media-library-main-editor {

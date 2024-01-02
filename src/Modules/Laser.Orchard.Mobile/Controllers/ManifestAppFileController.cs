@@ -8,6 +8,7 @@ using Orchard.Security;
 namespace Laser.Orchard.Mobile.Controllers {
     public class ManifestAppFileController : Controller {
         private const string contentType = "text/plain";
+        private const string contentTypeJson = "application/json"; 
 
         private readonly ICacheManager _cacheManager;
         private ManifestAppFileServices _manifestAppService;
@@ -20,19 +21,30 @@ namespace Laser.Orchard.Mobile.Controllers {
         }
 
         [AlwaysAccessible]
-        public ActionResult Index() {       
+        public ActionResult Index(AppType appType) {       
             var content = _cacheManager.Get("ManifestAppFile.Settings",
                               ctx => {
                                   ctx.Monitor(_signals.When("ManifestAppFile.SettingsChanged"));
                                   var manifestAppFile = _manifestAppService.Get();
                                   return manifestAppFile;
                               });
-            
-            if (!content.Enable) {
-                return new HttpNotFoundResult();
+
+            if (appType == AppType.Apple) {
+                if (!content.Enable) {
+                    return new HttpNotFoundResult();
+                }
+
+                return File(Encoding.UTF8.GetBytes(content.FileContent ?? ""), contentType, "apple-app-site-association");
             }
 
-            return File(Encoding.UTF8.GetBytes(content.FileContent ?? ""), contentType, "apple-app-site-association");
+            if (appType == AppType.Google) {
+                if (!content.GoogleEnable) {
+                    return new HttpNotFoundResult();
+                }
+
+                return File(Encoding.UTF8.GetBytes(content.GoogleFileContent ?? ""), contentTypeJson, "assetlinks.json");
+            }
+            return new HttpNotFoundResult();
         }
 
         [AlwaysAccessible]

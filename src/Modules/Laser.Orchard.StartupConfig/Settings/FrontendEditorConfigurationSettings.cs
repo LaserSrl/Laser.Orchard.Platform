@@ -1,7 +1,9 @@
 ﻿using Orchard.ContentManagement.MetaData.Builders;
+using Orchard.Environment.Extensions;
 using System.Globalization;
 
 namespace Laser.Orchard.StartupConfig.Settings {
+    [OrchardFeature("Laser.Orchard.StartupConfig.FrontendEditorConfiguration")]
     public class FrontendEditorConfigurationSettings {
         public bool AllowFrontEndEdit { get; set; }
         public static void SetValues(ContentTypePartDefinitionBuilder builder, bool allowEdit) {

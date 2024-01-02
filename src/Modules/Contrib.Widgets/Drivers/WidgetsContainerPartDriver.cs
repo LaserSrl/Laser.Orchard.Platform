@@ -20,6 +20,8 @@ using Contrib.Widgets.Settings;
 using Orchard.Security;
 using Orchard.Localization;
 using Orchard.UI.Notify;
+using System.Runtime.Remoting.Contexts;
+using System.Web.UI.WebControls.WebParts;
 
 namespace Contrib.Widgets.Drivers {
     [OrchardFeature("Contrib.Widgets")]
@@ -36,14 +38,14 @@ namespace Contrib.Widgets.Drivers {
         private readonly INotifier _notifier;
 
         public WidgetsContainerPartDriver(
-            ISiteThemeService siteThemeService, 
-            IWidgetsService widgetsService, 
-            IVirtualPathProvider virtualPathProvider, 
-            IShapeFactory shapeFactory, 
-            IWidgetManager widgetManager, 
-            IWorkContextAccessor wca, 
-            IContentManager contentManager, 
-            ILocalizationService localizationService, 
+            ISiteThemeService siteThemeService,
+            IWidgetsService widgetsService,
+            IVirtualPathProvider virtualPathProvider,
+            IShapeFactory shapeFactory,
+            IWidgetManager widgetManager,
+            IWorkContextAccessor wca,
+            IContentManager contentManager,
+            ILocalizationService localizationService,
             ICultureManager cultureManager,
             IAuthorizer authorizer,
             INotifier notifier) {
@@ -85,7 +87,8 @@ namespace Contrib.Widgets.Drivers {
                     widgetParts = widgetParts.Where(x => settings.AllowedWidgets.Split(',').Contains(x.TypeDefinition.Name));
                 if (!string.IsNullOrWhiteSpace(settings.AllowedZones))
                     widgetParts = widgetParts.Where(x => settings.AllowedZones.Split(',').Contains(x.Zone));
-            } else if (settings.HierarchicalAssociation != null && settings.HierarchicalAssociation.Count() > 0) {
+            }
+            else if (settings.HierarchicalAssociation != null && settings.HierarchicalAssociation.Count() > 0) {
                 widgetParts = widgetParts.Where(wp => settings.HierarchicalAssociation.Any(z => z.ZoneName.Equals(wp.Zone) && z.Widgets.Any(w => w.WidgetType == wp.TypeDefinition.Name || w.WidgetType == "All")));
             }
             // Build and add shape to zone.
@@ -114,7 +117,8 @@ namespace Contrib.Widgets.Drivers {
                         currentThemesZones = currentThemesZones.Where(x => settings.AllowedZones.Split(',').Contains(x)).ToList();
                     if (!string.IsNullOrWhiteSpace(settings.AllowedWidgets))
                         widgetTypes = widgetTypes.Where(x => settings.AllowedWidgets.Split(',').Contains(x)).ToList();
-                } else if (settings.HierarchicalAssociation != null && settings.HierarchicalAssociation.Count() > 0) {
+                }
+                else if (settings.HierarchicalAssociation != null && settings.HierarchicalAssociation.Count() > 0) {
                     currentThemesZones = currentThemesZones.Where(ctz => settings.HierarchicalAssociation.Select(x => x.ZoneName).Contains(ctz)).ToList();
                     widgetTypes = widgetTypes.Where(w => settings.HierarchicalAssociation.Any(x => x.Widgets.Any(a => a.WidgetType == w || a.WidgetType == "All"))).ToList();
                 }
@@ -135,7 +139,8 @@ namespace Contrib.Widgets.Drivers {
                             lp.Culture != null && !string.IsNullOrWhiteSpace(lp.Culture.Culture))
                         .OrderBy(o => o.Culture.Culture)
                         .ToList();
-                } catch {
+                }
+                catch {
                     contentLocalizations = null;
                 }
 
@@ -159,7 +164,7 @@ namespace Contrib.Widgets.Drivers {
             if (updater.TryUpdateModel(viewModel, null, null, null)) {
                 UpdatePositions(viewModel);
                 RemoveWidgets(viewModel);
-                CloneWidgets(viewModel, part.ContentItem);
+                CloneWidgets(viewModel.CloneFrom >= 0 ? _contentManager.Get(viewModel.CloneFrom, VersionOptions.Latest) : null, part.ContentItem, part.Settings.GetModel<WidgetsContainerSettings>()?.TryToLocalizeItems, viewModel.CloneFrom >= 0);
 
             }
 
@@ -184,7 +189,8 @@ namespace Contrib.Widgets.Drivers {
                 if (currentWidget != null && _authorizer.Authorize(
                     Orchard.Core.Contents.Permissions.DeleteContent, currentWidget)) {
                     _widgetsService.DeleteWidget(widgetId);
-                } else {
+                }
+                else {
                     // If current widget is null, it means it has already been removed (perhaps a concurrent delete call - e.g. when two browser tabs are open?).
                     // It is not a permission issue, so nothing should really be notified to the user.
                     unableToDeleteSome = (currentWidget != null);
@@ -218,86 +224,108 @@ namespace Contrib.Widgets.Drivers {
             }
         }
 
-
-
-        //protected override void Imported(WidgetsContainerPart part, ImportContentContext context) {
-        //    var hostId = context.Attribute(part.PartDefinition.Name, "HostId");
-        //    if (hostId != null) {
-        //        CloneWidgets(Convert.ToInt32(hostId), part.ContentItem);
-        //    }
-        //}
-
-        //protected override void Exporting(WidgetsContainerPart part, ExportContentContext context) {
-        //    // memorizzo l'id della pagina sorgente
-        //    context.Element(part.PartDefinition.Name).SetAttributeValue("HostId", part.Id.ToString());
-        //}
-
         #region [ Clone Functionality ]
 
-        private void CloneWidgets(WidgetsContainerViewModel viewModel, ContentItem hostContentItem) {
-            CloneWidgets(viewModel.CloneFrom, hostContentItem);
-        }
+        private void CloneWidgets(ContentItem source, ContentItem destination, bool? tryLocalizeitems, bool forceTranslating) {
+            if (source == null || destination == null) return;
 
-        private void CloneWidgets(int originalContentId, ContentItem destinationContentItem) {
-            if (originalContentId <= 0) return;
-
-            // recupero i WidgetExPart del Content selezionato come Master (CloneFrom)
-            var widgets = _widgetManager.GetWidgets(originalContentId);
+            // recupero i WidgetExPart del Content selezionato come source
+            var widgets = _widgetManager.GetWidgets(source.Id, source.IsPublished());
+            var originalLocalization = source.As<LocalizationPart>();
+            var destinationLocalization = destination.As<LocalizationPart>();
             foreach (var widget in widgets) {
-
-                // recupero il content widget nel ContentItem Master
-                //var widgetPart = _widgetsService.GetWidget(widget.Id);
-
-                // Clono il ContentMaster e recupero la parte WidgetExPart
-                var clonedContentitem = _contentManager.Clone(widget.ContentItem);
-
-                var widgetExPart = clonedContentitem.As<WidgetExPart>();
-
-                // assegno il nuovo contenitore se non nullo ( nel caso di HtmlWidget per esempio la GetWidget ritorna nullo...)
-                if (widgetExPart != null) {
-                    widgetExPart.Host = destinationContentItem;
-                    _contentManager.Publish(widgetExPart.ContentItem);
+                ContentItem clonedWidget;
+                // if we need to keep the localization in sync, we try to do it
+                if (tryLocalizeitems ?? false) {
+                    // Checks if original and destination have a different culture, and if yes tries to keep localizations of widgets in sync
+                    if (originalLocalization != null && destinationLocalization != null && originalLocalization.Culture?.Culture != destinationLocalization.Culture?.Culture) {
+                        var translatedWidget = _localizationService.GetLocalizedContentItem(widget, destinationLocalization.Culture?.Culture)?.ContentItem;
+                        // If there is not a localizaed widget
+                        //  We clone the widget and we assign the right culture if possible
+                        // else 
+                        // we use the localizaed widget
+                        if (translatedWidget == null) {
+                            clonedWidget = _contentManager.Clone(widget.ContentItem);
+                            var clonedWidgetLocalizationPart = clonedWidget.As<LocalizationPart>();
+                            if (clonedWidgetLocalizationPart != null) {
+                                if (forceTranslating) {
+                                    _localizationService.SetContentCulture(clonedWidgetLocalizationPart, destinationLocalization.Culture.Culture);
+                                    clonedWidgetLocalizationPart.MasterContentItem = widget;
+                                }
+                            }
+                        }
+                        else {
+                            clonedWidget = translatedWidget;
+                        }
+                    }
+                    else {
+                        // We clone the widget, but if we are translating a culture we clone only the orginal culture
+                        if (IsTranslating()) {
+                            var originalWidgetLocalization = widget.As<LocalizationPart>();
+                            if (originalWidgetLocalization == null) {
+                                clonedWidget = _contentManager.Clone(widget.ContentItem);
+                            }
+                            else if (originalWidgetLocalization != null &&
+                                originalWidgetLocalization.Culture != null &&
+                                originalWidgetLocalization.Culture.Culture == originalLocalization.Culture?.Culture) {
+                                clonedWidget = _contentManager.Clone(widget.ContentItem);
+                            }
+                            else { //skip this widget from cloning and skip the subsequent processing
+                                continue;
+                            }
+                        }
+                        else {
+                            clonedWidget = _contentManager.Clone(widget.ContentItem);
+                        }
+                    }
                 }
-
-            }
-
-        }
-
-        private void CloneWidgets(ContentItem original, ContentItem destination) {
-            if (original == null || destination == null) return;
-
-            // recupero i WidgetExPart del Content selezionato come Master (CloneFrom)
-            var widgets = _widgetManager.GetWidgets(original.Id, original.IsPublished());
-            foreach (var widget in widgets) {
-                // Clono il ContentMaster e recupero la parte WidgetExPart
-                var clonedContentitem = _contentManager.Clone(widget.ContentItem);
-
-                var widgetExPart = clonedContentitem.As<WidgetExPart>();
+                else {
+                    clonedWidget = _contentManager.Clone(widget.ContentItem);
+                }
+                var widgetExPart = clonedWidget.As<WidgetExPart>();
 
                 // assegno il nuovo contenitore se non nullo ( nel caso di HtmlWidget per esempio la GetWidget ritorna nullo...)
                 if (widgetExPart != null) {
                     widgetExPart.Host = destination;
                     _contentManager.Publish(widgetExPart.ContentItem);
                 }
-
-                // se il widget ha una LocalizationPart, la gestisco
-                var clonedLocalization = clonedContentitem.As<LocalizationPart>();
-                if (clonedLocalization != null) {
-                    clonedLocalization.Culture = destination.As<LocalizationPart>().Culture;
-                    var originalLocalization = widget.ContentItem.As<LocalizationPart>();
-                    if(originalLocalization.MasterContentItem == null) {
-                        clonedLocalization.MasterContentItem = widget.ContentItem;
-                    }
-                    else {
-                        clonedLocalization.MasterContentItem = originalLocalization.MasterContentItem;
+                if (tryLocalizeitems ?? false) {
+                    var clonedWisgetLocalization = clonedWidget.As<LocalizationPart>();
+                    // if the widegt has a LocalizationPart, we manage it
+                    if (clonedWisgetLocalization != null) {
+                        if (destinationLocalization != null) {
+                            clonedWisgetLocalization.Culture.Culture = destinationLocalization.Culture.Culture;
+                        }
+                        var originalWidgetLocalization = widget.ContentItem.As<LocalizationPart>();
+                        //We need to manage the MasterContentItem only if we are translating the widget;
+                        //On the contrary if we are cloning it, we have nothing to do.
+                        if (IsTranslating()) {
+                            if (originalWidgetLocalization.MasterContentItem == null) {
+                                clonedWisgetLocalization.MasterContentItem = widget.ContentItem;
+                            }
+                            else {
+                                clonedWisgetLocalization.MasterContentItem = originalWidgetLocalization.MasterContentItem;
+                            }
+                        }
                     }
                 }
             }
         }
+
+        private bool IsTranslating() {
+            var routeData = _wca.GetContext().HttpContext.Request.RequestContext.RouteData.Values;
+            object action, area;
+
+            return routeData.TryGetValue("action", out action) &&
+                            routeData.TryGetValue("area", out area) &&
+                            action.ToString().ToUpperInvariant() == "TRANSLATE" &&
+                            area.ToString().ToUpperInvariant() == "ORCHARD.LOCALIZATION";
+        }
+
         #endregion
 
         protected override void Cloning(WidgetsContainerPart originalPart, WidgetsContainerPart clonePart, CloneContentContext context) {
-            CloneWidgets(context.ContentItem, context.CloneContentItem);
+            CloneWidgets(context.ContentItem, context.CloneContentItem, clonePart.Settings.GetModel<WidgetsContainerSettings>()?.TryToLocalizeItems, false);
         }
     }
 }

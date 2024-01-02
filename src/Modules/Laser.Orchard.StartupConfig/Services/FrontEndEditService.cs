@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Orchard.ContentManagement.MetaData.Models;
+using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.StartupConfig.Services {
+    [OrchardFeature("Laser.Orchard.StartupConfig.FrontendEditorConfiguration")]
     public class FrontEndEditService : IFrontEndEditService {
         public dynamic BuildFrontEndShape(dynamic shape, Func<ContentTypePartDefinition, string, bool> partTest, Func<ContentPartFieldDefinition, bool> fieldTest) {
             //shape.Content.Items contains the List<object> of the things we will display

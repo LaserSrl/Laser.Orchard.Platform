@@ -45,12 +45,12 @@
             <b>@T("Account Information")</b>
             <div class="space-20"></div>
 
-            @Html.TextBox("username", "", new { placeholder = "Username...", @class = "input-text form-control" })
+            @Html.TextBox("username", "", new { placeholder = "Username...", @class = "input-text form-control", autocomplete = "off" })
             @Html.ValidationMessage("username")
 
             <div class="space-20"></div>
 
-            @Html.TextBox("email", "", new { placeholder = "email...", @class = "input-text form-control" })
+            @Html.TextBox("email", "", new { placeholder = "email...", @class = "input-text form-control", autocomplete = "off" })
             @Html.ValidationMessage("email")
 
             <div class="space-20"></div>
@@ -68,7 +68,7 @@
             }
 
             <div class="space-20"></div>
-            <button class="submit" type="submit">@T("Register")</button>
+            <button class="btn btn-primary submit" type="submit">@T("Register")</button>
 
 
         }
