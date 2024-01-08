@@ -15,16 +15,18 @@
 
         var acceptString = string.Empty;
         if (!string.IsNullOrWhiteSpace(Model.Type)) {
-            // TODO: refine this, properly tieing ContentTypes to mime
+            // TODO: refine this, properly tieing ContentTypes to mimetype
+            var accepts = new List<string>();
             if (Model.Type.Contains("Image") || Model.Type.Contains("VectorImage")) {
-                acceptString += "image/*";
+                accepts.Add("image/*");
             }
             if (Model.Type.Contains("Audio")) {
-                acceptString += "audio/*";
+                accepts.Add("audio/*");
             }
             if (Model.Type.Contains("Video")) {
-                acceptString += "video/*";
+                accepts.Add("video/*");
             }
+            acceptString = string.Join(", ", accepts);
             if (Model.Type.Contains("Document")) {
                 // allow anything
                 acceptString = string.Empty;
