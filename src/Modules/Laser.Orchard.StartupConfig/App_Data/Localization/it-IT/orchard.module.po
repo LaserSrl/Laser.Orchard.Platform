@@ -160,14 +160,6 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/Parts/C
 msgid "Fields Filter"
 msgstr "Filtro Campi"
 
-msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/PerItemCachePartSettings.cshtml"
-msgid "hint"
-msgstr "suggerimento"
-
-msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/PerItemCachePartSettings.cshtml"
-msgid "New Cache Key"
-msgstr "Nuova chiave di cache"
-
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ShortCodes/ContentShortCodeSettings.cshtml"
 msgid "A comma separated value of all the content types or content parts to display."
 msgstr "Un elenco separato da virgole di tutti i tipi di contenuto o di parti di contenuto da visualizzare."
@@ -531,14 +523,6 @@ msgstr "Inserire il nome della cartella (opzionale). Se vuoto, sarà creato in a
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/OwnedFolder_Edit.cshtml"
 msgid "User default owned folder"
 msgstr "Cartella di default di proprietà dell'utente"
-
-msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/PerItemCachePart_Edit.cshtml"
-msgid "hint"
-msgstr "suggerimento"
-
-msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/PerItemCachePart_Edit.cshtml"
-msgid "New Cache Key"
-msgstr "Nuova chiave di cache"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ProtectionSettingsPart.Edit.cshtml"
 msgid "A list of MVC Area.Controller.Action entries. When defined, using comma separated values, protects entries from unauthorized calls."

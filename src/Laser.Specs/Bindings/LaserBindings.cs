@@ -161,7 +161,6 @@ namespace Laser.Specs.Bindings {
                     "inarCassa",
                     "IvreaMontalto",
                     "KrakeDefaultTheme",
-                    "Laser.Bootstrap",
                     "Laser.ECommerce",
                     "Lasergroup",
                     "OctoTelematics",

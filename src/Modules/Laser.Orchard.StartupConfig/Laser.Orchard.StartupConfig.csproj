@@ -315,110 +315,137 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Markdown\Markdown.csproj">
       <Project>{3158c928-888c-4a84-8bc1-4a8257489538}</Project>
       <Name>Markdown</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.AuditTrail\Orchard.AuditTrail.csproj">
       <Project>{3dd574cd-9c5d-4a45-85e1-ebba64c22b5f}</Project>
       <Name>Orchard.AuditTrail</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Autoroute\Orchard.Autoroute.csproj">
       <Project>{66fccd76-2761-47e3-8d11-b45d0001ddaa}</Project>
       <Name>Orchard.Autoroute</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Blogs\Orchard.Blogs.csproj">
       <Project>{63fbd4d9-e1da-4a7b-aa6a-d6074fe50867}</Project>
       <Name>Orchard.Blogs</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Caching\Orchard.Caching.csproj">
       <Project>{7528bf74-25c7-4abe-883a-443b4eec4776}</Project>
       <Name>Orchard.Caching</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Conditions\Orchard.Conditions.csproj">
       <Project>{98251eae-a41b-47b2-aa91-e28b8482da70}</Project>
       <Name>Orchard.Conditions</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.ContentPermissions\Orchard.ContentPermissions.csproj">
       <Project>{e826f796-8ce3-4b5b-8423-5aa5f81d2fc3}</Project>
       <Name>Orchard.ContentPermissions</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.ContentPicker\Orchard.ContentPicker.csproj">
       <Project>{f301ef7d-f19c-4d83-aa94-cb64f29c037d}</Project>
       <Name>Orchard.ContentPicker</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.ContentTypes\Orchard.ContentTypes.csproj">
       <Project>{0e7646e8-fe8f-43c1-8799-d97860925ec4}</Project>
       <Name>Orchard.ContentTypes</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.CustomForms\Orchard.CustomForms.csproj">
       <Project>{2cf067ca-064b-43c6-8b88-5e3b99a65f1d}</Project>
       <Name>Orchard.CustomForms</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Email\Orchard.Email.csproj">
       <Project>{05660f47-d649-48bd-9ded-df4e01e7cff9}</Project>
       <Name>Orchard.Email</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Fields\Orchard.Fields.csproj">
       <Project>{3787dde5-e5c8-4841-bda7-dcb325388064}</Project>
       <Name>Orchard.Fields</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Forms\Orchard.Forms.csproj">
       <Project>{642a49d7-8752-4177-80d6-bfbbcfad3de0}</Project>
       <Name>Orchard.Forms</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Localization\Orchard.Localization.csproj">
       <Project>{fbc8b571-ed50-49d8-8d9d-64ab7454a0d6}</Project>
       <Name>Orchard.Localization</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
       <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
       <Name>Orchard.MediaLibrary</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.MediaProcessing\Orchard.MediaProcessing.csproj">
       <Project>{08191fcd-7258-4f19-95fb-aec3de77b2eb}</Project>
       <Name>Orchard.MediaProcessing</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Modules\Orchard.Modules.csproj">
       <Project>{17f86780-9a1f-4aa1-86f1-875eec2730c7}</Project>
       <Name>Orchard.Modules</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.OutputCache\Orchard.OutputCache.csproj">
       <Project>{6e444ff1-a47c-4cf6-bb3f-507c8ebd776d}</Project>
       <Name>Orchard.OutputCache</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Projections\Orchard.Projections.csproj">
       <Project>{5531e894-d259-45a3-aa61-26dbe720c1ce}</Project>
       <Name>Orchard.Projections</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Roles\Orchard.Roles.csproj">
       <Project>{d10ad48f-407d-4db5-a328-173ec7cb010f}</Project>
       <Name>Orchard.Roles</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
       <Project>{e649ea64-d213-461b-87f7-d67035801443}</Project>
       <Name>Orchard.Taxonomies</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
       <Project>{6f759635-13d7-4e94-bcc9-80445d63f117}</Project>
       <Name>Orchard.Tokens</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Users\Orchard.Users.csproj">
       <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
       <Name>Orchard.Users</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Widgets\Orchard.Widgets.csproj">
       <Project>{194d3ccc-1153-474d-8176-fde8d7d0d0bd}</Project>
       <Name>Orchard.Widgets</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Workflows\Orchard.Workflows.csproj">
       <Project>{7059493c-8251-4764-9c1e-2368b8b485bc}</Project>
       <Name>Orchard.Workflows</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Laser.Orchard.Commons\Laser.Orchard.Commons.csproj">
       <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
@@ -767,7 +794,6 @@
     <Content Include="Views\DefinitionTemplates\Parts\ContentPickerConnector.Settings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\UsersGroups.cshtml" />
     <Content Include="Views\UsersGroupsSettings\Settings.cshtml" />
-    <Content Include="Views\EditorTemplates\Parts\TaxonomyExtensionsSiteSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\UserGroupSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\ContentPickerFieldExtensionSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TaxonomyExtension_Edit.cshtml" />

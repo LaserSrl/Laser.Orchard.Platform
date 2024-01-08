@@ -380,34 +380,42 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Email\Orchard.Email.csproj">
       <Project>{05660f47-d649-48bd-9ded-df4e01e7cff9}</Project>
       <Name>Orchard.Email</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Forms\Orchard.Forms.csproj">
       <Project>{642a49d7-8752-4177-80d6-bfbbcfad3de0}</Project>
       <Name>Orchard.Forms</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.JobsQueue\Orchard.JobsQueue.csproj">
       <Project>{085948ff-0e9b-4a9a-b564-f8b8b4bdddbc}</Project>
       <Name>Orchard.JobsQueue</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Localization\Orchard.Localization.csproj">
       <Project>{FBC8B571-ED50-49D8-8D9D-64AB7454A0D6}</Project>
       <Name>Orchard.Localization</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
       <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
       <Name>Orchard.MediaLibrary</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Workflows\Orchard.Workflows.csproj">
       <Project>{7059493c-8251-4764-9c1e-2368b8b485bc}</Project>
       <Name>Orchard.Workflows</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Laser.Orchard.Commons\Laser.Orchard.Commons.csproj">
       <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
@@ -416,6 +424,7 @@
     <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
       <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>
       <Name>Laser.Orchard.StartupConfig</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

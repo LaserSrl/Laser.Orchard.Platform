@@ -183,34 +183,42 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Alias\Orchard.Alias.csproj">
       <Project>{475b6c45-b27c-438b-8966-908b9d6d1077}</Project>
       <Name>Orchard.Alias</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Autoroute\Orchard.Autoroute.csproj">
       <Project>{66fccd76-2761-47e3-8d11-b45d0001ddaa}</Project>
       <Name>Orchard.Autoroute</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Forms\Orchard.Forms.csproj">
       <Project>{642a49d7-8752-4177-80d6-bfbbcfad3de0}</Project>
       <Name>Orchard.Forms</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Localization\Orchard.Localization.csproj">
       <Project>{fbc8b571-ed50-49d8-8d9d-64ab7454a0d6}</Project>
       <Name>Orchard.Localization</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Projections\Orchard.Projections.csproj">
       <Project>{5531e894-d259-45a3-aa61-26dbe720c1ce}</Project>
       <Name>Orchard.Projections</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
       <Project>{e649ea64-d213-461b-87f7-d67035801443}</Project>
       <Name>Orchard.Taxonomies</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

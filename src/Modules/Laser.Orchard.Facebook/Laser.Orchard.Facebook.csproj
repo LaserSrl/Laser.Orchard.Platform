@@ -149,30 +149,37 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
       <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
       <Name>Orchard.MediaLibrary</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
       <Project>{6f759635-13d7-4e94-bcc9-80445d63f117}</Project>
       <Name>Orchard.Tokens</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Users\Orchard.Users.csproj">
       <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
       <Name>Orchard.Users</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.CommunicationGateway\Laser.Orchard.CommunicationGateway.csproj">
       <Project>{bb12e69f-0976-407d-a716-542b7d22ee5f}</Project>
       <Name>Laser.Orchard.CommunicationGateway</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.OpenAuthentication\Laser.Orchard.OpenAuthentication.csproj">
       <Project>{9ce00190-3abe-41e2-966f-76a9b017eb65}</Project>
       <Name>Laser.Orchard.OpenAuthentication</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

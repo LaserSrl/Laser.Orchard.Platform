@@ -116,6 +116,7 @@
     <ProjectReference Include="..\..\..\..\Nwazet.Commerce\Nwazet.Commerce.csproj">
       <Project>{909acc2c-d672-4752-b75b-6822e05fe0e3}</Project>
       <Name>Nwazet.Commerce</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
@@ -130,14 +131,17 @@
     <ProjectReference Include="..\Laser.Orchard.NwazetIntegration\Laser.Orchard.NwazetIntegration.csproj">
       <Project>{dc68a88c-e516-4030-8da7-d954f5ea7424}</Project>
       <Name>Laser.Orchard.NwazetIntegration</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.PaymentGateway\Laser.Orchard.PaymentGateway.csproj">
       <Project>{e6900a95-3d80-497d-ad29-998adc8ad3d7}</Project>
       <Name>Laser.Orchard.PaymentGateway</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
       <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>
       <Name>Laser.Orchard.StartupConfig</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,9 +1,0 @@
-﻿<div class="nav-responsive">
-    <div>@T("MENU")</div>
-    <select onchange="location=this.value">
-        <option></option>
-        @foreach (var item in Model.Menu) {
-            @Display(New.MenuItemOption(MenuItem: item, Level: 0));
-        }
-    </select>
-</div>
