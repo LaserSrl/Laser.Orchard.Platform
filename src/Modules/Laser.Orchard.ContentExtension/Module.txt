@@ -13,3 +13,7 @@ Features:
         Description: Add  Dynamic Projection ContentType and DynamicProjectionPart to customize projection.
 	    Category: Content
 		Dependencies: Orchard.Resources, Orchard.Projections, Laser.Orchard.Queries, Laser.Orchard.StartupConfig
+    Laser.Orchard.ContentExtension.StaticContents:
+        Name:  Static content routes
+        Description: Add  routes based on static contents.
+	    Category: Content
