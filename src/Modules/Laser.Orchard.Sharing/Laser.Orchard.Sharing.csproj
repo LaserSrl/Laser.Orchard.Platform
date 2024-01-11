@@ -140,6 +140,11 @@
       <Name>Orchard.Framework</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Cookies\Laser.Orchard.Cookies.csproj">
+      <Project>{BDB0CD8D-7C6C-46F0-A041-6B2E1E0F9C9E}</Project>
+      <Name>Laser.Orchard.Cookies</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
