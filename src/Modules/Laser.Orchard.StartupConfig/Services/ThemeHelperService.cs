@@ -6,6 +6,7 @@ using Orchard.Environment.Extensions;
 using Orchard.FileSystems.VirtualPath;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
+using Orchard.MediaLibrary.Models;
 using Orchard.Mvc.Html;
 using System;
 using System.Web.Mvc;
@@ -104,6 +105,18 @@ namespace Laser.Orchard.StartupConfig.Services {
             // using this file should cause a 404, that we can then debug
             return html.ThemePath(workContext.CurrentTheme, relPath);
 
+        }
+
+        public string ResizeMediaUrl(dynamic helper, MediaPart part, int width, int height, string mode, string alignment) {
+            var imgPath = part.MediaUrl;
+            if (part.As<ImagePart>() != null) {
+                imgPath = helper.ResizeMediaUrl(Path: part.MediaUrl,
+                        ContentItem: part.ContentItem,
+                        Width: width, Height: height,
+                        Mode: mode, Alignment: alignment).ToString();
+            }
+
+            return imgPath;
         }
     }
 }
