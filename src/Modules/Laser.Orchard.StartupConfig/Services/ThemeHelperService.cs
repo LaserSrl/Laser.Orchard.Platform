@@ -1,14 +1,17 @@
 ﻿using Orchard;
 using Orchard.Autoroute.Services;
 using Orchard.ContentManagement;
+using Orchard.DisplayManagement;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
 using Orchard.FileSystems.VirtualPath;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.MediaLibrary.Models;
+using Orchard.MediaProcessing.Shapes;
 using Orchard.Mvc.Html;
 using System;
+using System.IO;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.StartupConfig.Services {
@@ -19,6 +22,7 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly ILocalizationService _localizationService;
         private readonly IVirtualPathProvider _virtualPathProvider;
         private readonly IExtensionManager _extensionManager;
+        private readonly MediaShapes _mediaShapes;
 
         public ThemeHelperService(
             ShellSettings shellSettings,
@@ -26,7 +30,8 @@ namespace Laser.Orchard.StartupConfig.Services {
             IHomeAliasService homeAliasService,
             ILocalizationService localizationService,
             IVirtualPathProvider virtualPathProvider,
-            IExtensionManager extensionManager) {
+            IExtensionManager extensionManager,
+            MediaShapes mediaShapes) {
 
             _shellSettings = shellSettings;
             _workContextAccessor = workContextAccessor;
@@ -34,6 +39,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             _localizationService = localizationService;
             _virtualPathProvider = virtualPathProvider;
             _extensionManager = extensionManager;
+            _mediaShapes = mediaShapes;
         }
 
         public string UrlPrefix {
@@ -71,9 +77,9 @@ namespace Laser.Orchard.StartupConfig.Services {
             // we shouldn't try to fix it
             Uri uriResult;
             bool isAllowedAbsoluteUri = Uri.TryCreate(path, UriKind.Absolute, out uriResult)
-                && (uriResult.Scheme == Uri.UriSchemeHttp 
-                    || uriResult.Scheme == Uri.UriSchemeHttps 
-                    || uriResult.Scheme == Uri.UriSchemeMailto 
+                && (uriResult.Scheme == Uri.UriSchemeHttp
+                    || uriResult.Scheme == Uri.UriSchemeHttps
+                    || uriResult.Scheme == Uri.UriSchemeMailto
                     || uriResult.Scheme == Uri.UriSchemeFtp);
             if (isAllowedAbsoluteUri) {
                 return uriResult.ToString();
@@ -96,8 +102,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                 var baseThemeName = theme.BaseTheme;
                 if (!string.IsNullOrWhiteSpace(baseThemeName)) {
                     theme = _extensionManager.GetExtension(baseThemeName);
-                }
-                else {
+                } else {
                     // if the theme had no base theme, end iterations
                     break;
                 }
@@ -107,16 +112,16 @@ namespace Laser.Orchard.StartupConfig.Services {
 
         }
 
-        public string ResizeMediaUrl(dynamic helper, MediaPart part, int width, int height, string mode, string alignment) {
-            var imgPath = part.MediaUrl;
-            if (part.As<ImagePart>() != null) {
-                imgPath = helper.ResizeMediaUrl(Path: part.MediaUrl,
-                        ContentItem: part.ContentItem,
-                        Width: width, Height: height,
-                        Mode: mode, Alignment: alignment).ToString();
+        [Shape]
+        public void ResizeMediaUrlWrapper(dynamic Shape, dynamic Display, TextWriter Output, ContentItem ContentItem, string Path, int Width, int Height, string Mode, string Alignment, string PadColor, string Scale = "upscaleOnly") {
+            if (ContentItem.Has<MediaPart>()) {
+                if (ContentItem.Has<ImagePart>()) {
+                    _mediaShapes.ResizeMediaUrl(Shape, Display, Output, ContentItem, Path, Width, Height, Mode, Alignment, PadColor, Scale);
+                } else {
+                    Shape.IgnoreShapeTracer = true;
+                    Output.Write(ContentItem.As<MediaPart>().MediaUrl);
+                }
             }
-
-            return imgPath;
         }
     }
 }
