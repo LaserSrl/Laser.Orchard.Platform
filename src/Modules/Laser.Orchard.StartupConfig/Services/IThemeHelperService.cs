@@ -1,6 +1,8 @@
 ﻿using Orchard;
 using Orchard.ContentManagement;
+using Orchard.DisplayManagement;
 using Orchard.MediaLibrary.Models;
+using System.IO;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.StartupConfig.Services {
@@ -37,15 +39,20 @@ namespace Laser.Orchard.StartupConfig.Services {
         string ThemeAssetPath(HtmlHelper html, string relPath);
 
         /// <summary>
-        /// Resize the provided media when possible, checking if there is a ImagePart.
+        /// Wraps the ResizeMediaUrl of Orchard.MediaProcessing to avoid exceptions when Media isn't a Image (e.g. it's a Vector image, that cannot be resized)
         /// </summary>
-        /// <param name="display">Dynamic object to call the ResizeMediaUrl function</param>
-        /// <param name="part">The MediaPart to resize</param>
-        /// <param name="width">Width parameter for the ResizeMediaUrl function</param>
-        /// <param name="height">Height parameter for the ResizeMediaUrl function</param>
-        /// <param name="mode">Mode parameter for the ResizeMediaUrl function</param>
-        /// <param name="alignment">Alignment parameter for the ResizeMediaUrl function</param>
-        /// <returns></returns>
-        string ResizeMediaUrl(dynamic helper, MediaPart part, int width, int height, string mode, string alignment);
+        /// <param name="Shape"></param>
+        /// <param name="Display"></param>
+        /// <param name="Output"></param>
+        /// <param name="ContentItem"></param>
+        /// <param name="Path"></param>
+        /// <param name="Width"></param>
+        /// <param name="Height"></param>
+        /// <param name="Mode"></param>
+        /// <param name="Alignment"></param>
+        /// <param name="PadColor"></param>
+        /// <param name="Scale"></param>
+        [Shape]
+        void ResizeMediaUrlWrapper(dynamic Shape, dynamic Display, TextWriter Output, ContentItem ContentItem, string Path, int Width, int Height, string Mode, string Alignment, string PadColor, string Scale = "upscaleOnly");
     }
 }
