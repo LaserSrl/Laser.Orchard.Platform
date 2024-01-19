@@ -1,4 +1,6 @@
 ﻿using Orchard;
+using Orchard.ContentManagement;
+using Orchard.MediaLibrary.Models;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.StartupConfig.Services {
@@ -33,5 +35,17 @@ namespace Laser.Orchard.StartupConfig.Services {
         /// <param name="relPath">The asset's path</param>
         /// <returns></returns>
         string ThemeAssetPath(HtmlHelper html, string relPath);
+
+        /// <summary>
+        /// Resize the provided media when possible, checking if there is a ImagePart.
+        /// </summary>
+        /// <param name="display">Dynamic object to call the ResizeMediaUrl function</param>
+        /// <param name="part">The MediaPart to resize</param>
+        /// <param name="width">Width parameter for the ResizeMediaUrl function</param>
+        /// <param name="height">Height parameter for the ResizeMediaUrl function</param>
+        /// <param name="mode">Mode parameter for the ResizeMediaUrl function</param>
+        /// <param name="alignment">Alignment parameter for the ResizeMediaUrl function</param>
+        /// <returns></returns>
+        string ResizeMediaUrl(dynamic helper, MediaPart part, int width, int height, string mode, string alignment);
     }
 }
