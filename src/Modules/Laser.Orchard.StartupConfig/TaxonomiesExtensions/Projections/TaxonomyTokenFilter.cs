@@ -36,7 +36,12 @@ namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
             string ids = context.State.TermToken;
 
             if (!String.IsNullOrWhiteSpace(ids)) {
-                var idList = ids.Split(new[] { ',' }).Select(Int32.Parse).ToArray();
+                var idList = ids
+                    .Split(new[] { ',' })
+                    // Term ids need to be int.
+                    // To avoid throwing an exception, remove non integer terms ids inside the string.
+                    .Where(s => int.TryParse(s, out var temp))
+                    .Select(Int32.Parse).ToArray();
 
                 var terms = idList.Select(_taxonomyService.GetTerm).ToList();
                 var allTerms = new List<TermPart>();
