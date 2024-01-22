@@ -36,7 +36,12 @@ namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
             string ids = context.State.TermToken;
 
             if (!String.IsNullOrWhiteSpace(ids)) {
-                var idList = ids.Split(new[] { ',' }).Select(Int32.Parse).ToArray();
+                var idList = ids
+                    .Split(new[] { ',' })
+                    // Term ids need to be int.
+                    // To avoid throwing an exception, remove non integer terms ids inside the string.
+                    .Where(s => int.TryParse(s, out var temp))
+                    .Select(Int32.Parse).ToArray();
 
                 var terms = idList.Select(_taxonomyService.GetTerm).ToList();
                 var allTerms = new List<TermPart>();
@@ -52,7 +57,8 @@ namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
 
                 var allIds = allTerms.Select(x => x != null ? x.Id : 0).Where(x => x > 0).ToList();
                 if (allIds.Count() == 0) {
-                    throw new Exception(T("None of the ids \"{0}\" is a term.", ids).ToString());
+                    //throw new Exception(T("None of the ids \"{0}\" is a term.", ids).ToString());
+                    return;
                 }
                 int op = Convert.ToInt32(context.State.Operator);
 
