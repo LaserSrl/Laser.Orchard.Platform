@@ -57,7 +57,8 @@ namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
 
                 var allIds = allTerms.Select(x => x != null ? x.Id : 0).Where(x => x > 0).ToList();
                 if (allIds.Count() == 0) {
-                    throw new Exception(T("None of the ids \"{0}\" is a term.", ids).ToString());
+                    //throw new Exception(T("None of the ids \"{0}\" is a term.", ids).ToString());
+                    return;
                 }
                 int op = Convert.ToInt32(context.State.Operator);
 
