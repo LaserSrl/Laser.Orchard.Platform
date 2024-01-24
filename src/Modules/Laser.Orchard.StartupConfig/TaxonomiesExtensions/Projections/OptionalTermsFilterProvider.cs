@@ -59,6 +59,9 @@ namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
             if (!string.IsNullOrWhiteSpace(termsString)) {
                 var termIds = termsString
                     .Split(new char[] { ',' })
+                    // Term ids need to be int.
+                    // To avoid throwing an exception, remove non integer terms ids inside the string.
+                    .Where(s => int.TryParse(s, out var temp))
                     .Select(int.Parse);
                 if (termIds.Any()) {
                     // if there are no term ids, it makes no sense to be here
