@@ -24,8 +24,8 @@ namespace Laser.Orchard.StartupConfig.Security {
         public IEnumerable<PermissionStereotype> GetDefaultStereotypes() {
             return new[] {
                 new PermissionStereotype {
-                    Name="Anonymous",
-                    Permissions= new[] {FrontEndMediaUpload}
+                    Name = "Administrator",
+                    Permissions = new[] {FrontEndMediaUpload}
                 }
             };
         }
