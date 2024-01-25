@@ -58,14 +58,14 @@ namespace Laser.Orchard.StartupConfig.Controllers {
 
             if (contentItem == null)
                 return HttpNotFound();
-
-            //if (!_mediaLibraryService.CheckMediaFolderPermission(om.Permissions.SelectMediaContent, contentItem.FolderPath))
-            //{
-            //    // Services.Notifier.Add(UI.Notify.NotifyType.Error, T("Cannot select media"));
-            //    return new HttpUnauthorizedResult();
-            //}
+            // TODO: Settings to properly display media only in specific folders.
+            // For the moment, every media is visible via front end client storage feature.
+            // If user has not FrontEndMediaUpload permission, previous security criteria are applied.
             if (!Services.Authorizer.Authorize(FrontEndClientStoragePermissions.FrontEndMediaUpload)) {
-                return new HttpUnauthorizedResult();
+                if (!_mediaLibraryService.CheckMediaFolderPermission(om.Permissions.SelectMediaContent, contentItem.FolderPath)) {
+                    // Services.Notifier.Add(UI.Notify.NotifyType.Error, T("Cannot select media"));
+                    return new HttpUnauthorizedResult();
+                }
             }
 
             dynamic model = Services.ContentManager.BuildDisplay(contentItem, displayType);
@@ -75,6 +75,7 @@ namespace Laser.Orchard.StartupConfig.Controllers {
 
         [HttpPost]
         public ActionResult Delete(int[] mediaItemIds) {
+            // Using standard Orchard.MediaLibrary permissions because they are enough to properly manage delete permissions.
             if (!Services.Authorizer.Authorize(om.Permissions.ManageOwnMedia)) {
                 // Services.Notifier.Add(UI.Notify.NotifyType.Error, T("Couldn't delete media items"));
                 return new HttpUnauthorizedResult();
@@ -103,19 +104,16 @@ namespace Laser.Orchard.StartupConfig.Controllers {
         }
         [OutputCache(Duration = 0, NoStore = true)]
         public ActionResult Index(string folderPath, string type, int? replaceId = null) {
-
-            //if (!_mediaLibraryService.CheckMediaFolderPermission(om.Permissions.SelectMediaContent, folderPath))
-            //{
-            //    return new HttpUnauthorizedResult();
-            //}
-
-            //// Check permission
-            //if (!_mediaLibraryService.CanManageMediaFolder(folderPath))
-            //{
-            //    return new HttpUnauthorizedResult();
-            //}
+            // If user has no FrontEndMediaUpload permission, previous security checks are applied.
             if (!Services.Authorizer.Authorize(FrontEndClientStoragePermissions.FrontEndMediaUpload)) {
-                return new HttpUnauthorizedResult();
+                if (!_mediaLibraryService.CheckMediaFolderPermission(om.Permissions.SelectMediaContent, folderPath)) {
+                    return new HttpUnauthorizedResult();
+                }
+
+                // Check permission
+                if (!_mediaLibraryService.CanManageMediaFolder(folderPath)) {
+                    return new HttpUnauthorizedResult();
+                }
             }
 
             var viewModel = new ImportMediaViewModel {
@@ -136,19 +134,17 @@ namespace Laser.Orchard.StartupConfig.Controllers {
 
         [HttpPost]
         public ActionResult Upload(string folderPath, string type) {
-            //if (!_mediaLibraryService.CheckMediaFolderPermission(om.Permissions.ImportMediaContent, folderPath))
-            //{
-            //    return new HttpUnauthorizedResult();
-            //}
 
-            //// Check permission
-            //if (!_mediaLibraryService.CanManageMediaFolder(folderPath))
-            //{
-            //    return new HttpUnauthorizedResult();
-            //}
             // Only check front end media upload permission
             if (!Services.Authorizer.Authorize(FrontEndClientStoragePermissions.FrontEndMediaUpload)) {
-                return new HttpUnauthorizedResult();
+                if (!_mediaLibraryService.CheckMediaFolderPermission(om.Permissions.ImportMediaContent, folderPath)) {
+                    return new HttpUnauthorizedResult();
+                }
+
+                // Check permission
+                if (!_mediaLibraryService.CanManageMediaFolder(folderPath)) {
+                    return new HttpUnauthorizedResult();
+                }
             }
 
             var statuses = new List<object>();
@@ -250,7 +246,14 @@ namespace Laser.Orchard.StartupConfig.Controllers {
                                                                 .Where(x => x.FolderPath == replaceMedia.FolderPath && x.FileName == replaceMedia.FileName)
                                                                 .Count();
                     if (mediaItemsUsingTheFile == 1) { // if the file is referenced only by the deleted media content, the file too can be removed.
-                        _mediaLibraryService.DeleteFile(replaceMedia.FolderPath, replaceMedia.FileName);
+                        try {
+                            _mediaLibraryService.DeleteFile(replaceMedia.FolderPath, replaceMedia.FileName);
+                        } catch (ArgumentException) { // File not found by FileSystemStorageProvider is thrown as ArgumentException.
+                            statuses.Add(new {
+                                error = T("Error when deleting file to replace: file {0} does not exist in folder {1}. Media has been updated anyway.", replaceMedia.FileName, replaceMedia.FolderPath).Text,
+                                progress = 1.0
+                            });
+                        }
                     } else {
                         // it changes the media file name
                         replaceMedia.FileName = filename;

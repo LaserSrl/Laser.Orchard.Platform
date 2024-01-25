@@ -10,7 +10,7 @@ namespace Laser.Orchard.StartupConfig.Security {
         public static readonly Permission FrontEndMediaUpload = new Permission {
             Description = "Front-end Media Upload",
             Name = "FrontEndMediaUpload",
-            ImpliedBy = new[] { oml.Permissions.ImportMediaContent }
+            ImpliedBy = new[] { oml.Permissions.ManageMediaContent }
         };
 
         public virtual Feature Feature { get; set; }
