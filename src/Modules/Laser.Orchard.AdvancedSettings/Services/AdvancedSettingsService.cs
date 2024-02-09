@@ -11,11 +11,14 @@ namespace Laser.Orchard.AdvancedSettings.Services {
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
 
-        public AdvancedSettingsService(IContentManager contentManager, ICacheManager cacheManager, ISignals signals) {
+        public AdvancedSettingsService(IContentManager contentManager, 
+            ICacheManager cacheManager, 
+            ISignals signals) {
             _contentManager = contentManager;
             _cacheManager = cacheManager;
             _signals = signals;
         }
+
         public string SettingsCacheKey(string settingName) {
             return string.Format("AdvancedSettings-{0}-Cache", settingName);
         }
@@ -42,6 +45,7 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             if (advancedSettings != null) {
                 advancedSettings.ContentManager = _contentManager;
             }
+
             return advancedSettings;
         }
 
