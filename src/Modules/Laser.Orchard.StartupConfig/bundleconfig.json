@@ -16,5 +16,11 @@
     "inputFiles": [
       "Scripts/tabulator/luxon.js"
     ]
+  },
+  {
+    "outputFileName": "Styles/tabulator/tabulator.min.css",
+    "inputFiles": [
+      "Styles/tabulator/tabulator.css"
+    ]
   }
 ]

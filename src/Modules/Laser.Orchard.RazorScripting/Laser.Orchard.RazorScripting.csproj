@@ -98,12 +98,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\RazorDecisionActivity.cs" />
+    <Compile Include="Drivers\RazorScriptingFieldDriver.cs" />
     <Compile Include="Drivers\RazorValidationPartDriver.cs" />
     <Compile Include="Forms\RazorDecisionForms.cs" />
+    <Compile Include="Handlers\RazorScriptingHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\RazorScriptingField.cs" />
     <Compile Include="Models\RazorValidationPart.cs" />
+    <Compile Include="Settings\RazorScriptingFieldSettings.cs" />
     <Compile Include="Settings\RazorValidationPartSettings.cs" />
-    <Compile Include="Settings\RazorValidationPartSettingsEvents.cs" />
+    <Compile Include="Settings\RazorScriptingSettingsEvents.cs" />
+    <Compile Include="ViewModels\RazorScriptingFieldSettingsEventsViewModel.cs" />
     <Content Include="Styles\workflows-activity-razor-decision.css" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DefinitionTemplates\RazorScriptingFieldSettingsEventsViewModel.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
