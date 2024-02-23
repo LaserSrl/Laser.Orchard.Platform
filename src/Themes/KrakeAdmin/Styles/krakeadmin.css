@@ -1671,6 +1671,18 @@ html.media-library-modal-window .button-cancel {
   width: unset;
   height: unset;
 }
+#media-library-main-list li .media-thumbnail {
+  min-width: 200px;
+  min-height: 200px;
+  width: unset;
+  height: unset;
+}
+#media-library-main-list li img {
+  min-width: 200px;
+  min-height: 200px;
+  width: unset;
+  height: unset;
+}
 
 #header {
   overflow: visible;
