@@ -13,6 +13,7 @@ using Orchard.Environment.Configuration;
 using Orchard.FileSystems.Media;
 using Orchard.Forms.Services;
 using Orchard.Logging;
+using Orchard.MediaLibrary.Models;
 using Orchard.MediaProcessing.Descriptors.Filter;
 using Orchard.MediaProcessing.Media;
 using Orchard.MediaProcessing.Models;
@@ -22,7 +23,7 @@ using Orchard.Utility.Extensions;
 
 namespace Laser.Orchard.PrivateMedia.Services {
 
-      public class PrivateMediaImageProfileManager : IImageProfileManager {
+    public class PrivateMediaImageProfileManager : IImageProfileManager {
 
         private readonly IStorageProvider _storageProvider;
         private readonly IImageProcessingFileNameProvider _fileNameProvider;
@@ -120,31 +121,45 @@ namespace Laser.Orchard.PrivateMedia.Services {
                 CreaProfilesPrivateWebConfig();
             }
 
-            // if the filename is not cached, process it
-            if (string.IsNullOrEmpty(filePath)) {
-                Logger.Debug("FilePath is null, processing required, profile {0} for image {1}", profileName, path);
+            // Before checking everything else, ensure that the content item that needs to be processed has a ImagePart.
+            // If it's not the case (e.g. if media is a svg file), processing would throw a exception.
+            // If content item is null (it means it's not passed as a parameter of the ResizeMediaUrl call),
+            // this function processes the file like it did before this patch;
+            // this means it could possibly throw and log exceptions for svg files.
+            bool checkForProfile = (contentItem == null || contentItem.Has<ImagePart>());
 
-                process = true;
-            }
+            if (checkForProfile) {
+                // if the filename is not cached, process it
+                if (string.IsNullOrEmpty(filePath)) {
+                    Logger.Debug("FilePath is null, processing required, profile {0} for image {1}", profileName, path);
 
-            // the processd file doesn't exist anymore, process it
-            else if (!_storageProvider.FileExists(filePath)) {
-                Logger.Debug("Processed file no longer exists, processing required, profile {0} for image {1}", profileName, path);
+                    process = true;
+                }
 
-                process = true;
-            }
+                // the processd file doesn't exist anymore, process it
+                else if (!_storageProvider.FileExists(filePath)) {
+                    Logger.Debug("Processed file no longer exists, processing required, profile {0} for image {1}", profileName, path);
 
-            // if the original file is more recent, process it
-            else {
-                DateTime pathLastUpdated;
-                if (TryGetImageLastUpdated(path, out pathLastUpdated)) {
-                    var filePathLastUpdated = _storageProvider.GetFile(filePath).GetLastUpdated();
+                    process = true;
+                }
 
-                    if (pathLastUpdated > filePathLastUpdated) {
-                        Logger.Debug("Original file more recent, processing required, profile {0} for image {1}", profileName, path);
+                // if the original file is more recent, process it
+                else {
+                    DateTime pathLastUpdated;
+                    if (TryGetImageLastUpdated(path, out pathLastUpdated)) {
+                        var filePathLastUpdated = _storageProvider.GetFile(filePath).GetLastUpdated();
 
-                        process = true;
+                        if (pathLastUpdated > filePathLastUpdated) {
+                            Logger.Debug("Original file more recent, processing required, profile {0} for image {1}", profileName, path);
+
+                            process = true;
+                        }
                     }
+                }
+            } else {
+                // Since media with no ImagePart have no profile, filePath is null, so it's set again to its original path on the storage provider.
+                if (string.IsNullOrWhiteSpace(filePath)) {
+                    filePath = _storageProvider.GetStoragePath(path);
                 }
             }
 
@@ -158,8 +173,7 @@ namespace Laser.Orchard.PrivateMedia.Services {
                     profilePart = _profileService.GetImageProfileByName(profileName);
                     if (profilePart == null)
                         return String.Empty;
-                }
-                else {
+                } else {
                     profilePart = _services.ContentManager.New<ImageProfilePart>("ImageProfile");
                     profilePart.Name = profileName;
                     foreach (var customFilter in customFilters) {
@@ -216,8 +230,7 @@ namespace Laser.Orchard.PrivateMedia.Services {
                                         }
                                     }
                                 }
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 Logger.Error(e, "A profile could not be processed: " + path);
                             }
                         }
@@ -254,8 +267,7 @@ namespace Laser.Orchard.PrivateMedia.Services {
                 try {
                     var file = _storageProvider.GetFile(storagePath);
                     return file.OpenRead();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Logger.Error(e, "path:" + path + " storagePath:" + storagePath);
                 }
             }

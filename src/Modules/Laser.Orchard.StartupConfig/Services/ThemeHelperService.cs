@@ -111,17 +111,5 @@ namespace Laser.Orchard.StartupConfig.Services {
             return html.ThemePath(workContext.CurrentTheme, relPath);
 
         }
-
-        [Shape]
-        public void ResizeMediaUrlWrapper(dynamic Shape, dynamic Display, TextWriter Output, ContentItem ContentItem, string Path, int Width, int Height, string Mode, string Alignment, string PadColor, string Scale = "upscaleOnly") {
-            if (ContentItem.Has<MediaPart>()) {
-                if (ContentItem.Has<ImagePart>()) {
-                    _mediaShapes.ResizeMediaUrl(Shape, Display, Output, ContentItem, Path, Width, Height, Mode, Alignment, PadColor, Scale);
-                } else {
-                    Shape.IgnoreShapeTracer = true;
-                    Output.Write(ContentItem.As<MediaPart>().MediaUrl);
-                }
-            }
-        }
     }
 }
