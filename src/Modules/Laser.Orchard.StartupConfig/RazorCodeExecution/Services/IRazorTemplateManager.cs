@@ -246,27 +246,36 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             foreach (var assembly in AssemblyToReference)
                 yield return assembly;
 
-            //adds specific dlls in /Sites/__RazorReferences 
-            var razorReferencesFolder = HostingEnvironment.MapPath("~/App_Data/Sites/__RazorReferences");
-            if (Directory.Exists(razorReferencesFolder)) {
-                var dlls = Directory.GetFiles(razorReferencesFolder, "*.dll");
-                foreach (var dll in dlls) {
-                    // don't add the dll to the references if it's already there
-                    if (!(AssemblyToReference.Any(ar => {
-                        try {
-                            var fileName = ar.GetFile();
-                            return string.Equals(Path.GetFileName(dll), Path.GetFileName(fileName));
+            var additionalFolders = new List<string> {
+                // Explicitly add dlls from /App_data/Dependencies and /Orchard.Web/bin because they may not have
+                // been laoded in the appcontext yet
+                HostingEnvironment.MapPath("~/bin"),
+                HostingEnvironment.MapPath("~/App_Data/Dependencies"),
+                // Specific dlls in /Sites/__RazorReferences for special cases
+                HostingEnvironment.MapPath("~/App_Data/Sites/__RazorReferences")
+            };
+            foreach (var razorReferencesFolder in additionalFolders) {
+                if (Directory.Exists(razorReferencesFolder)) {
+                    var dlls = Directory.GetFiles(razorReferencesFolder, "*.dll");
+                    foreach (var dll in dlls) {
+                        // don't add the dll to the references if it's already there
+                        if (!(AssemblyToReference.Any(ar => {
+                            try {
+                                var fileName = ar.GetFile();
+                                return string.Equals(Path.GetFileName(dll), Path.GetFileName(fileName));
+                            }
+                            catch (Exception) {
+                                return false;
+                            }
+                        }))) {
+                            var reference = CompilerReference.From(dll);
+                            yield return reference;
                         }
-                        catch (Exception) {
-                            return false;
-                        }
-                    }))) {
-                        var reference = CompilerReference.From(dll);
-                        yield return reference;
                     }
                 }
             }
         }
     }
+
 }
 
