@@ -3,6 +3,6 @@
 namespace Laser.Orchard.StartupConfig.Models {
     [OrchardFeature("Laser.Orchard.StartupConfig.JsonDataTablePart")]
     public class JsonDataTableFieldSettings : JsonDataTablePartSettings {
-
+        public string Hint { get; set; }
     }
 }

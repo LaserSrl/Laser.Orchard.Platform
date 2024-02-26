@@ -12,4 +12,12 @@
         <span class="hint">@T("Limit number of rows in the table. 0 means no limit.")</span>
     </div>
 </fieldset>
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Hint)">@T("Help text")</label>
+        @Html.TextAreaFor(m => m.Hint, new { @class = "text medium", rows = "5" })
+        <span class="hint">@T("The help text is written under the field when the user is entering a value.")</span>
+        @Html.ValidationMessageFor(m => m.Hint)
+    </div>
+</fieldset>
 @Display.TokenHint()
