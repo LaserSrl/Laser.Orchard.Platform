@@ -21,6 +21,7 @@ namespace Laser.Orchard.ButtonToWorkflows.Drivers {
 
         private readonly IDynamicButtonToWorkflowsService _dynamicButtonToWorkflowsService;
         private readonly IControllerContextAccessor _controllerContextAccessor;
+        private readonly INotifier _notifier;
 
         private const string TemplateName = "Parts/DynamicButtonToWorkflowsSettings";
 
@@ -29,11 +30,13 @@ namespace Laser.Orchard.ButtonToWorkflows.Drivers {
 
         public DynamicButtonToWorkflowsSettingsPartDriver(
             IDynamicButtonToWorkflowsService dynamicButtonToWorkflowsService,
-            IControllerContextAccessor controllerContextAccessor) {
+            IControllerContextAccessor controllerContextAccessor,
+            INotifier notifier) {
             _dynamicButtonToWorkflowsService = dynamicButtonToWorkflowsService;
             _logger = NullLogger.Instance;
             _controllerContextAccessor = controllerContextAccessor;
             T = NullLocalizer.Instance;
+            _notifier = notifier;
         }
 
         protected override string Prefix {
@@ -121,12 +124,15 @@ namespace Laser.Orchard.ButtonToWorkflows.Drivers {
                     uniqueName = GenerateUniqueName(button.Attribute("ButtonName").Value, existingDefinitions.ToList());
 
                     if (existingDefinitions.Any(a => a.GlobalIdentifier.Trim().Equals(button.Attribute("GlobalIdentifier").Value.Trim()))) {
-                        _logger.Error(string.Format("A button with global identifier {0} is already present. Button will not be imported", button.Attribute("GlobalIdentifier").Value.Trim()));
+                        var msg = T("A button with global identifier {0} is already present. Button will not be imported", button.Attribute("GlobalIdentifier").Value.Trim());
+                        _logger.Debug(msg.Text);
                         addButtonDefinition = false;
                     }
 
-                    if (addButtonDefinition && existingDefinitions.Any(a => a.ButtonName.Trim().Equals(button.Attribute("ButtonName").Value.Trim())))
-                        _logger.Error(string.Format("The button name {0} was already used. It was automatically renamed to {1}.", button.Attribute("ButtonName").Value, uniqueName));
+                    if (addButtonDefinition && existingDefinitions.Any(a => a.ButtonName.Trim().Equals(button.Attribute("ButtonName").Value.Trim()))) {
+                        var msg = T("The button name {0} was already used. It was automatically renamed to {1}.", button.Attribute("ButtonName").Value, uniqueName);
+                        _logger.Debug(msg.Text);
+                    }
                 } else
                     uniqueName = GenerateUniqueName(Guid.NewGuid().ToString(), existingDefinitions.ToList());
 
