@@ -38,21 +38,5 @@ namespace Laser.Orchard.StartupConfig.Services {
         /// <returns></returns>
         string ThemeAssetPath(HtmlHelper html, string relPath);
 
-        /// <summary>
-        /// Wraps the ResizeMediaUrl of Orchard.MediaProcessing to avoid exceptions when Media isn't a Image (e.g. it's a Vector image, that cannot be resized)
-        /// </summary>
-        /// <param name="Shape"></param>
-        /// <param name="Display"></param>
-        /// <param name="Output"></param>
-        /// <param name="ContentItem"></param>
-        /// <param name="Path"></param>
-        /// <param name="Width"></param>
-        /// <param name="Height"></param>
-        /// <param name="Mode"></param>
-        /// <param name="Alignment"></param>
-        /// <param name="PadColor"></param>
-        /// <param name="Scale"></param>
-        [Shape]
-        void ResizeMediaUrlWrapper(dynamic Shape, dynamic Display, TextWriter Output, ContentItem ContentItem, string Path, int Width, int Height, string Mode, string Alignment, string PadColor, string Scale = "upscaleOnly");
     }
 }
