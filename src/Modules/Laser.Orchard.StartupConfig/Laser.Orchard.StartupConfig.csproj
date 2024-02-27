@@ -566,6 +566,7 @@
     <Compile Include="Security\BearerTokenAuthenticationTicket.cs" />
     <Compile Include="Security\BearerTokenIdentity.cs" />
     <Compile Include="Security\ControlWrapperPermission.cs" />
+    <Compile Include="Security\FrontEndClientStoragePermissions.cs" />
     <Compile Include="Security\IBearerTokenDataProvider.cs" />
     <Compile Include="Security\Providers\BaseBearerTokenDataProvider.cs" />
     <Compile Include="Security\Providers\IApiCredentialsValidationProvider.cs" />
