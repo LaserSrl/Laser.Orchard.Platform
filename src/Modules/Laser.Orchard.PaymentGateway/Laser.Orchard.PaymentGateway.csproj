@@ -221,6 +221,10 @@
       <Name>Orchard.Framework</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Laser.Orchard.Commons\Laser.Orchard.Commons.csproj">
+      <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
+      <Name>Laser.Orchard.Commons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.AdvancedSettings\Laser.Orchard.AdvancedSettings.csproj">
       <Project>{edff325b-701d-41f4-a76e-03cf48feaf15}</Project>
       <Name>Laser.Orchard.AdvancedSettings</Name>
