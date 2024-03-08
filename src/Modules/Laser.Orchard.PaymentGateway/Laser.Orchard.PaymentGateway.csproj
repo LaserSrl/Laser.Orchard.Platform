@@ -142,6 +142,7 @@
     <Compile Include="PaymentMigrations.cs" />
     <Compile Include="Providers\BankTransferPosProvider.cs" />
     <Compile Include="Providers\CashOnDeliveryProvider.cs" />
+    <Compile Include="Providers\CustomPosShapes.cs" />
     <Compile Include="Providers\DefaultCustomPosProvider.cs" />
     <Compile Include="Providers\ICustomPosProvider.cs" />
     <Compile Include="Routes.cs" />
