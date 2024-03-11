@@ -69,12 +69,10 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
         public string ExecuteString(string codeTemplate, IContent content, IDictionary<string, object> tokens = null) {
             if (!string.IsNullOrEmpty(codeTemplate)) {
-                var config = new TemplateServiceConfiguration();
 #if DEBUG
-                config.Debug = true;
+                _razorTemplateManager.StartNewRazorEngine();
 #endif
                 string result = "";
-                _razorTemplateManager.StartNewRazorEngine();
                 var model = new RazorModelContext {
                     OrchardServices = _orchardServices,
                     ContentItem = content,
