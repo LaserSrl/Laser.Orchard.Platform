@@ -72,7 +72,8 @@ namespace Laser.Orchard.PaymentGateway.Providers {
                         Iban: iban,
                         Email: email,
                         Reason: reason,
-                        Status: status
+                        Status: status,
+                        Title: GetPosName(payment)
                     );
                 }
             }
