@@ -1,6 +1,7 @@
 ﻿using Orchard.DisplayManagement.Descriptors;
 using Orchard.Environment.Extensions;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Laser.Orchard.PaymentGateway.Providers {
     [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
@@ -17,11 +18,16 @@ namespace Laser.Orchard.PaymentGateway.Providers {
                     .OnDisplaying(displaying => {
                         string posName = displaying.Shape.ShapeContext.PaymentViewModel.PosName;
                         // Normalize pos name to transform it to a valid shape name
-                        // TODO: remove special characters, removing invalid characters
-                        posName = posName.Trim()
+                       posName = posName.Trim()
                             .Replace(" ", "")
                             .Replace(".", "_")
                             .Replace("-", "__");
+
+                        // Remove invalid characters from the resulting string
+                        var invalidChars = Path.GetInvalidFileNameChars();
+                        foreach(var c in invalidChars) {
+                            posName = posName.Replace(c.ToString(), "");
+                        }
 
                         displaying.ShapeMetadata.Alternates.Add(cpp.TechnicalName + "__" + posName);
                     });
