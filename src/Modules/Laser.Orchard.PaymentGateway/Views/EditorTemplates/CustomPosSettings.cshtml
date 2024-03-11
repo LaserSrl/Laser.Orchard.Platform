@@ -1,13 +1,35 @@
-﻿@using Laser.Orchard.Commons.Helpers
-@using Laser.Orchard.PaymentGateway.Services
+﻿@using Laser.Orchard.Commons.Helpers;
+@using Laser.Orchard.PaymentGateway.Services;
+@using Laser.Orchard.PaymentGateway.Providers;
+@using System.Collections.Generic;
 
 @model Laser.Orchard.PaymentGateway.Models.CustomPosSettings
 
 @{
     var _posService = WorkContext.Resolve<CustomPosService>();
-
+   
     MvcHtmlString posBlock = Html.UniqueClientId("CustomPos");
     var divId = "cp_" + posBlock;
+
+    var posName = Model.Name;
+    var alternateName = string.Empty;
+    if (!string.IsNullOrWhiteSpace(posName)) {
+        alternateName = posName.Trim()
+            .Replace(" ", "")
+            .Replace(".", "_")
+            .Replace("-", "__");
+
+        // Remove invalid characters from the resulting string
+        var invalidChars = Path.GetInvalidFileNameChars();
+        foreach (var c in invalidChars) {
+            alternateName = alternateName.Replace(c.ToString(), "");
+        }
+
+        // Add provider TechnicalName as a prefix.
+        if (!string.IsNullOrWhiteSpace(Model.ProviderName)) {
+            alternateName = Model.ProviderName + "-" + alternateName;
+        }
+    }
 }
 
 <div class="j_custompos" id="@divId">
@@ -22,6 +44,9 @@
             <label for="@Html.FieldIdFor(m => m.Name)">@T("Pos Name:")</label>
             @Html.TextBoxFor(m => m.Name, new { @class = "text small" })
             <span class="hint">@T("The name of the custom payment method")</span>
+            @if (!string.IsNullOrWhiteSpace(alternateName)) {
+                <span class="hint">@T("Alternate name: {0}", alternateName)</span>
+            }
         </div>
         <div>
             <label for="@Html.FieldIdFor(m => m.Order)">@T("Order:")</label>
