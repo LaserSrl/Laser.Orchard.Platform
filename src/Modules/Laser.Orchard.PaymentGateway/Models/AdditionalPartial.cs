@@ -6,8 +6,6 @@ namespace Laser.Orchard.PaymentGateway.Models {
         public string ShapeFile { get; set; }
 
         public override dynamic DisplayShape(AdditionalShapeContext ctx) {
-            //return ctx.ShapeFactory.AdditionalShapeManager(ShapeName: ShapeFile,
-            //    ShapeContext: ctx);
             return ctx.ShapeFactory.Create(ShapeFile, Arguments.From(new {
                 ShapeContext = ctx
             }));

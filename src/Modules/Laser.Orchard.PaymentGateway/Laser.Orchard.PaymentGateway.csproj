@@ -244,9 +244,6 @@
     <Content Include="Views\BankTransfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\AdditionalShapeManager.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\CustomPosAdminSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
