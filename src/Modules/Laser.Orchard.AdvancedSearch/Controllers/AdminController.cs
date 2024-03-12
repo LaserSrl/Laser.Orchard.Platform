@@ -312,13 +312,14 @@ namespace Laser.Orchard.AdvancedSearch.Controllers
                     }
                     else
                     {
-                        var taxonomySetForField = _taxonomyService.GetTaxonomyByName(tf.Settings.GetModel<TaxonomyFieldSettings>().Taxonomy);
+                        var taxonomySetForField = _taxonomyService.GetTaxonomyByName(taxName);
                         if (taxonomySetForField == null) continue; //handles missing taxonomy name
                                                                    // show taxonomies and their localizations 
-                        listTaxonomyIds.Add(taxonomySetForField.Id);
-                        if (taxonomySetForField.As<LocalizationPart>() != null)
-                        {
-                            listTaxonomyIds.AddRange(_localizationService.GetLocalizations(taxonomySetForField).Select(x => x.Id));
+                        if (!listTaxonomyIds.Contains(taxonomySetForField.Id)) {
+                            listTaxonomyIds.Add(taxonomySetForField.Id);
+                            if (taxonomySetForField.As<LocalizationPart>() != null) {
+                                listTaxonomyIds.AddRange(_localizationService.GetLocalizations(taxonomySetForField).Select(x => x.Id));
+                            }
                         }
                     }
 
@@ -326,6 +327,7 @@ namespace Laser.Orchard.AdvancedSearch.Controllers
 
             }
             //TODO: optimize code 
+            listTaxonomyIds = listTaxonomyIds.Distinct().ToList();
             foreach (var taxonomy in _taxonomyService.GetTaxonomies().Where(x => listTaxonomyIds.Contains(x.Id)))
             {
                 termList.Add(new KeyValuePair<int, string>(-1, taxonomy.Name));
