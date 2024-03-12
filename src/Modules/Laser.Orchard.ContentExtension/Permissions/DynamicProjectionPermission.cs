@@ -1,5 +1,7 @@
 ﻿using Laser.Orchard.ContentExtension.Models;
 using Laser.Orchard.ContentExtension.Services;
+using Orchard.ContentManagement;
+using Orchard.Core.Common.Models;
 using Orchard.Environment.Extensions;
 using Orchard.Environment.Extensions.Models;
 using Orchard.Security.Permissions;
@@ -18,7 +20,8 @@ namespace Laser.Orchard.ContentExtension.Permissions {
         private readonly IDynamicProjectionService _dynamicProjectionService;
 
         public DynamicProjectionPermission(
-            IDynamicProjectionService dynamicProjectionService) {
+            IDynamicProjectionService dynamicProjectionService,
+            IContentManager contentManager) {
             
             _dynamicProjectionService = dynamicProjectionService;
         }
@@ -43,11 +46,13 @@ namespace Laser.Orchard.ContentExtension.Permissions {
         }
 
         public static Permission CreateDynamicPermission(DynamicProjectionPart part) {
+            var identity = part.As<IdentityPart>().Identifier;
+
             return new Permission {
                 ImpliedBy = new[] { ManageAll },
                 Category = "Dynamic Projection Permission",
                 Description = "Specific Dynamic Projection Permission : " + part.AdminMenuText,
-                Name = "DynamicProjectionPermission" + part.Id.ToString()
+                Name = "DynamicProjectionPermission" + identity.ToString()
             };
         }
     }
