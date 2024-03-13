@@ -1,8 +1,9 @@
-﻿using Laser.Orchard.ContentExtension.Services;
+﻿using Laser.Orchard.ContentExtension.Models;
+using Laser.Orchard.ContentExtension.Services;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.UI.Navigation;
-
+using System.Collections.Generic;
 
 namespace Laser.Orchard.ContentExtension.Navigation {
     [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
@@ -17,9 +18,14 @@ namespace Laser.Orchard.ContentExtension.Navigation {
 
         public string MenuName { get { return "admin"; } }
 
+        private IEnumerable<DynamicProjectionPart> _allParts;
         public void GetNavigation(NavigationBuilder builder) {
-            var allParts = _dynamicProjectionService.GetPartsForMenu();
-            foreach (var part in allParts) {
+            // GetNavigation is invoked (usually) twice, so it makes sense to memorize the
+            // results of the query. (that's, twice per attempt to build a menu)
+            if (_allParts == null) {
+                _allParts = _dynamicProjectionService.GetPartsForMenu();
+            }
+            foreach (var part in _allParts) {
                 if (part != null) {
                     builder.Add(
                         new LocalizedString(part.AdminMenuText),
