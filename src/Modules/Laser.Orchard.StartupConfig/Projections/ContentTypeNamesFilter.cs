@@ -16,7 +16,7 @@ namespace Laser.Orchard.StartupConfig.Projections {
         public void Describe(DescribeFilterContext describe) {
             describe.For("Content", T("Content"), T("Content"))
                 .Element("ContentTypeNames", T("Content Type Names"),
-                    T("Specific content types, specified by name and validated by a list of allower content types."),
+                    T("Specific content types, specified by name and validated by a list of allowed content types."),
                     ApplyFilter,
                     DisplayFilter,
                     "ContentTypeNamesFilterForm"
