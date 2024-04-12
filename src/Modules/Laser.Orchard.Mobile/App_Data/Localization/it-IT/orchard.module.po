@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -701,6 +701,14 @@ msgid "Enable return file from the route: /apple-developer-domain-association"
 msgstr "Abilita il file di ritorno dalla route: /apple-developer-domain-association"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable route /.well-known/assetlinks.json"
+msgstr "Abilita rotta /.well-known/assetlinks.json"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable the /.well-known/assetlinks.json route"
+msgstr "Abilita rotta /.well-known/assetlinks.json"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "Enable the App Site File"
 msgstr "Abilita il File App Site"
 
@@ -717,12 +725,20 @@ msgid "File Content"
 msgstr "Contenuto del file"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "File Content for /.well-known/assetlinks.json"
+msgstr "File Content per Abilita /.well-known/assetlinks.json"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "File Content for apple-app-site-association"
 msgstr "Contenuto del file per apple-app-site-association"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "File Content for apple-developer-domain-association"
 msgstr "Contenuto del file per apple-developer-domain-association"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Google /.well-known/assetlinks.json content"
+msgstr "Contenuto di Google  /.well-known/assetlinks.json"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "Manage Manifest File"

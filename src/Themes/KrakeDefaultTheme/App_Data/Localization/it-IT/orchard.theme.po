@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -459,6 +459,10 @@ msgstr "Registrazione utente in fase di approvazione"
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RegistrationPending.cshtml"
 msgid "Your user account has been created but has to be approved before it can be used."
 msgstr "La tua utenza è stata creata, ma deve essere approvata prima che tu la possa usare."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
+msgid "Enter your username or email address"
+msgstr "Indica il tuo username o il tuo indirizzo e-mail"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
 msgid "Lost Password"

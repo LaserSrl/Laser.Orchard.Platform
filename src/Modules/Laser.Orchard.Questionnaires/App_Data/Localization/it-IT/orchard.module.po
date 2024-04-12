@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -605,6 +605,10 @@ msgid "Completeness"
 msgstr "Completezza"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Context"
+msgstr "Contesto"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Date From"
 msgstr "Dalla Data"
 
@@ -939,6 +943,14 @@ msgstr "Salva"
 msgctxt "Laser.Orchard.Questionnaires.Services.to"
 msgid "Operation Fail: Questionnaire already filled"
 msgstr "Operazione fallita: questionario già compilato"
+
+msgctxt "Laser.Orchard.Questionnaires.ViewModels.StatsSearchContextExtensions"
+msgid "Contents"
+msgstr "Contenuti"
+
+msgctxt "Laser.Orchard.Questionnaires.ViewModels.StatsSearchContextExtensions"
+msgid "Widgets"
+msgstr "Widget"
 
 msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionAttribute"
 msgid "You have to answer to {0}"

@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -161,8 +161,16 @@ msgid "Error Saving Content Item"
 msgstr "Errore durante il salvataggio del contenuto"
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Drivers.DynamicButtonToWorkflowsSettingsPartDriver"
+msgid "A button with global identifier {0} is already present. Button will not be imported"
+msgstr "Un pulsante con global identifier {0} esiste già. Il pulsante non verrà importato"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Drivers.DynamicButtonToWorkflowsSettingsPartDriver"
 msgid "Cannot have multiple buttons with the same name ({0})"
 msgstr "Non è possibile avere più pulsanti con lo stesso nome ({0})"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Drivers.DynamicButtonToWorkflowsSettingsPartDriver"
+msgid "The button name {0} was already used. It was automatically renamed to {1}."
+msgstr "Il nome {0} è già usato. Il pulsante sarà automaticamente rinominato in {1}"
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Handlers.DynamicButtonToWorkflowsSettingsHandler"
 msgid "Buttons"

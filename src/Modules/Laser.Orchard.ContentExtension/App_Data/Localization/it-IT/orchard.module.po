@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -249,8 +249,16 @@ msgid "There are not forms set. Create the first by adding a cshtml file in the 
 msgstr "Non c'è alcun form disponibile. È possibile crearne uno aggiungendo un file cshtml nella cartella /App_Data/Sites/{tenant}/Code"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "There are not forms set. Create the first by adding a cshtml file in the /App_Data/Sites/{tenant}/CodeViews folder"
+msgstr "Non ci sono form configurati. Crea il primo aggiungendo un file cshtml nella cartella /App_Data/Sites/{tenant}/CodeViews"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "There are not razors set. Create the first by adding a cshtml file in the /App_Data/Sites/{tenant}/Code folder"
 msgstr "Non c'è alcun razor disponibile. È possibile crearne uno aggiungendo un file cshtml nella cartella /App_Data/Sites/{tenant}/Code"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "There are not razors set. Create the first by adding a cshtml file in the /App_Data/Sites/{tenant}/CodeViews folder"
+msgstr "Non ci sono razor configurati. Crea il primo aggiungendo un file cshtml nella cartella /App_Data/Sites/{tenant}/CodeViews"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Type a ContentType name. Leave empty to not use a ContenType as form for filtering."

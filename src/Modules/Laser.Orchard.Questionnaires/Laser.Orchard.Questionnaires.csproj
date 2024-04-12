@@ -289,6 +289,10 @@
       <Name>Orchard.Localization</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
+      <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
+      <Name>Orchard.MediaLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Modules\Orchard.Modules.csproj">
       <Project>{17f86780-9a1f-4aa1-86f1-875eec2730c7}</Project>
       <Name>Orchard.Modules</Name>
