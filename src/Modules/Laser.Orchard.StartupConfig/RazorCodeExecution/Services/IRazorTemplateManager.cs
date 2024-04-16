@@ -12,6 +12,7 @@ using System.Web.Hosting;
 using System.Diagnostics;
 using Orchard.Environment.Configuration;
 using Laser.Orchard.StartupConfig.Providers;
+using Orchard.Logging;
 
 namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
@@ -44,7 +45,10 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
             _orchardServices = orchardServices;
             _shellSettings = shellSettings;
+
+            Logger = NullLogger.Instance;
         }
+        public ILogger Logger { get; set; }
 
         private List<string> listCached;
         private List<string> listOldCached;
@@ -84,9 +88,11 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
             listOldCached.AddRange(listCached);
             listCached = new List<string>();
+
         }
 
         private IRazorEngineService _razorEngine;
+
 
         //public void AddLayout(string key, string code) {
 
@@ -135,7 +141,11 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 #else
                     RazorEngineServiceStatic.AddTemplate(key, new LoadedTemplateSource(code, null));
 #endif
+                    var csw = new Stopwatch();
+                    csw.Start();
                     RazorEngineServiceStatic.Compile(key, null);
+                    csw.Stop();
+                    Logger.Error(string.Format("Compilation {0}: {1}", key, csw.ElapsedMilliseconds));
                     listCached.Add(key);
                 }
                 else
@@ -254,20 +264,26 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                 // Specific dlls in /Sites/__RazorReferences for special cases
                 HostingEnvironment.MapPath("~/App_Data/Sites/__RazorReferences")
             };
+            var alreadySelectedFiles = AssemblyToReference.Select(ar => {
+                    try {
+                        var fileName = ar.GetFile();
+                        return Path.GetFileName(fileName);
+                    }
+                    catch (Exception) {
+                        return string.Empty;
+                    }
+                })
+                .Where(fn => !string.IsNullOrWhiteSpace(fn))
+                .ToHashSet();
+
             foreach (var razorReferencesFolder in additionalFolders) {
                 if (Directory.Exists(razorReferencesFolder)) {
                     var dlls = Directory.GetFiles(razorReferencesFolder, "*.dll");
                     foreach (var dll in dlls) {
-                        // don't add the dll to the references if it's already there
-                        if (!(AssemblyToReference.Any(ar => {
-                            try {
-                                var fileName = ar.GetFile();
-                                return string.Equals(Path.GetFileName(dll), Path.GetFileName(fileName));
-                            }
-                            catch (Exception) {
-                                return false;
-                            }
-                        }))) {
+                        // Don't add the dll to the references if it's already there
+                        var fullName = Path.GetFileName(dll);
+                        if (!alreadySelectedFiles.Contains(fullName)) {
+                            alreadySelectedFiles.Add(fullName);
                             var reference = CompilerReference.From(dll);
                             yield return reference;
                         }
