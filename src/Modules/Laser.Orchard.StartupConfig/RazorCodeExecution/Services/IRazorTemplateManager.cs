@@ -1,18 +1,15 @@
 ﻿using Orchard;
+using Orchard.Environment.Configuration;
+using Orchard.Logging;
+using RazorEngine.Compilation;
+using RazorEngine.Compilation.ReferenceResolver;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using RazorEngine.Compilation.ReferenceResolver;
-using RazorEngine.Compilation;
 using System.Linq;
-using System.Web;
 using System.Web.Hosting;
-using System.Diagnostics;
-using Orchard.Environment.Configuration;
-using Laser.Orchard.StartupConfig.Providers;
-using Orchard.Logging;
 
 namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
@@ -141,11 +138,8 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 #else
                     RazorEngineServiceStatic.AddTemplate(key, new LoadedTemplateSource(code, null));
 #endif
-                    var csw = new Stopwatch();
-                    csw.Start();
                     RazorEngineServiceStatic.Compile(key, null);
-                    csw.Stop();
-                    Logger.Error(string.Format("Compilation {0}: {1}", key, csw.ElapsedMilliseconds));
+
                     listCached.Add(key);
                 }
                 else
