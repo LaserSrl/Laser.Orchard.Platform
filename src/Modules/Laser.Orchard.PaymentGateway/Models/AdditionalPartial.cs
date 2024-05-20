@@ -1,6 +1,4 @@
-﻿using System.Web.Mvc;
-using System.Web.Mvc.Html;
-using Laser.Orchard.PaymentGateway.ViewModels;
+﻿using Orchard.DisplayManagement;
 
 namespace Laser.Orchard.PaymentGateway.Models {
     public class AdditionalPartial : AdditionalShapeBase {
@@ -8,8 +6,9 @@ namespace Laser.Orchard.PaymentGateway.Models {
         public string ShapeFile { get; set; }
 
         public override dynamic DisplayShape(AdditionalShapeContext ctx) {
-            return ctx.ShapeFactory.AdditionalShapeManager(ShapeName: ShapeFile,
-                ShapeContext: ctx);
+            return ctx.ShapeFactory.Create(ShapeFile, Arguments.From(new {
+                ShapeContext = ctx
+            }));
         }
     }
 }

@@ -59,54 +59,49 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers
         {
 
             var settings = field.PartFieldDefinition.Settings.GetModel<CPContentCreationSettings>();
-            var fieldSettings = field.PartFieldDefinition.Settings.GetModel<ContentPickerFieldSettings>();
 
             if (!settings.EnableContentCreation)
             {
                 return null;
             }
 
-            List<string> contentTypeNames = new List<string>();
-            List<string> creatableTypes = GetCreatableTypes(false).Select(x => x.Name).ToList();
-
-            if (fieldSettings != null && !string.IsNullOrWhiteSpace(fieldSettings.DisplayedContentTypes))
-            {
-                //begin make the list for associated parts
-                var types = fieldSettings.DisplayedContentTypes;
-
-                IEnumerable<String> contentTypes;
-                if (!String.IsNullOrEmpty(types))
-                {
-                    var rawTypes = types.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                    contentTypes = _contentDefinitionManager
-                        .ListTypeDefinitions()
-                        .Where(x => x.Parts.Any(p => rawTypes.Contains(p.PartDefinition.Name)) || rawTypes.Contains(x.Name))
-                        .Select(x => x.Name)
-                        .ToArray();
-                }
-                else
-                {
-                    contentTypes = creatableTypes;
-                }
-                //end  list for associated parts
-
-
-                foreach (string contentTypeName in contentTypes)
-                {
-                    if (!string.IsNullOrWhiteSpace(contentTypeName)) contentTypeNames.Add(contentTypeName.Trim());
-                }
-            }
-            else
-            {
-                foreach (var creatableTypeName in creatableTypes)
-                {
-                    contentTypeNames.Add(creatableTypeName);
-                }
-            }
-
             return ContentShape("Fields_ContentPickerCreateItem_Edit", GetDifferentiator(field, part),
                 () =>
                 {
+                    var fieldSettings = field.PartFieldDefinition.Settings.GetModel<ContentPickerFieldSettings>();
+
+                    List<string> contentTypeNames = new List<string>();
+                    List<string> creatableTypes = GetCreatableTypes(false).Select(x => x.Name).ToList();
+
+                    if (fieldSettings != null && !string.IsNullOrWhiteSpace(fieldSettings.DisplayedContentTypes)) {
+                        //begin make the list for associated parts
+                        var types = fieldSettings.DisplayedContentTypes;
+
+                        IEnumerable<String> contentTypes;
+                        if (!String.IsNullOrEmpty(types)) {
+                            var rawTypes = types.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                            contentTypes = _contentDefinitionManager
+                                .ListTypeDefinitions()
+                                .Where(x => x.Parts.Any(p => rawTypes.Contains(p.PartDefinition.Name)) || rawTypes.Contains(x.Name))
+                                .Select(x => x.Name)
+                                .ToArray();
+                        }
+                        else {
+                            contentTypes = creatableTypes;
+                        }
+                        //end  list for associated parts
+
+
+                        foreach (string contentTypeName in contentTypes) {
+                            if (!string.IsNullOrWhiteSpace(contentTypeName)) contentTypeNames.Add(contentTypeName.Trim());
+                        }
+                    }
+                    else {
+                        foreach (var creatableTypeName in creatableTypes) {
+                            contentTypeNames.Add(creatableTypeName);
+                        }
+                    }
+
                     var model = new ContentPickerCreateItemVM
                     {
                         contentTypeList = contentTypeNames,

@@ -137,6 +137,10 @@
       <Name>Orchard.Framework</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Laser.Orchard.Commons\Laser.Orchard.Commons.csproj">
+      <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
+      <Name>Laser.Orchard.Commons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.TemplateManagement\Laser.Orchard.TemplateManagement.csproj">
       <Project>{ca85f4f3-216c-4eab-bfbc-4044ee307cd7}</Project>
       <Name>Laser.Orchard.TemplateManagement</Name>

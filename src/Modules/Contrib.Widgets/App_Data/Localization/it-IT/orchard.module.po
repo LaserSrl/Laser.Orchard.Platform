@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -187,4 +187,12 @@ msgstr "Il tuo contenuto è stato creato."
 msgctxt "Contrib.Widgets.Drivers.WidgetsContainerPartDriver"
 msgid "You don't have the permissions to remove some of the widgets you attempted to delete."
 msgstr "Non hai il permesso per rimuovere alcuni dei widget che hai cercato di eliminare."
+
+msgctxt "Contrib.Widgets.Handlers.WidgetExPartHandler"
+msgid "The widget '{0}' has been moved under its '{1}' container"
+msgstr "Il widget '{0}' è stato spostato nel suo contenitore '{1}'"
+
+msgctxt "Contrib.Widgets.Handlers.WidgetsContainerPartHandler"
+msgid "The widget '{0}' has been replaced by its '{1}' version"
+msgstr "Il widget '{0}' è stato sostituito dalla sua versione '{1}'"
 

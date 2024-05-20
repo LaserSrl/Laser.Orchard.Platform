@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -63,6 +63,10 @@ msgstr "Salva Tutto"
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
 msgid " Remove this custom pos"
 msgstr "Rimouvi il metodo di pagamento personalizzato"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
+msgid "Alternate name: {0}"
+msgstr "Nome alternate: {0}"
 
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
 msgid "Order:"
@@ -279,6 +283,10 @@ msgstr "C'è stato un errore nell'inizializzazione del pagamento. È consigliato
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosPayButton.cshtml"
 msgid "Pay now"
 msgstr "Paga ora"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosPayButton_BankTransfer.cshtml"
+msgid "Pay via {0}"
+msgstr "Paga tramite {0}"
 
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosPayButton_BankTransfer.cshtml"
 msgid "Pay via Bank Transfer"

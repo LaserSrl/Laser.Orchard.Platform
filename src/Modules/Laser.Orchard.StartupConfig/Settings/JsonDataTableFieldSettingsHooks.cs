@@ -23,6 +23,7 @@ namespace Laser.Orchard.StartupConfig.Handlers {
             }
             var model = new JsonDataTableFieldSettings();
             if (updateModel.TryUpdateModel(model, "JsonDataTableFieldSettings", null, null)) {
+                builder.WithSetting("JsonDataTableFieldSettings.Hint", model.Hint);
                 builder.WithSetting("JsonDataTableFieldSettings.ColumnsDefinition", model.ColumnsDefinition);
                 builder.WithSetting("JsonDataTableFieldSettings.MaxRows", model.MaxRows.ToString());
             }

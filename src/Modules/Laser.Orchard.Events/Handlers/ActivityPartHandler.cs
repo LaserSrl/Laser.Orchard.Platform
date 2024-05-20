@@ -22,7 +22,7 @@ namespace Laser.Orchard.Events.Handlers
 
                 part.RepeatValue = 1;
                 part.RepeatEnd = false;
-                part.RepeatEndDate = new DateTime(currYear + 1, currMonth, currDay);
+                part.RepeatEndDate = part.DateTimeStart.Value.AddYears(1);
             });
 
             //Necessario per inizializzare l'oggetto nel caso in cui l'activity part venga aggiunta in un secondo momento
@@ -38,7 +38,7 @@ namespace Laser.Orchard.Events.Handlers
 
                     part.RepeatValue = 1;
                     part.RepeatEnd = false;
-                    part.RepeatEndDate = new DateTime(currYear + 1, currMonth, currDay);
+                    part.RepeatEndDate = part.DateTimeStart.Value.AddYears(1);
                 }
             });
         }

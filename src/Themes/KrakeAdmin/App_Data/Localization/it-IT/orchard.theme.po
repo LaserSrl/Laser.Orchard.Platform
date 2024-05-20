@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -291,6 +291,114 @@ msgstr "Progetto Krake"
 msgctxt "~/Themes/KrakeAdmin/Views/Header.cshtml"
 msgid "Your site"
 msgstr "Il tuo sito"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Amelia"
+msgstr "Amelia"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Cerulean"
+msgstr "Cerulean"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Cosmo"
+msgstr "Cosmo"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Cyborg"
+msgstr "Cyborg"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Default"
+msgstr "Predefinito"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Flatly"
+msgstr "Flatly"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Journal"
+msgstr "Giornale"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Readable"
+msgstr "Readable"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select the swatch that you want"
+msgstr "Selezionare lo stile desiderato"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use a fixed navigation"
+msgstr "Selezionare questa checkbox per usare una navigazione fissa"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use a fluid layout (100% width)"
+msgstr "Selezionare questa checkbox per usare un layout fluido (100% width)"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use a navigation bar search field. *REQUIRES SEARCH MODULE"
+msgstr "Selezionare questa checkbox per usare un campo di ricerca nella barra di navigazione. *Richiesto per il modulo di ricerca"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use a sticky footer"
+msgstr "Selezionare questa checkbox per usare un footer"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use the inverse navigation color. *REQUIRES FIXED NAVIGATION BAR"
+msgstr "Selezionare questa checkbox per invertire i colori della barra di navigazione. *Richiede la barra di navigazione fissa"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Simplex"
+msgstr "Simplex"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Slate"
+msgstr "Slate"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Spacelab"
+msgstr "Spacelab"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Swatch"
+msgstr "Stile"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Tagline text"
+msgstr "Testo della Tagline"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "type tagline text for your site"
+msgstr "tipo di testo tagline per il sito"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "United"
+msgstr "United"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Fixed Navigation Bar"
+msgstr "Usare la barra di navigazione fissa"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Fluid Layout"
+msgstr "Usare il layout fluido"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Inverse Navigation Bar Color"
+msgstr "Usare la barra di navigazione con colori invertiti"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Navigation Bar Search Field"
+msgstr "Usare il campo di ricerca nella barra di navigazione"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Sticky Footer"
+msgstr "Usare un footer"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Layout.cshtml"
 msgid "Are you sure you want to remove this element ?"

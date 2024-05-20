@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -199,6 +199,10 @@ msgstr "modificato di recente"
 msgctxt "~/Modules/Laser.Orchard.AdvancedSearch/Views/Admin/List.cshtml"
 msgid "recently published"
 msgstr "pubblicato di recente"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSearch/Views/Admin/List.cshtml"
+msgid "Select all"
+msgstr "Seleziona tutti"
 
 msgctxt "~/Modules/Laser.Orchard.AdvancedSearch/Views/Admin/List.cshtml"
 msgid "Show"

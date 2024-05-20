@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2023 Laser s.r.l.
+# Copyright (c) 2024 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -129,12 +129,20 @@ msgid "Columns definition of the bootstrap-table as a json array. Example: [{fie
 msgstr "Definizione delle colonne come vettore json es: [{filed:'nome',title:'Nome'},{filed:'descrizione'.title:'Descrizione'}]"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTableFieldSettings.cshtml"
+msgid "Help text"
+msgstr "Testo della guida"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTableFieldSettings.cshtml"
 msgid "Limit number of rows in the table. 0 means no limit."
 msgstr "Limite numero di righe della tablella, 0 per nessun limite"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTableFieldSettings.cshtml"
 msgid "Max Number of Rows"
 msgstr "Numero massimo di righe"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTableFieldSettings.cshtml"
+msgid "The help text is written under the field when the user is entering a value."
+msgstr "Il testo della guida è scritto sotto il campo quando l'utente inserisce un valore."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTablePartSettings.cshtml"
 msgid "Columns Definition"
@@ -159,6 +167,14 @@ msgstr "Valori separati da virgola come ad esempio: ContentType.ContentFieldName
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/Parts/ContentPickerConnector.Settings.cshtml"
 msgid "Fields Filter"
 msgstr "Filtro Campi"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/PerItemCachePartSettings.cshtml"
+msgid "hint"
+msgstr "suggerimento"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/PerItemCachePartSettings.cshtml"
+msgid "New Cache Key"
+msgstr "Nuova chiave di cache"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ShortCodes/ContentShortCodeSettings.cshtml"
 msgid "A comma separated value of all the content types or content parts to display."
@@ -523,6 +539,14 @@ msgstr "Inserire il nome della cartella (opzionale). Se vuoto, sarà creato in a
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/OwnedFolder_Edit.cshtml"
 msgid "User default owned folder"
 msgstr "Cartella di default di proprietà dell'utente"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/PerItemCachePart_Edit.cshtml"
+msgid "hint"
+msgstr "suggerimento"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/PerItemCachePart_Edit.cshtml"
+msgid "New Cache Key"
+msgstr "Nuova chiave di cache"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ProtectionSettingsPart.Edit.cshtml"
 msgid "A list of MVC Area.Controller.Action entries. When defined, using comma separated values, protects entries from unauthorized calls."
@@ -1073,6 +1097,10 @@ msgid "Couldn't delete media items"
 msgstr "Non è stato possibile eliminare i files multimediali"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
+msgid "Error when deleting file to replace: file {0} does not exist in folder {1}. Media has been updated anyway."
+msgstr "Errore durante la cancellazione del file da sostituire: il file {0} non esiste nella cartella {1}. Il media è stato comunque aggiornato."
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
 msgid "This file is not allowed: {0}"
 msgstr "Questo file non è consentito: {0}"
 
@@ -1427,6 +1455,38 @@ msgstr "Inserisci un valore per l'indice (sono permessi i token)."
 msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderFormValidator"
 msgid "The array of Criteria may not be null"
 msgstr "L'array dei criteri non può essere null."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ContentTypeNamesFilter"
+msgid "Content"
+msgstr "Contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ContentTypeNamesFilter"
+msgid "Content Type Names"
+msgstr "Nomi dei tipi di contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ContentTypeNamesFilter"
+msgid "Content with specified types that are allowed"
+msgstr "Contenuti con specifici tipi consentiti"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ContentTypeNamesFilter"
+msgid "Specific content types, specified by name and validated by a list of allowed content types."
+msgstr "Tipi di contenuto specifici, indicati per nome e validati tramite una lista di tipi di contenuto consentiti."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ContentTypeNamesFilterForm"
+msgid "Allowed content types"
+msgstr "Tipi di contenuto consentiti"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ContentTypeNamesFilterForm"
+msgid "Content type names"
+msgstr "Nomi dei tipi di contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ContentTypeNamesFilterForm"
+msgid "The allowed content type names. If no name is provided, every content type will be allowed"
+msgstr "I nomi dei tipi di contenuto consentiti. Se nessun nome è fornito, tutti i tipi di contenuto saranno consentiti."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ContentTypeNamesFilterForm"
+msgid "The content type names. If no name is provided, all allowed content types will be used."
+msgstr "I nomi dei tipi di contenuto. Se nessun nome è indicato, saranno usati tutti i tipi di contenuto consentiti."
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterForm"
 msgid "Is between"

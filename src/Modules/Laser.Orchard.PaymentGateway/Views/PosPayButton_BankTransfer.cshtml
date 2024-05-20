@@ -1,7 +1,13 @@
-﻿<button type="submit"
+﻿@{
+    var buttonLabel = T("Pay via Bank Transfer");
+    if (Model.CustomPos != null && !(string.IsNullOrEmpty(Model.CustomPos.Name))) {
+        buttonLabel = T("Pay via {0}", Model.CustomPos.Name);
+    }
+}
+<button type="submit"
         name="SelectedPosService"
         value="@Model.PosName"
         style="padding: 10px 10px;"
         class="btn btn__bg d-block">
-    @T("Pay via Bank Transfer")
+    @buttonLabel
 </button>
