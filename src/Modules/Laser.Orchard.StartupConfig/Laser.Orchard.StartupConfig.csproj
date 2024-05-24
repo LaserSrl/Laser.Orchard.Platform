@@ -500,6 +500,8 @@
     <Compile Include="Projections\ContentTypeNamesFilter.cs" />
     <Compile Include="Projections\ContentTypeNamesFilterForm.cs" />
     <Compile Include="Projections\DateTimeFilterForm.cs" />
+    <Compile Include="Providers\ContentTypeJsonDataTableColumnProvider.cs" />
+    <Compile Include="Providers\IJsonDataTableColumnProvider.cs" />
     <Compile Include="RazorBase\Models\KeyNameResolveContext.cs" />
     <Compile Include="RazorBase\Models\TemplateSourceResolveContext.cs" />
     <Compile Include="RazorCodeExecution\Services\CustomRazorFileResolver.cs" />
@@ -588,7 +590,9 @@
     <Compile Include="Services\IBearerTokenEncryptionService.cs" />
     <Compile Include="Services\IFrontEndEditService.cs" />
     <Compile Include="Services\ContentSerialization\ISpecificContentFieldSerializationProvider.cs" />
+    <Compile Include="Services\IJsonDataTableService.cs" />
     <Compile Include="Services\IThemeHelperService.cs" />
+    <Compile Include="Services\JsonDataTableService.cs" />
     <Compile Include="Services\ThemeHelperService.cs" />
     <Compile Include="Settings\CacheEvictorPartSettingsHook.cs" />
     <Compile Include="Settings\FrontendEditorConfigurationSettings.cs" />
@@ -722,6 +726,7 @@
     <Compile Include="Tokens\StripHtmlToken.cs" />
     <Compile Include="ViewModels\ApiCredentialsPartViewModel.cs" />
     <Compile Include="ViewModels\CommandsExecuteViewModel.cs" />
+    <Compile Include="ViewModels\JsonDataTableFieldViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceIndexVM.cs" />
     <Compile Include="ViewModels\MaintenanceVM.cs" />
     <Compile Include="ViewModels\Response.cs" />
