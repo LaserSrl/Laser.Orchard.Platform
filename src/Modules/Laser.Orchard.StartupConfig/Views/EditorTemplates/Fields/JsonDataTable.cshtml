@@ -14,6 +14,7 @@
     var uniqueId = Model.Field.PartFieldDefinition.Name + "-" + Model.Field.Name;
 
     columns = "[{rowHandle:true,formatter:\"handle\",headerSort:false,width:30,minWidth:30}," + columns.TrimStart('[').TrimEnd(']') + ",{rowHandle:true,formatter:\"buttonCross\",headerSort:false,width:30,minWidth:30,cellClick:function(e, cell){cell.getRow().delete();}}]";
+
 }
 <fieldset>
     <legend>@Model.Field.DisplayName</legend>

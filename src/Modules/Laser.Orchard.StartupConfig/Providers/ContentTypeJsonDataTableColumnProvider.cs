@@ -23,7 +23,19 @@ namespace Laser.Orchard.StartupConfig.Providers {
                     var ct = editorParams.Value<string>("ct");
 
                     if (!string.IsNullOrWhiteSpace(ct)) {
-                        var q = _contentManager.Query().ForType(ct).ForVersion(VersionOptions.Published);
+                        var v = editorParams.Value<string>("v");
+                        var version = VersionOptions.Published;
+                        if (!string.IsNullOrWhiteSpace(v)) {
+                            switch (v.ToLowerInvariant()) {
+                                case "l":
+                                    version = VersionOptions.Latest;
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                        var q = _contentManager.Query().ForType(ct).ForVersion(version);
                         var results = q.List();
                         if (results != null) {
                             var arr = new JArray();
@@ -38,6 +50,7 @@ namespace Laser.Orchard.StartupConfig.Providers {
 
                             // Assign the list to "values" property
                             editorParams["values"] = arr;
+
                             // Refresh "editorParams" property of the "columnDefinition" JToken
                             columnDefinition["editorParams"] = editorParams;
                         }
