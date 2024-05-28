@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Schema;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
+using System.Linq;
 
 namespace Laser.Orchard.StartupConfig.Providers {
     [OrchardFeature("Laser.Orchard.StartupConfig.JsonDataTablePart")]
@@ -28,7 +29,13 @@ namespace Laser.Orchard.StartupConfig.Providers {
                         if (!string.IsNullOrWhiteSpace(v)) {
                             switch (v.ToLowerInvariant()) {
                                 case "l":
+                                case "latest":
                                     version = VersionOptions.Latest;
+                                    break;
+
+                                case "p":
+                                case "published":
+                                    version = VersionOptions.Published;
                                     break;
 
                                 default:
@@ -43,7 +50,8 @@ namespace Laser.Orchard.StartupConfig.Providers {
                             foreach (var ci in results) {
                                 var ciTitle = ci.ContentManager.GetItemMetadata(ci).DisplayText;
                                 var el = new JObject();
-                                el["value"] = ci.Id.ToString();
+                                //el["value"] = ci.Id.ToString();
+                                el["value"] = ciTitle;
                                 el["label"] = ciTitle;
                                 arr.Add(el);
                             }
@@ -56,6 +64,7 @@ namespace Laser.Orchard.StartupConfig.Providers {
                         }
                     }
 
+                    columnDefinition["sorter"] = "string";
                     columnDefinition["editor"] = "list";
                 }
             }
