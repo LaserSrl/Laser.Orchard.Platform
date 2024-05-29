@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
-using System.Linq;
 
 namespace Laser.Orchard.StartupConfig.Providers {
     [OrchardFeature("Laser.Orchard.StartupConfig.JsonDataTablePart")]
@@ -42,7 +40,10 @@ namespace Laser.Orchard.StartupConfig.Providers {
                                     break;
                             }
                         }
-                        var q = _contentManager.Query().ForType(ct).ForVersion(version);
+                        var q = _contentManager
+                            .Query()
+                            .ForType(ct)
+                            .ForVersion(version);
                         var results = q.List();
                         if (results != null) {
                             var arr = new JArray();

@@ -20,15 +20,16 @@ namespace Laser.Orchard.StartupConfig.Services {
 
             if (cols.HasValues) {
                 foreach (var col in cols) {
-                   foreach (var cp in _columnProviders) {
-                        var newCol = cp.ProcessColumnDefinition(col);
-                        newCols.Add(newCol);
-                   }
+                    JToken newCol = col;
+                    foreach (var cp in _columnProviders) {
+                        newCol = cp.ProcessColumnDefinition(newCol);
+                    }
+                    newCols.Add(newCol);
                 }
             }
 
             return JsonConvert.SerializeObject(newCols);
         }
-            
+
     }
 }
