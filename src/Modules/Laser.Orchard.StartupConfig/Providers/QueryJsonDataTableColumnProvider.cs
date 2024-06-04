@@ -56,6 +56,9 @@ namespace Laser.Orchard.StartupConfig.Providers {
                                 columnDefinition["editorParams"] = editorParams;
                             }
                         }
+
+                        // Add a marker to be replaced inside the shape to add a function to properly display the label of the selected item instead of its value.
+                        columnDefinition["displayLabel"] = "label";
                         columnDefinition["sorter"] = "string";
                         columnDefinition["editor"] = "list";
                     }

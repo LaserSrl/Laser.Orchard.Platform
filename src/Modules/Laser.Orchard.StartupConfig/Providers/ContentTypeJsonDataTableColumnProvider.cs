@@ -51,8 +51,8 @@ namespace Laser.Orchard.StartupConfig.Providers {
                             foreach (var ci in results) {
                                 var ciTitle = ci.ContentManager.GetItemMetadata(ci).DisplayText;
                                 var el = new JObject();
-                                //el["value"] = ci.Id.ToString();
-                                el["value"] = ciTitle;
+                                el["value"] = ci.Id.ToString();
+                                //el["value"] = ciTitle;
                                 el["label"] = ciTitle;
                                 arr.Add(el);
                             }
@@ -65,6 +65,8 @@ namespace Laser.Orchard.StartupConfig.Providers {
                         }
                     }
 
+                    // Add a marker to be replaced inside the shape to add a function to properly display the label of the selected item instead of its value.
+                    columnDefinition["displayLabel"] = "label";
                     columnDefinition["sorter"] = "string";
                     columnDefinition["editor"] = "list";
                 }
