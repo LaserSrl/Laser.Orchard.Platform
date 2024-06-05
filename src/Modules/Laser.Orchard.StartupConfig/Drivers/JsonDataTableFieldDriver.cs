@@ -60,10 +60,13 @@ namespace Laser.Orchard.StartupConfig.Drivers {
             return Editor(part, field, shapeHelper);
         }
         protected override void Importing(ContentPart part, JsonDataTableField field, ImportContentContext context) {
-            context.ImportAttribute(GetPrefix(field, part), "TableData", x => field.TableData = x);
+            context.ImportAttribute(GetPrefix(field, part), 
+                "TableData", 
+                x => field.TableData = _jsonDataTableService.ParseTableDataForImport(field, x, context));
         }
         protected override void Exporting(ContentPart part, JsonDataTableField field, ExportContentContext context) {
-            context.Element(GetPrefix(field, part)).SetAttributeValue("TableData", field.TableData);
+            var tableData = _jsonDataTableService.ParseTableDataForExport(field);            
+            context.Element(GetPrefix(field, part)).SetAttributeValue("TableData", tableData);
         }
     }
 }

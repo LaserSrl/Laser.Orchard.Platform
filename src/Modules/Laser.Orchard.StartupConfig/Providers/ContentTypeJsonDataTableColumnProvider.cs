@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Laser.Orchard.StartupConfig.Models;
+using Newtonsoft.Json.Linq;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 
@@ -15,7 +16,7 @@ namespace Laser.Orchard.StartupConfig.Providers {
         public JToken ProcessColumnDefinition(JToken columnDefinition) {
             var columnEditor = columnDefinition.Value<string>("editor");
 
-            if (!string.IsNullOrEmpty(columnEditor) && ColumnEditor.Equals(columnEditor, System.StringComparison.OrdinalIgnoreCase)) {
+            if (CheckColumnEditor(columnEditor)) {
                 var editorParams = columnDefinition.Value<JToken>("editorParams");
 
                 if (editorParams != null) {
@@ -73,6 +74,10 @@ namespace Laser.Orchard.StartupConfig.Providers {
             }
 
             return columnDefinition;
+        }
+
+        public bool CheckColumnEditor(string editor) {
+            return (!string.IsNullOrWhiteSpace(editor) && ColumnEditor.Equals(editor, System.StringComparison.OrdinalIgnoreCase));
         }
     }
 }

@@ -13,9 +13,6 @@
     var columns = Model.ColumnsDefinition;
     var uniqueId = Model.Field.PartFieldDefinition.Name + "-" + Model.Field.Name;
 
-    // If column is set up to display the label, add a proper formatter function that checks inside the values in the list to display the label instead of the value for selected items.
-    columns = columns.Replace("\"displayLabel\":\"label\"", "formatter:function(cell){var l = ''; cell.getColumn().getDefinition().editorParams.values.forEach(function(a){if (a.value.toString() == cell.getValue()) {l = a.label;} });return l;}");
-
     columns = "[{rowHandle:true,formatter:\"handle\",headerSort:false,width:30,minWidth:30}," + columns.TrimStart('[').TrimEnd(']') + ",{rowHandle:true,formatter:\"buttonCross\",headerSort:false,width:30,minWidth:30,cellClick:function(e, cell){cell.getRow().delete();}}]";
 
 }
