@@ -1,20 +1,25 @@
-﻿@model Laser.Orchard.StartupConfig.Models.JsonDataTableField
-@using Laser.Orchard.StartupConfig.Models;
+﻿@using Laser.Orchard.StartupConfig.Models;
+@using Laser.Orchard.StartupConfig.ViewModels;
+
+@model JsonDataTableFieldViewModel
 @{
     Style.Require("tabulator").AtHead();
     Script.Require("tabulator").AtHead();
     Script.Require("luxon").AtHead();
-    
 
-    var settings = Model.PartFieldDefinition.Settings.GetModel<JsonDataTableFieldSettings>();
-    var columns = settings.ColumnsDefinition;
-    var uniqueId = Model.PartFieldDefinition.Name + "-" + Model.Name;
+
+    var settings = Model.Field.PartFieldDefinition.Settings.GetModel<JsonDataTableFieldSettings>();
+    //var columns = settings.ColumnsDefinition;
+    var columns = Model.ColumnsDefinition;
+    var uniqueId = Model.Field.PartFieldDefinition.Name + "-" + Model.Field.Name;
+
     columns = "[{rowHandle:true,formatter:\"handle\",headerSort:false,width:30,minWidth:30}," + columns.TrimStart('[').TrimEnd(']') + ",{rowHandle:true,formatter:\"buttonCross\",headerSort:false,width:30,minWidth:30,cellClick:function(e, cell){cell.getRow().delete();}}]";
+
 }
 <fieldset>
-    <legend>@Model.DisplayName</legend>
+    <legend>@Model.Field.DisplayName</legend>
     <div>
-        @Html.HiddenFor(m => m.TableData)
+        @Html.HiddenFor(m => m.Field.TableData)
         <div class="btn-group" role="group" aria-label="Basic example" id="toolbar-@uniqueId">
             <button type="button" class="btn btn-secondary" id="btnAddTop-@uniqueId" style="margin-right:10px" title="@T("Insert a row at the top of the list")">@T("Insert")</button>
             <button type="button" class="btn btn-secondary" id="btnAddBottom-@uniqueId" style="margin-right:10px" title="@T("Insert a row at the bottom of the list")">@T("Add")</button>
@@ -24,14 +29,14 @@
             <script>
             $(function () {
                 var tableId = "#table-@uniqueId";
-                var $hidden = $("#@Html.FieldIdFor(m => m.TableData)");
+                var $hidden = $("#@Html.FieldIdFor(m => m.Field.TableData)");
 
                 var $table = new Tabulator(tableId, {
                     height:"300px",
                     layout:"fitColumns",
                     movableRows: true,
                     columns: @Html.Raw(columns),
-                    data: @Html.Raw(Model.TableData)
+                    data: @Html.Raw(Model.Field.TableData)
                 });
                 $table.on("dataChanged", function (data) {
                     var newVal = JSON.stringify(data);
