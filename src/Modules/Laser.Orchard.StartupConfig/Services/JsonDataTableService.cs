@@ -2,6 +2,7 @@
 using Laser.Orchard.StartupConfig.Providers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
@@ -15,12 +16,30 @@ namespace Laser.Orchard.StartupConfig.Services {
     public class JsonDataTableService : IJsonDataTableService {
         private readonly IEnumerable<IJsonDataTableColumnProvider> _columnProviders;
         private readonly IContentManager _contentManager;
+        private IContentSerializationServices _contentSerializationServices;
+        private readonly IWorkContextAccessor _workContextAccessor;
+
+        private IContentSerializationServices contentSerializationServices {
+            get {
+                if (_contentSerializationServices == null) {
+                    var workContext = _workContextAccessor.GetContext();
+                    IContentSerializationServices services;
+                    if (workContext.TryResolve(out services)) {
+                        _contentSerializationServices = services;
+                    }
+                }
+
+                return _contentSerializationServices;
+            }
+        }
 
         public JsonDataTableService(IEnumerable<IJsonDataTableColumnProvider> columnProviders,
-            IContentManager contentManager) {
+            IContentManager contentManager,
+            IWorkContextAccessor workContextAccessor) {
 
             _columnProviders = columnProviders;
             _contentManager = contentManager;
+            _workContextAccessor = workContextAccessor;
         }
 
         public string ProcessColumnsDefinition(string columnsDefinition) {
@@ -98,7 +117,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                                 // fieldValue is the identity of the selected content item
                                 // For this reason, we need to check if there is the proper content item in the target tenant (the one we are importing data to)
                                 var intId = 0;
-                                
+
                                 var ci = context.GetItemFromSession(fieldValue);
                                 if (ci != null) {
                                     intId = ci.Id;
@@ -114,6 +133,45 @@ namespace Laser.Orchard.StartupConfig.Services {
             }
 
             return tableData;
+        }
+
+        public JArray SerializeData(JsonDataTableField field) {
+            var elements = new JArray();
+            // First, check if each of the columns needs to be processed, based on column definition.
+            var settings = field.PartFieldDefinition.Settings.GetModel<JsonDataTableFieldSettings>();
+            JArray cols = JArray.Parse(settings.ColumnsDefinition);
+            if (cols.HasValues) {
+                JArray rows = JArray.Parse(field.TableData);
+                foreach (var row in rows) {
+                    var element = new JObject();
+                    foreach (var col in cols) {
+                        var columnEditor = col.Value<string>("editor");
+                        var fieldName = col.Value<string>("field");
+                        if (_columnProviders.Any(cp => cp.CheckColumnEditor(columnEditor)) &&
+                            contentSerializationServices != null) {
+                            // Assume that every custom providers treats the data as content item ids.
+                            // Content items need to be serialized in place of their ids.                        
+
+                            var fieldValue = row.Value<string>(fieldName);
+                            if (!string.IsNullOrWhiteSpace(fieldValue)) {
+                                var intValue = 0;
+                                if (int.TryParse(fieldValue, out intValue) && intValue > 0) {
+                                    var ci = _contentManager.Get(intValue);
+                                    var contentJson = contentSerializationServices.GetJson(ci);
+                                    element[fieldName] = contentJson;
+                                }
+                            }
+                        } else {
+                            // Standard name-value column
+                            var fieldValue = row.Value<string>(fieldName);
+                            element[fieldName] = fieldValue;
+                        }
+                    }
+                    elements.Add(element);
+                }
+            }
+
+            return elements;
         }
     }
 }
