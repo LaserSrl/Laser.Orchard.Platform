@@ -502,6 +502,7 @@
     <Compile Include="Projections\DateTimeFilterForm.cs" />
     <Compile Include="Providers\ContentTypeJsonDataTableColumnProvider.cs" />
     <Compile Include="Providers\IJsonDataTableColumnProvider.cs" />
+    <Compile Include="Providers\JsonDataTableFieldSerializationProvider.cs" />
     <Compile Include="Providers\QueryJsonDataTableColumnProvider.cs" />
     <Compile Include="RazorBase\Models\KeyNameResolveContext.cs" />
     <Compile Include="RazorBase\Models\TemplateSourceResolveContext.cs" />
