@@ -5,6 +5,7 @@ using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.ViewModels;
 using Laser.Orchard.UsersExtensions.Filters;
 using Laser.Orchard.UsersExtensions.Models;
+using Laser.Orchard.UsersExtensions.Providers;
 using Laser.Orchard.UsersExtensions.Services;
 using Orchard;
 using Orchard.ContentManagement;
@@ -21,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -40,6 +42,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
         private readonly IUserService _userService;
         private readonly IUserEventHandler _userEventHandler;
         private readonly IMembershipService _membershipService;
+        private readonly IEnumerable<IExtendedRegistrationProvider> _extendedRegistrationProviders;
 
         public BaseUserActionsController(
             IOrchardServices orchardServices,
@@ -49,7 +52,9 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             IUserService userService,
             IUserEventHandler userEventHandler,
             ICsrfTokenHelper csrfTokenHelper,
-            IMembershipService membershipService) {
+            IMembershipService membershipService,
+            IEnumerable<IExtendedRegistrationProvider> extendedRegistrationProviders) {
+
             OrchardServices = orchardServices;
             UtilsServices = utilsServices;
             _usersExtensionsServices = usersExtensionsServices;
@@ -58,6 +63,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             _userEventHandler = userEventHandler;
             CsrfTokenHelper = csrfTokenHelper;
             _membershipService = membershipService;
+            _extendedRegistrationProviders = extendedRegistrationProviders;
             T = NullLocalizer.Instance;
         }
 
@@ -157,6 +163,10 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                 }
 
                 result = UtilsServices.GetResponse(responseType, message, json);
+
+                foreach (var erp in _extendedRegistrationProviders) {
+                    erp.FillCustomFields(Request, registeredServicesData);
+                }
             }
             catch (Exception ex) {
                 result = UtilsServices.GetResponse(ResponseType.None, ex.Message);
