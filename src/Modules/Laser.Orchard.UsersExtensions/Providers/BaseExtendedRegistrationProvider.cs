@@ -20,7 +20,7 @@ namespace Laser.Orchard.UsersExtensions.Providers {
         }
 
         public virtual void FillCustomFields(HttpRequestBase request, JObject registeredData) {
-
+            // Empty function for the base class
         }
 
         public virtual void FillCustomField(ContentItem user, ContentField field, string value) {
