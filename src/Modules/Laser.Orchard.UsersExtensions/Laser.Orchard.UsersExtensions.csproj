@@ -201,6 +201,7 @@
     <Compile Include="Models\UserRegistrationLogin.cs" />
     <Compile Include="Models\UserRegistrationPolicyPart.cs" />
     <Compile Include="Models\UserRegistrationSettingsPart.cs" />
+    <Compile Include="Providers\BaseExtendedRegistrationProvider.cs" />
     <Compile Include="Providers\FormDataExtendedRegistrationProvider.cs" />
     <Compile Include="Providers\IExtendedRegistrationProvider.cs" />
     <Compile Include="Providers\RequestBodyExtendedRegistrationProvider.cs" />

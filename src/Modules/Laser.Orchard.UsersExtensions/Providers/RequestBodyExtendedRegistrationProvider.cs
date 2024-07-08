@@ -1,20 +1,22 @@
 ﻿using Newtonsoft.Json.Linq;
 using Orchard.ContentManagement;
-using Orchard.Core.Common.Fields;
+using Orchard.Taxonomies.Services;
 using System;
 using System.IO;
 using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.UsersExtensions.Providers {
-    public class RequestBodyExtendedRegistrationProvider : IExtendedRegistrationProvider {
+    public class RequestBodyExtendedRegistrationProvider : BaseExtendedRegistrationProvider {
         private readonly IContentManager _contentManager;
 
-        public RequestBodyExtendedRegistrationProvider(IContentManager contentManager) {
+        public RequestBodyExtendedRegistrationProvider(IContentManager contentManager,
+            ITaxonomyService taxonomyService) : base(contentManager, taxonomyService) {
+
             _contentManager = contentManager;
         }
 
-        public void FillCustomFields(HttpRequestBase request, JObject registeredData) {
+        public override void FillCustomFields(HttpRequestBase request, JObject registeredData) {
             if (request.InputStream.Length > 0) {
                 var user = _contentManager.Get(GetUserIdFromRegisteredData(registeredData));
                 if (user != null) {
@@ -25,40 +27,20 @@ namespace Laser.Orchard.UsersExtensions.Providers {
                         string respJson = reader.ReadToEnd();
                         var json = JObject.Parse(respJson);
 
-                        for (int i = 0; i <= json.Count - 1; i++) {
-                            //var t = json[i];
-                            
+                        // Request body is expected be in the following format:
+                        // {
+                        //    "Cognome": "Bianchi",
+                        //    "KCal": "1000",
+                        //    "RestrizioniAlimentari": "63,65"
+                        // }
+                        foreach (var p in json.Properties()) {
+                            var field = allFields.FirstOrDefault(fi => fi.PartFieldDefinition.Name.Equals(p.Name.ToString(), StringComparison.OrdinalIgnoreCase));
+                            FillCustomField(user, field, p.Value.ToString());
                         }
-
-                        //foreach (var t in json.ChildrenTokens) {
-                        //    var field = allFields.FirstOrDefault(fi => fi.PartFieldDefinition.Name.Equals(t.Name, StringComparison.OrdinalIgnoreCase));
-                        //    if (field != null) {
-                        //        switch (field.FieldDefinition.Name) {
-                        //            default:
-                        //                ((TextField)field).Value = t.Value;
-                        //                break;
-                        //        }
-                        //    }
-                        //}
                     }
 
                 }
             }
-        }
-
-        public int GetUserIdFromRegisteredData(JObject registeredData) {
-            // registeredData json structure is the following:
-            // "Data": {
-            //  "Roles": [],
-            //  "UserId": 80,
-            //  "ContactId": 78
-            // },
-            var userId = registeredData["UserId"].ToString();
-
-            var intId = 0;
-            int.TryParse(userId, out intId);
-
-            return intId;
         }
     }
 }
