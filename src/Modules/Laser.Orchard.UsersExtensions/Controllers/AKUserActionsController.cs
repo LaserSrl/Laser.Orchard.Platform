@@ -5,6 +5,7 @@ using Laser.Orchard.StartupConfig.ViewModels;
 using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
 using Laser.Orchard.UsersExtensions.Filters;
 using Laser.Orchard.UsersExtensions.Models;
+using Laser.Orchard.UsersExtensions.Providers;
 using Laser.Orchard.UsersExtensions.Services;
 using Orchard;
 using Orchard.Mvc.AntiForgery;
@@ -28,7 +29,8 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             IUserEventHandler userEventHandler,
             IEnumerable<IIdentityProvider> identityProviders,
             ICsrfTokenHelper csrfTokenHelper,
-            IMembershipService membershipService
+            IMembershipService membershipService,
+            IEnumerable<IExtendedRegistrationProvider> extendedRegistrationProviders
 ) : base(
                  orchardServices,
                  utilsServices,
@@ -37,7 +39,8 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                  userService,
                  userEventHandler,
                  csrfTokenHelper,
-                 membershipService
+                 membershipService,
+                 extendedRegistrationProviders
                  ) {
         }
 

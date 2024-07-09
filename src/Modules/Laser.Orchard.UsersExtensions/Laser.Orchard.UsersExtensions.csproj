@@ -189,6 +189,9 @@
     <Compile Include="Models\UserRegistrationLogin.cs" />
     <Compile Include="Models\UserRegistrationPolicyPart.cs" />
     <Compile Include="Models\UserRegistrationSettingsPart.cs" />
+    <Compile Include="Providers\FormDataExtendedRegistrationProvider.cs" />
+    <Compile Include="Providers\IExtendedRegistrationProvider.cs" />
+    <Compile Include="Providers\RequestBodyExtendedRegistrationProvider.cs" />
     <Compile Include="RoutesApi.cs" />
     <Compile Include="Routes\Routes.cs" />
     <Compile Include="Services\DefaultFrontEndSettingsProvider.cs" />
