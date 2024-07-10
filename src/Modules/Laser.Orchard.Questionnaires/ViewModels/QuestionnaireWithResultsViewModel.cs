@@ -29,5 +29,7 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
         public WorkContext WorkContext { get; set; }
 
         public IQuestionnaireHelperServices QuestionnaireHelperService { get; set; }
+        public bool IsPublished { get; set; }
+        public int Version { get; set; }
     }
 }
