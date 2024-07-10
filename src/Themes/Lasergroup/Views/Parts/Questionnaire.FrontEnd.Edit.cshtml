@@ -10,7 +10,7 @@
     var contentManager = WorkContext.Resolve<IContentManager>();
     int j = 0;
 }
-@using (Script.Head()) { 
+@using (Script.Head()) {
     <script type="text/javascript">
         $(document).ready(function () {
             AddClassConditionedAndOnclickToAnswer();
@@ -76,25 +76,26 @@
 }
 @if (TempData["QuestSuccess"] != null) {
     <div class="quest-message quest-success">@T(TempData["QuestSuccess"].ToString())</div>
-}
-else {
+} else {
     if (TempData["QuestError"] != null) {
-    <div class="quest-message quest-error">@Html.Raw(T(TempData["QuestError"].ToString()).Text.Replace("\r\n", "<br/>"))</div>
+        <div class="quest-message quest-error">@Html.Raw(T(TempData["QuestError"].ToString()).Text.Replace("\r\n", "<br/>"))</div>
     }
     if (Questionnaire.MustAcceptTerms && !Questionnaire.HasAcceptedTerms) {
         using (Html.BeginFormAntiForgeryPost(Url.Action("AcceptTerms", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.RawUrl }), FormMethod.Post)) {
-    @Html.HiddenFor(m => Questionnaire.Id)
-    @Html.HiddenFor(m => Questionnaire.MustAcceptTerms)
-    <div class="questionnaire-container">
-        <div class="terms-and-conditions">
-            @if (!String.IsNullOrWhiteSpace(Questionnaire.TermsText)) {
-                @Html.Raw(Questionnaire.TermsText)
-            }
-        </div>
-        @Html.CheckBoxFor(m => Questionnaire.HasAcceptedTerms)
-        <label class="forcheckbox" for="@Html.FieldIdFor(m => Questionnaire.HasAcceptedTerms)">@T("I accept your terms and conditions. I want to answer to your survey.")</label>
-        <input type="submit" value="@T("Continue >")" name="Accept.Terms"/>
-    </div>
+            @Html.HiddenFor(m => Questionnaire.Id)
+            @Html.HiddenFor(m => Questionnaire.MustAcceptTerms)
+            @Html.HiddenFor(m => m.IsPublished)
+            @Html.HiddenFor(m => m.Version)
+            <div class="questionnaire-container">
+                <div class="terms-and-conditions">
+                    @if (!String.IsNullOrWhiteSpace(Questionnaire.TermsText)) {
+                        @Html.Raw(Questionnaire.TermsText)
+                    }
+                </div>
+                @Html.CheckBoxFor(m => Questionnaire.HasAcceptedTerms)
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => Questionnaire.HasAcceptedTerms)">@T("I accept your terms and conditions. I want to answer to your survey.")</label>
+                <input type="submit" value="@T("Continue >")" name="Accept.Terms" />
+            </div>
         }
     } else {
 
@@ -104,6 +105,8 @@ else {
                 @Html.HiddenFor(m => Questionnaire.MustAcceptTerms)
                 @Html.HiddenFor(m => Questionnaire.HasAcceptedTerms)
                 @Html.HiddenFor(m => Questionnaire.Context)
+                @Html.HiddenFor(m => m.IsPublished)
+                @Html.HiddenFor(m => m.Version)
                 var progSection = 0;
                 if (sections.Count() > 1) {
                     <ul id="progressbar">
@@ -123,106 +126,106 @@ else {
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     @if (sections.Count() > 1) {
-                                    if (progSection > 2) {
-                                    <input type="button" name="previous" class="previous btn" value="@T("Previous")" />
+                                        if (progSection > 2) {
+                                            <input type="button" name="previous" class="previous btn" value="@T("Previous")" />
+                                        }
+                                        <input type="button" name="next" class="next btn" value="@T("Next")" />
                                     }
-                                    <input type="button" name="next" class="next btn" value="@T("Next")" />
-                                    }
-                                    </div>
                                 </div>
-                                    @:</fieldset>
+                            </div>
+                            @:</fieldset>
                         }
                         @:<fieldset class="@(progSection > 1 ? "quest-no-show" : "")">
                             <h2 class="fs-title">
                                 @Questionnaire.QuestionsWithResults[j].Section
                             </h2>
                             @:<ul class="j_allquest">
-                ultimaSection = Questionnaire.QuestionsWithResults[j].Section;
-                    }
-
-
-                    @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].Id, new { @class = "j_conditionid" })
-                    @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].QuestionType)
-                    @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].Question)
-
-                    @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].IsRequired)
-                    @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].Condition)
-                    @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].ConditionType)
-                    @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].AllFiles)
-                    @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].AnswerType)
-                    <li data-condition="@Questionnaire.QuestionsWithResults[j].Condition" data-conditiontype="@Questionnaire.QuestionsWithResults[j].ConditionType" data-required="@(Questionnaire.QuestionsWithResults[j].IsRequired ? "true" : "false")">
-
-                        <h3>@Questionnaire.QuestionsWithResults[j].Question</h3>
-                        @if (Questionnaire.QuestionsWithResults[j].AllFiles != null && Questionnaire.QuestionsWithResults[j].AllFiles.Split(',').Count() > 0) {
-                            foreach (int ciId in Questionnaire.QuestionsWithResults[j].AllFiles.Split(',').Select(int.Parse).ToList()) {
-                                MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
-                                <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                ultimaSection = Questionnaire.QuestionsWithResults[j].Section;
                             }
-                        }
-                        @if (Questionnaire.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
-                            @Html.TextAreaFor(m => Questionnaire.QuestionsWithResults[j].OpenAnswerAnswerText,new { @maxlength = "1200" })
-                        } else if (Questionnaire.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.SingleChoice) {
-                            var numeroRisposte = Questionnaire.QuestionsWithResults[j].AnswersWithResult.Count();
-                            <ul>
-                                <li>
-                                    @for (int i = 0; i < numeroRisposte; i++) {
-                                        <label for="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)">
-                                            <input class="j_answer" type="radio"
-                                                   @(Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer == Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id ? "checked=\"checked\"" : "")
-                                                   name="@Html.FieldNameFor(m => Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer)"
-                                                   id="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)"
-                                                   value="@(Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id)" />
-                                            @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answer
-                                        </label>
 
-                                        if (Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
-                                            foreach (int ciId in Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
-                                                MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
-                                                <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
-                                            }
-                                        }
 
+                            @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].Id, new { @class = "j_conditionid" })
+                            @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].QuestionType)
+                            @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].Question)
+
+                            @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].IsRequired)
+                            @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].Condition)
+                            @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].ConditionType)
+                            @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].AllFiles)
+                            @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].AnswerType)
+                            <li data-condition="@Questionnaire.QuestionsWithResults[j].Condition" data-conditiontype="@Questionnaire.QuestionsWithResults[j].ConditionType" data-required="@(Questionnaire.QuestionsWithResults[j].IsRequired ? "true" : "false")">
+
+                                <h3>@Questionnaire.QuestionsWithResults[j].Question</h3>
+                                @if (Questionnaire.QuestionsWithResults[j].AllFiles != null && Questionnaire.QuestionsWithResults[j].AllFiles.Split(',').Count() > 0) {
+                                    foreach (int ciId in Questionnaire.QuestionsWithResults[j].AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                        MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                        <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
                                     }
-                                </li>
-                            </ul>
-                        } else if (Questionnaire.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.MultiChoice) {
-                            var numeroRisposte = Questionnaire.QuestionsWithResults[j].AnswersWithResult.Count();
-
-                            <ul>
-                                <li>
-                                    @for (int i = 0; i < numeroRisposte; i++) {
-                                        @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id)
-                                        <label for="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)">
-                                            @Html.CheckBoxFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered, new { @class = "j_answer", data_valu = @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id })
-                                            @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answer
-                                        </label>
-                                        if (Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
-                                            foreach (int ciId in Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
-                                                MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
-                                                <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
-                                            }
-                                        }
-                                    }
-                                </li>
-                            </ul>
-                        }
-                    </li>
-                    if (j == Questionnaire.QuestionsWithResults.Count() - 1) {
-                        @:</ul>
-                    @Html.HiddenFor(m => Questionnaire.UseRecaptcha)
-                        if (Questionnaire.UseRecaptcha) {
-                            @Html.Raw(Questionnaire.CaptchaHtmlWidget)
-                        }
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                @if (sections.Count() > 1) {
-                                    <input type="button" name="previous" class="previous btn" value="@T("Previous")" />
                                 }
-                                <input type="submit" value="@T("Send your questionnaire")" name="" class="btn btn-primary" />
+                                @if (Questionnaire.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                    @Html.TextAreaFor(m => Questionnaire.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200" })
+                                } else if (Questionnaire.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.SingleChoice) {
+                                    var numeroRisposte = Questionnaire.QuestionsWithResults[j].AnswersWithResult.Count();
+                                    <ul>
+                                        <li>
+                                            @for (int i = 0; i < numeroRisposte; i++) {
+                                                <label for="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)">
+                                                    <input class="j_answer" type="radio"
+                                                           @(Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer == Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id ? "checked=\"checked\"" : "")
+                                                           name="@Html.FieldNameFor(m => Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer)"
+                                                           id="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)"
+                                                           value="@(Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id)" />
+                                                    @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answer
+                                                </label>
+
+                                                if (Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
+                                                    foreach (int ciId in Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                                        MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                                        <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                                    }
+                                                }
+
+                                            }
+                                        </li>
+                                    </ul>
+                                } else if (Questionnaire.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.MultiChoice) {
+                                    var numeroRisposte = Questionnaire.QuestionsWithResults[j].AnswersWithResult.Count();
+
+                                    <ul>
+                                        <li>
+                                            @for (int i = 0; i < numeroRisposte; i++) {
+                                                @Html.HiddenFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id)
+                                                <label for="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)">
+                                                    @Html.CheckBoxFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered, new { @class = "j_answer", data_valu = @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id })
+                                                    @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answer
+                                                </label>
+                                                if (Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
+                                                    foreach (int ciId in Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                                        MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                                        <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                                    }
+                                                }
+                                            }
+                                        </li>
+                                    </ul>
+                                }
+                            </li>
+                            if (j == Questionnaire.QuestionsWithResults.Count() - 1) {
+                            @:</ul>
+                            @Html.HiddenFor(m => Questionnaire.UseRecaptcha)
+                            if (Questionnaire.UseRecaptcha) {
+                                @Html.Raw(Questionnaire.CaptchaHtmlWidget)
+                            }
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    @if (sections.Count() > 1) {
+                                        <input type="button" name="previous" class="previous btn" value="@T("Previous")" />
+                                    }
+                                    <input type="submit" value="@T("Send your questionnaire")" name="" class="btn btn-primary" />
+                                </div>
                             </div>
-                        </div>
                         @:</fieldset>
-                                                                                                                                                                                                                                                                                    }
+                    }
                 }
 
             }
