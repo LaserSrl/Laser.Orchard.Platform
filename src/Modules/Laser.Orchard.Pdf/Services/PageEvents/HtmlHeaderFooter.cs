@@ -18,13 +18,14 @@ namespace Laser.Orchard.Pdf.Services.PageEvents {
                 // footer was not in html format so bring it in html format
                 var htmlFooter2 = string.Format("<p>{0}</p>", htmlFooter);
                 footer = XMLWorkerHelper.ParseToElementList(htmlFooter2, null);
+            }
         }
-        }
+
         public override void OnEndPage(PdfWriter writer, Document document) {
-             if (header.Count > 0) {
+            if (header.Count > 0) {
                 var ctHeader = new ColumnText(writer.DirectContent);
                 ctHeader.SetSimpleColumn(document.LeftMargin, document.Top, document.Right, document.Top + document.TopMargin);
-                foreach(var elem in header) {
+                foreach (var elem in header) {
                     ctHeader.AddElement(elem);
                 }
                 ctHeader.Go();
