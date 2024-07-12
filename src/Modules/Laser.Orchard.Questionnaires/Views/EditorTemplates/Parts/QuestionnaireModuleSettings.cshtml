@@ -1,4 +1,6 @@
-﻿@model Laser.Orchard.Questionnaires.Models.QuestionnaireModuleSettingsPart
+﻿@using Laser.Orchard.Questionnaires.Models;
+
+@model QuestionnaireModuleSettingsPart
 <fieldset>
     <legend>@T("Questionnaire Settings")</legend>
     @Html.CheckBoxFor(m => m.Disposable)

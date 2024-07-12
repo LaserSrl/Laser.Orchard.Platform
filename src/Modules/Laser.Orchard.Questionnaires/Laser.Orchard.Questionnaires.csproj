@@ -70,6 +70,7 @@
     <Compile Include="Drivers\GamePartDriver.cs" />
     <Compile Include="Drivers\QuestionnaireModuleSettingsPartDriver.cs" />
     <Compile Include="Drivers\QuestionnairePartDriver.cs" />
+    <Compile Include="Drivers\QuestionnaireStatsSettingsPartDriver.cs" />
     <Compile Include="Drivers\RankingPartDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Handlers\AuthorizationEventHandler.cs" />
@@ -81,15 +82,18 @@
     <Compile Include="Handlers\QuestionnaireModuleSettingsHandler.cs" />
     <Compile Include="Handlers\QuestionnaireNotAnsweredFilter.cs" />
     <Compile Include="Handlers\QuestionnaireNotAnsweredFilterForm.cs" />
+    <Compile Include="Handlers\QuestionnaireStatsSettingsPartHandler.cs" />
     <Compile Include="Handlers\RankingPartHandler.cs" />
     <Compile Include="Handlers\ScheduledTaskHandler.cs" />
     <Compile Include="Handlers\StasExportScheduledTaskHandler.cs" />
+    <Compile Include="Helpers\QuestionnaireHelper.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AnswerRecord.cs" />
     <Compile Include="Models\GamePart.cs" />
     <Compile Include="Models\QuestionnaireModuleSettingsPart.cs" />
     <Compile Include="Models\QuestionnairePart.cs" />
     <Compile Include="Models\QuestionnairePartRecord.cs" />
+    <Compile Include="Models\QuestionnaireStatsSettingsPart.cs" />
     <Compile Include="Models\QuestionRecord.cs" />
     <Compile Include="Models\RankingPart.cs" />
     <Compile Include="Models\UserAnswerInstanceRecord.cs" />
@@ -180,6 +184,8 @@
     <Content Include="Views\QuestionnaireStats\QuestionDetail.cshtml" />
     <Content Include="Views\LocalNavRankings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Questionnaire_FrontEnd_Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\QuestionnaireStatsSettings.cshtml" />
+    <Content Include="Views\QuestionnaireDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
