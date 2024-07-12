@@ -1,5 +1,8 @@
-﻿@using Laser.Orchard.Questionnaires.ViewModels
+﻿@using Laser.Orchard.Questionnaires.Models
+@using Laser.Orchard.Questionnaires.ViewModels
+@using Orchard.ContentManagement
 @using System.Linq
+
 @model QuestionnaireStatsViewModel
 @{
     var dateContext = new DateContext {
@@ -38,6 +41,14 @@
             width = 600;
             height = 400;
         }
+    }
+
+    var showPdfButton = false;
+    var showExcelButton = false;
+    var settings = WorkContext.CurrentSite.As<QuestionnaireStatsSettingsPart>();
+    if (settings != null) {
+        showPdfButton = settings.EnablePdfExport;
+        showExcelButton = settings.EnableExcelExport;
     }
 }
 
@@ -101,7 +112,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
-                                <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export")</button>
+                                @if (showPdfButton) {
+                                    <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export to Pdf")</button>
+                                }
+                                @if (showExcelButton) {
+                                    <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export to multiple Excel spreadsheets")</button>
+                                }
+                                <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export to Csv")</button>
                                 <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=QuestionnairesStatistics" class="button">@T("Show Exported Files")</a>
                             </fieldset>
                         </div>

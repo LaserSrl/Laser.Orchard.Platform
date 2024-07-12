@@ -113,9 +113,14 @@
     <Compile Include="Settings\GamePartSettingVM.cs" />
     <Compile Include="Settings\QuestionnairesPartEditorEvents.cs" />
     <Compile Include="Settings\QuestionnairesPartSettingVM.cs" />
+    <Compile Include="ViewModels\AnswerStatsViewModel.cs" />
     <Compile Include="ViewModels\ExportUserAnswersVM.cs" />
     <Compile Include="ViewModels\ExternalAnswerWithResultViewModel.cs" />
     <Compile Include="ViewModels\GamePartVM.cs" />
+    <Compile Include="ViewModels\QuestionnaireSearchViewModel.cs" />
+    <Compile Include="ViewModels\QuestionnaireStatsDetailViewModel.cs" />
+    <Compile Include="ViewModels\QuestionnaireStatsViewModel.cs" />
+    <Compile Include="ViewModels\QuestionStatsViewModel.cs" />
     <Compile Include="ViewModels\RankingTemplateVM.cs" />
     <Compile Include="ViewModels\StatsDetailFilterContext.cs" />
     <Compile Include="ViewModels\StatsSearchContext.cs" />
