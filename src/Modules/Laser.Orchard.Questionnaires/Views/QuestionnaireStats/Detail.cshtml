@@ -113,7 +113,7 @@
                         <div class="form-group">
                             <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
                                 @if (showPdfButton) {
-                                    <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export to Pdf")</button>
+                                    <a href="@Url.Action("PdfExport", "QuestionnaireStatsExport", new { area = "Laser.Orchard.Questionnaires", questionnaireId = Model.Id, filterContext = Model.FilterContext, redirectUrl = urlBack })" class="button">@T("Export to Pdf")</a>
                                 }
                                 @if (showExcelButton) {
                                     <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export to multiple Excel spreadsheets")</button>

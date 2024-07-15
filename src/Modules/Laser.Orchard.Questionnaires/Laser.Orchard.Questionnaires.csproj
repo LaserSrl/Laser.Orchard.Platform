@@ -67,6 +67,7 @@
     <Compile Include="Controllers\QuestionnaireController.cs" />
     <Compile Include="Controllers\QuestionnaireResponseController.cs" />
     <Compile Include="Controllers\QuestionnaireStatsController.cs" />
+    <Compile Include="Controllers\QuestionnaireStatsExportController.cs" />
     <Compile Include="Drivers\GamePartDriver.cs" />
     <Compile Include="Drivers\QuestionnaireModuleSettingsPartDriver.cs" />
     <Compile Include="Drivers\QuestionnairePartDriver.cs" />
