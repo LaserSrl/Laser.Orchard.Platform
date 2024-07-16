@@ -50,6 +50,10 @@
         showPdfButton = settings.EnablePdfExport;
         showExcelButton = settings.EnableExcelExport;
     }
+
+    var dateFrom = Model.FilterContext.DateFrom.HasValue ? Model.FilterContext.DateFrom.Value.ToString(dateContext.Format) : "";
+    var dateTo = Model.FilterContext.DateTo.HasValue ? Model.FilterContext.DateTo.Value.ToString(dateContext.Format) : "";
+    var context = Model.FilterContext.Context;
 }
 
 @functions{
@@ -113,7 +117,7 @@
                         <div class="form-group">
                             <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
                                 @if (showPdfButton) {
-                                    <a href="@Url.Action("PdfExport", "QuestionnaireStatsExport", new { area = "Laser.Orchard.Questionnaires", questionnaireId = Model.Id, filterContext = Model.FilterContext, redirectUrl = urlBack })" class="button">@T("Export to Pdf")</a>
+                                    <a href="@Url.Action("PdfExport", "QuestionnaireStatsExport", new { area = "Laser.Orchard.Questionnaires", questionnaireId = Model.Id, dateFrom = dateFrom, dateTo = dateTo, dateFormat = dateContext.Format, context = context, redirectUrl = urlBack })" class="button">@T("Export to Pdf")</a>
                                 }
                                 @if (showExcelButton) {
                                     <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export to multiple Excel spreadsheets")</button>

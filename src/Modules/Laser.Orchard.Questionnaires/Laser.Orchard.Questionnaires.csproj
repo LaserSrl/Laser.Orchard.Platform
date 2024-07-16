@@ -86,7 +86,8 @@
     <Compile Include="Handlers\QuestionnaireStatsSettingsPartHandler.cs" />
     <Compile Include="Handlers\RankingPartHandler.cs" />
     <Compile Include="Handlers\ScheduledTaskHandler.cs" />
-    <Compile Include="Handlers\StasExportScheduledTaskHandler.cs" />
+    <Compile Include="Handlers\StatsExportScheduledTaskHandler.cs" />
+    <Compile Include="Handlers\StatsPdfExportScheduledTaskHandler.cs" />
     <Compile Include="Helpers\QuestionnaireHelper.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AnswerRecord.cs" />
@@ -192,6 +193,7 @@
     <Content Include="Views\EditorTemplates\Parts\Questionnaire_FrontEnd_Edit.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\QuestionnaireStatsSettings.cshtml" />
     <Content Include="Views\QuestionnaireDetail.cshtml" />
+    <Content Include="Views\QuestionnaireDetail.Pdf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -203,6 +205,9 @@
     </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -367,6 +372,10 @@
       <Project>{fc5b52ec-3cf9-42da-850d-36d110bbe121}</Project>
       <Name>Laser.Orchard.Events</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Pdf\Laser.Orchard.Pdf.csproj">
+      <Project>{C389AD69-B5FE-4F2E-B06D-292CB089E4B4}</Project>
+      <Name>Laser.Orchard.Pdf</Name>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
       <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>

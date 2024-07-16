@@ -68,7 +68,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                 ContentItem filters = _orchardServices.ContentManager.Create("QuestionnaireStatsExport");
                 filters.As<TitlePart>().Title = string.Format("id={0}&from={1:yyyyMMdd}&to={2:yyyyMMdd}&filtercontext={3}", idQuestionario, filterContext.DateFrom.HasValue? filterContext.DateFrom.Value:new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime(), filterContext.Context);
                 _orchardServices.ContentManager.Publish(filters);
-                _taskManager.CreateTask(StasExportScheduledTaskHandler.TaskType, DateTime.UtcNow.AddSeconds(-1), filters);
+                _taskManager.CreateTask(StatsExportScheduledTaskHandler.TaskType, DateTime.UtcNow.AddSeconds(-1), filters);
                 //_questionnairesServices.SaveQuestionnaireUsersAnswers(idQuestionario, fromDate, toDate);
                 _notifier.Add(NotifyType.Information, T("Export started. Please check 'Show Exported Files' in a few minutes to get the result."));
             }
