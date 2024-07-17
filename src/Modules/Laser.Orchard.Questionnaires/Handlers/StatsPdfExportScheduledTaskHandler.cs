@@ -7,6 +7,7 @@ using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
 using Orchard.DisplayManagement;
 using Orchard.Environment.Configuration;
+using Orchard.Environment.Extensions;
 using Orchard.Logging;
 using Orchard.Tasks.Scheduling;
 using Orchard.Widgets.Models;
@@ -16,7 +17,8 @@ using System.IO;
 using System.Web.Hosting;
 
 namespace Laser.Orchard.Questionnaires.Handlers {
-    public class StatsPdfExportScheduledTaskHandler :IScheduledTaskHandler {
+    [OrchardFeature("Laser.Orchard.QuestionnaireStatsExport")]
+    public class StatsPdfExportScheduledTaskHandler : IScheduledTaskHandler {
         private readonly IQuestionnairesServices _questionnairesServices;
         private readonly IShapeFactory _shapeFactory;
         private readonly IShapeDisplay _shapeDisplay;
@@ -90,7 +92,7 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                         fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.pdf", new CommonUtils().NormalizeFileName(ci.As<TitlePart>().Title, "questionnaire", ' '), filterContext.DateFrom.HasValue ? filterContext.DateFrom.Value : new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime());
                     } else if (ci.As<WidgetPart>() != null) {
                         fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.pdf", new CommonUtils().NormalizeFileName(ci.As<WidgetPart>().Title, "questionnaire", ' '), filterContext.DateFrom.HasValue ? filterContext.DateFrom.Value : new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime());
-                    } else if (ci.As<WidgetPart>() != null) {
+                    } else {
                         fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.pdf", "questionnaire", filterContext.DateFrom.HasValue ? filterContext.DateFrom.Value : new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime());
                     }
 
