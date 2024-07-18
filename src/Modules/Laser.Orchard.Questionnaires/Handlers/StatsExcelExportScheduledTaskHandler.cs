@@ -4,6 +4,7 @@ using Laser.Orchard.Questionnaires.Services;
 using Laser.Orchard.Questionnaires.ViewModels;
 using MiniExcelLibs;
 using MiniExcelLibs.Attributes;
+using MiniExcelLibs.OpenXml;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
@@ -25,7 +26,7 @@ namespace Laser.Orchard.Questionnaires.Handlers {
     public class AnswerCount {
         [ExcelColumnWidth(50)]
         public string Answer { get; set; }
-        public int Count { get; set; }
+        public int? Count { get; set; }
     }
 
     [OrchardFeature("Laser.Orchard.QuestionnaireStatsExport")]
@@ -138,6 +139,19 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                             foreach (var ss in sectionStats) {
                                 var answerList = new List<AnswerCount>();
 
+                                // First row of the worksheet is the question
+                                answerList.Add(new AnswerCount {
+                                    Answer = ss.Question,
+                                    Count = null
+                                });
+
+                                // Second row of the worksheet is the total number of answers to the questionnaire
+                                answerList.Add(new AnswerCount {
+                                    Answer = T("Questionnaire answers").Text,
+                                    Count = model.ReplyingPeopleCount
+                                });
+
+                                // For each question, add the answers and their count
                                 foreach (var asvm in ss.Answers) {
                                     answerList.Add(new AnswerCount {
                                         Answer = asvm.Answer,
@@ -148,8 +162,12 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                                 sheets.Add(T("Question {0}", qNumber.ToString()).Text, answerList.ToArray());
                                 qNumber++;
                             }
-                            
-                            MiniExcel.SaveAs(filePath, sheets, overwriteFile: true);
+
+                            OpenXmlConfiguration configuration = new OpenXmlConfiguration() {
+                                EnableWriteNullValueCell = true // Default value.
+                            };
+
+                            MiniExcel.SaveAs(filePath, sheets, overwriteFile: true, configuration: configuration, printHeader: false);
                         }
                     }
 
