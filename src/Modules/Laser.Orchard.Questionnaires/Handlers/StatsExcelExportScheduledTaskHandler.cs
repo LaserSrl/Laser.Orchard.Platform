@@ -1,10 +1,9 @@
-﻿using iTextSharp.text;
-using Laser.Orchard.Commons.Services;
+﻿using Laser.Orchard.Commons.Services;
 using Laser.Orchard.Questionnaires.Models;
 using Laser.Orchard.Questionnaires.Services;
 using Laser.Orchard.Questionnaires.ViewModels;
 using MiniExcelLibs;
-using NHibernate.Util;
+using MiniExcelLibs.Attributes;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
@@ -24,6 +23,7 @@ using System.Web.Hosting;
 
 namespace Laser.Orchard.Questionnaires.Handlers {
     public class AnswerCount {
+        [ExcelColumnWidth(50)]
         public string Answer { get; set; }
         public int Count { get; set; }
     }
@@ -133,29 +133,22 @@ namespace Laser.Orchard.Questionnaires.Handlers {
 
                             var sheets = new Dictionary<string, object>();
 
+                            var qNumber = 1;
+
                             foreach (var ss in sectionStats) {
-                                var answers = new DataTable();
-                                answers.TableName = ss.Question;
-                                answers.Columns.Add(T("Answer").Text, typeof(string));
-                                answers.Columns.Add(T("Count").Text, typeof(int));
+                                var answerList = new List<AnswerCount>();
 
                                 foreach (var asvm in ss.Answers) {
-                                    var a = answers.NewRow();
-                                    a[T("Answer").Text] = asvm.Answer;
-                                    a[T("Count").Text] = asvm.Count;
-                                    answers.Rows.Add(a);
+                                    answerList.Add(new AnswerCount {
+                                        Answer = asvm.Answer,
+                                        Count = asvm.Count
+                                    });
                                 }
-
-                                var sheetName = ss.Question;
-                                // Sheet name must be limited to 30 characters.
-                                if (sheetName.Length > 28) {
-                                    // TODO: avoid sheet name duplicates
-                                    sheetName = ss.Question.Substring(0, 28);
-                                }
-                                
-                                sheets.Add(sheetName, answers);
+                                                                
+                                sheets.Add(T("Question {0}", qNumber.ToString()).Text, answerList.ToArray());
+                                qNumber++;
                             }
-
+                            
                             MiniExcel.SaveAs(filePath, sheets, overwriteFile: true);
                         }
                     }
