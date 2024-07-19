@@ -6,4 +6,5 @@
 	<Place Parts_Questionnaire_Summary="-" />
   <Place Parts_QuestionnaireModuleSettings_Edit="Content:11" />
   <Place Parts_QuestionnaireStatsSettings_Edit="Content:12" />
+  <Place Parts_QuestionnaireSpecificAccessPart_Edit="Content:13" />
 </Placement>

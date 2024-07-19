@@ -43,12 +43,18 @@
         }
     }
 
+    var showCsvButton = false;
+    var settings = WorkContext.CurrentSite.As<QuestionnaireModuleSettingsPart>();
+    if (settings != null) {
+        showCsvButton = settings.EnableCsvExport;
+    }
+
     var showPdfButton = false;
     var showExcelButton = false;
-    var settings = WorkContext.CurrentSite.As<QuestionnaireStatsSettingsPart>();
-    if (settings != null) {
-        showPdfButton = settings.EnablePdfExport;
-        showExcelButton = settings.EnableExcelExport;
+    var advSettings = WorkContext.CurrentSite.As<QuestionnaireStatsSettingsPart>();
+    if (advSettings != null) {
+        showPdfButton = advSettings.EnablePdfExport;
+        showExcelButton = advSettings.EnableExcelExport;
     }
 
     var dateFrom = Model.FilterContext.DateFrom.HasValue ? Model.FilterContext.DateFrom.Value.ToString(dateContext.Format) : "";
@@ -122,8 +128,11 @@
                                 @if (showExcelButton) {
                                     <a href="@Url.Action("ExcelExport", "QuestionnaireStatsExport", new { area = "Laser.Orchard.Questionnaires", questionnaireId = Model.Id, dateFrom = dateFrom, dateTo = dateTo, dateFormat = dateContext.Format, context = context, redirectUrl = urlBack })" class="button">@T("Export to Excel")</a>
                                 }
-                                <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export to Csv")</button>
-                                <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=QuestionnairesStatistics" class="button">@T("Show Exported Files")</a>
+                                @if (showCsvButton) {
+                                    <button type="submit" name="@Html.FieldNameFor(m => m.FilterContext.Export)" value="true">@T("Export to Csv")</button>
+                                }
+                                <a href="@Url.Action("Index", "FileDownloader", 
+                                        new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=@Model.Id&ParentFolder=QuestionnairesStatistics" class="button">@T("Show Exported Files")</a>
                             </fieldset>
                         </div>
                         <!-- /.form-group -->

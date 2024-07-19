@@ -71,6 +71,7 @@
     <Compile Include="Drivers\GamePartDriver.cs" />
     <Compile Include="Drivers\QuestionnaireModuleSettingsPartDriver.cs" />
     <Compile Include="Drivers\QuestionnairePartDriver.cs" />
+    <Compile Include="Drivers\QuestionnaireSpecificAccessPartDriver.cs" />
     <Compile Include="Drivers\QuestionnaireStatsSettingsPartDriver.cs" />
     <Compile Include="Drivers\RankingPartDriver.cs" />
     <Compile Include="Enums.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Models\QuestionnaireModuleSettingsPart.cs" />
     <Compile Include="Models\QuestionnairePart.cs" />
     <Compile Include="Models\QuestionnairePartRecord.cs" />
+    <Compile Include="Models\QuestionnaireSpecificAccessPart.cs" />
     <Compile Include="Models\QuestionnaireStatsSettingsPart.cs" />
     <Compile Include="Models\QuestionRecord.cs" />
     <Compile Include="Models\RankingPart.cs" />
@@ -186,6 +188,7 @@
     <Content Include="Views\AdminRanking\Index.cshtml" />
     <Content Include="Views\AdminRanking\GetListSingleGame.cshtml" />
     <Content Include="Views\AdminRanking\TestEmail.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\EmptyShape.cshtml" />
     <None Include="Views\EditorTemplates\Parts\GamePart_Edit.cshtml" />
     <Content Include="Views\QuestionnaireStats\Index.cshtml" />
     <Content Include="Views\QuestionnaireStats\Detail.cshtml" />
@@ -195,6 +198,7 @@
     <Content Include="Views\EditorTemplates\Parts\QuestionnaireStatsSettings.cshtml" />
     <Content Include="Views\QuestionnaireDetail.cshtml" />
     <Content Include="Views\QuestionnaireDetail.Pdf.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\QuestionnaireSpecificAccessPart_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">

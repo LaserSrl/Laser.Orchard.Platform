@@ -97,8 +97,8 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                     }
 
                     string filePath = HostingEnvironment.MapPath(
-                        string.Format("~/App_Data/Sites/{0}/Export/QuestionnairesStatistics/{1}",
-                            _shellSettings.Name, fileName));
+                        string.Format("~/App_Data/Sites/{0}/QuestionnairesStatistics/{1}/{2}",
+                            _shellSettings.Name, questionnaireId, fileName));
                     FileInfo fi = new FileInfo(filePath);
                     if (fi.Directory.Parent.Exists == false) {
                         Directory.CreateDirectory(fi.Directory.Parent.FullName);

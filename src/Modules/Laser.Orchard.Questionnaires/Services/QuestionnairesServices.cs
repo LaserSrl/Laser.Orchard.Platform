@@ -33,6 +33,7 @@ using System.Security.Cryptography;
 using System.Linq.Expressions;
 using Orchard.Core.Contents.Settings;
 using Orchard.Widgets.Models;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.Questionnaires.Services {
 
@@ -1091,8 +1092,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                 fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", "questionnaire", context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
             }
             string filePath = HostingEnvironment.MapPath(
-                string.Format("~/App_Data/Sites/{0}/Export/QuestionnairesStatistics/{1}",
-                    _shellSettings.Name, fileName));
+                string.Format("~/App_Data/Sites/{0}/QuestionnairesStatistics/{1}/{2}",
+                    _shellSettings.Name, questionnaireId, fileName));
             // Creo la directory Export
             FileInfo fi = new FileInfo(filePath);
             if (fi.Directory.Parent.Exists == false) {
@@ -1229,5 +1230,18 @@ namespace Laser.Orchard.Questionnaires.Services {
             return fullStat.OrderBy(o => o.QuestionnaireTitle).ThenBy(o => o.Question).ThenBy(o => o.Answer).ToList();
         }
 
+        public IEnumerable<SelectListItem> GetEnabledUsers() {
+            var users = _orchardServices.ContentManager
+                .Query<UserPart, UserPartRecord>()
+                .Where(u => u.RegistrationStatus == UserStatus.Approved)
+                .List()
+                .Select(up => new SelectListItem {
+                    Value = up.Id.ToString(),
+                    Text = up.UserName,
+                    Selected = false
+                });
+
+            return users;
+        }
     }
 }

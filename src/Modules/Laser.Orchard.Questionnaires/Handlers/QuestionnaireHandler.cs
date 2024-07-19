@@ -1,7 +1,9 @@
-﻿using Laser.Orchard.Questionnaires.Models;
+﻿using DocumentFormat.OpenXml.Office.Word;
+using Laser.Orchard.Questionnaires.Models;
 using Laser.Orchard.Questionnaires.Settings;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
+using Orchard.ContentManagement.MetaData;
 using Orchard.Data;
 using System;
 using System.Collections.Generic;
@@ -11,9 +13,13 @@ using System.Security.Cryptography;
 namespace Laser.Orchard.Questionnaires.Handlers {
 
     public class QuestionnaireHandler : ContentHandler {
+        private readonly IContentDefinitionManager _contentDefinitionManager;
 
-        public QuestionnaireHandler(IRepository<QuestionnairePartRecord> repository) {
+        public QuestionnaireHandler(IRepository<QuestionnairePartRecord> repository,
+            IContentDefinitionManager contentDefinitionManager) {
+
             Filters.Add(StorageFilter.For(repository));
+            _contentDefinitionManager = contentDefinitionManager;
 
             OnLoaded<QuestionnairePart>((context, part) => InitializeQuestionsToDisplay(part));
         }
@@ -85,6 +91,20 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                 list[n] = value;
             }
             return list;
+        }
+
+        protected override void Activating(ActivatingContentContext context) {
+            base.Activating(context);
+
+            var contentDefinition = _contentDefinitionManager.GetTypeDefinition(context.ContentType);
+            if (contentDefinition != null) {
+                if (contentDefinition.Parts
+                    .Any(pa => pa.PartDefinition.Name.Equals("QuestionnairePart", StringComparison.OrdinalIgnoreCase))) {
+
+                    // Add the QuestionnaireSpecificAccessPart to every questionnaire
+                    context.Builder.Weld<QuestionnaireSpecificAccessPart>();
+                }
+            }
         }
     }
 }

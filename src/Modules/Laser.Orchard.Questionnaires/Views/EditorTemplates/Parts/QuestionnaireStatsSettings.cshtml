@@ -3,7 +3,7 @@
 @model QuestionnaireStatsSettingsPart
 
 <fieldset>
-    <legend>@T("Questionnaire stats options")</legend>
+    <legend>@T("Advanced questionnaire stats options")</legend>
     @Html.CheckBoxFor(m => m.EnablePdfExport)
     <label class="forcheckbox" for="@Html.FieldIdFor(m => m.EnablePdfExport)">@T("Enable pdf export of statistics")</label>
     <span class="hint">@T("Display a button to export the statistics of a single questionnaire in pdf format.")</span>

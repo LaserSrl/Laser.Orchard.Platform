@@ -37,7 +37,7 @@ namespace Laser.Orchard.Questionnaires.Handlers {
 
         public const string TaskType = "Laser.Orchard.Questionnaires.StatsExcelExport.Task";
         public ILogger Logger { get; set; }
-        public Localizer T {get; set;}
+        public Localizer T { get; set; }
 
         public StatsExcelExportScheduledTaskHandler(IQuestionnairesServices questionnairesServices,
             ShellSettings shellSettings,
@@ -114,13 +114,12 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                             }
 
                             string filePath = HostingEnvironment.MapPath(
-                                string.Format("~/App_Data/Sites/{0}/Export/QuestionnairesStatistics/{1}",
-                                _shellSettings.Name, fileName));
+                                string.Format("~/App_Data/Sites/{0}/QuestionnairesStatistics/{1}/{2}",
+                                _shellSettings.Name, questionnaireId.ToString(), fileName));
                             FileInfo fi = new FileInfo(filePath);
                             if (fi.Directory.Parent.Exists == false) {
                                 Directory.CreateDirectory(fi.Directory.Parent.FullName);
                             }
-                            // Creo la directory Questionnaires
                             if (!fi.Directory.Exists) {
                                 Directory.CreateDirectory(fi.DirectoryName);
                             }
@@ -158,7 +157,7 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                                         Count = asvm.Count
                                     });
                                 }
-                                                                
+
                                 sheets.Add(T("Question {0}", qNumber.ToString()).Text, answerList.ToArray());
                                 qNumber++;
                             }
