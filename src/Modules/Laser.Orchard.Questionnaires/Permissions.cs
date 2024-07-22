@@ -5,24 +5,32 @@ using Orchard.Security.Permissions;
 namespace Laser.Orchard.Questionnaires {
     public class Permissions : IPermissionProvider {
         public static readonly Permission SubmitQuestionnaire = new Permission {
-            Description = "Submit questionnaire", 
+            Description = "Submit questionnaire",
             Name = "SubmitQuestionnaire"
         };
-        public static readonly Permission AccessStatistics = new Permission { 
-            Description = "Access questionnaire statistics", 
-            Name = "AccessStatistics" 
+        public static readonly Permission AccessStatistics = new Permission {
+            Description = "Access questionnaire statistics",
+            Name = "AccessStatistics"
         };
         public static readonly Permission GameRanking = new Permission {
-            Description = "View game rankings", 
-            Name = "GameRanking" 
+            Description = "View game rankings",
+            Name = "GameRanking"
         };
         public static readonly Permission AccessExportQuestionnairesStatistics = new Permission {
-            Description = "Access questionnaire statistics export files", 
-            Name = "AccessExportQuestionnairesStatistics" 
+            Description = "Access questionnaire statistics export files",
+            Name = "AccessExportQuestionnairesStatistics"
         };
         public static readonly Permission ManageAccessToSpecificQuestionnaireStatistics = new Permission {
             Description = "Manage access to the statistics of specific questionnaires",
             Name = "ManageAccessToSpecificQuestionnaireStatistics"
+        };
+        public static readonly Permission AccessSpecificQuestionnaireStatistics = new Permission {
+            Description = "Access to the statistics of specific questionnaire",
+            Name = "AccessSpecificQuestionnaireStatistics"
+        };
+        public static readonly Permission ExportSpecificQuestionnaireStatistics = new Permission {
+            Description = "Export specific questionnaire statistics",
+            Name = "ExportSpecificQuestionnaireStatistics"
         };
 
         public virtual Feature Feature { get; set; }
@@ -33,9 +41,20 @@ namespace Laser.Orchard.Questionnaires {
                 AccessStatistics,
                 GameRanking,
                 AccessExportQuestionnairesStatistics,
-                ManageAccessToSpecificQuestionnaireStatistics
+                ManageAccessToSpecificQuestionnaireStatistics,
+                AccessSpecificQuestionnaireStatistics,
+                ExportSpecificQuestionnaireStatistics
             };
         }
+
+        /// <summary>
+        /// Property used to ensure a proper permission is used when requesting access to a specific questionnaire
+        /// </summary>
+        public static readonly IEnumerable<Permission> SpecificQuestionnairePermissions = new[] {
+                AccessSpecificQuestionnaireStatistics,
+                ExportSpecificQuestionnaireStatistics
+            };
+
 
         public IEnumerable<PermissionStereotype> GetDefaultStereotypes() {
             return new[] {
@@ -50,7 +69,7 @@ namespace Laser.Orchard.Questionnaires {
                 new PermissionStereotype {
                     Name = "Editor",
                     Permissions = new[] {AccessStatistics, GameRanking } //} //
-                },
+                }
             };
         }
     }

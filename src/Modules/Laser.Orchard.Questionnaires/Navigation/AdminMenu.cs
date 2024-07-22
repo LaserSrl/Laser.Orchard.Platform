@@ -22,12 +22,13 @@ namespace Laser.Orchard.Questionnaires.Navigation {
 
 
 
-            builder.Add(T("Statistics"), "10", menu => menu.LinkToFirstChild(false).Permission(Permissions.AccessStatistics).Permission(Permissions.GameRanking)
+            builder.Add(T("Statistics"), "10", menu => menu.LinkToFirstChild(false).Permission(Permissions.AccessStatistics).Permission(Permissions.GameRanking).Permission(Permissions.AccessSpecificQuestionnaireStatistics)
                     .Add(item => item
                         .Caption(T("Questionnaires"))
                         .Position("0")
                         .Action("Index", "QuestionnaireStats", new { area = "Laser.Orchard.Questionnaires" })
                         .Permission(Permissions.AccessStatistics)
+                        .Permission(Permissions.AccessSpecificQuestionnaireStatistics)
                     )
                     .Add(item => item
                         .Caption(T("Games"))

@@ -1,27 +1,22 @@
-﻿using Laser.Orchard.Questionnaires.Services;
+﻿using Laser.Orchard.Questionnaires.Handlers;
+using Laser.Orchard.Questionnaires.Models;
+using Laser.Orchard.Questionnaires.Services;
 using Laser.Orchard.Questionnaires.ViewModels;
-using Laser.Orchard.Questionnaires.Handlers;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
+using Orchard.Core.Containers.Extensions;
 using Orchard.Core.Title.Models;
+using Orchard.Environment.Configuration;
+using Orchard.Localization;
+using Orchard.Tasks.Scheduling;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Linq;
-using System;
-using System.Globalization;
-using Orchard.Tasks.Scheduling;
 using Orchard.UI.Notify;
-using Orchard.Localization;
-using Laser.Orchard.StartupConfig.FileDownloader.ViewModels;
-using Orchard.Environment.Configuration;
-using System.Text;
-using Laser.Orchard.Questionnaires.Models;
-using NHibernate.Linq;
-using System.Runtime.ConstrainedExecution;
 using Orchard.Widgets.Models;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.Questionnaires.Controllers {
     public class QuestionnaireStatsController : Controller {
@@ -78,7 +73,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         [HttpGet]
         [Admin]
         public ActionResult Index(int? page, int? pageSize, StatsSearchContext searchContext) {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics))
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics) && !_orchardServices.Authorizer.Authorize(Permissions.AccessSpecificQuestionnaireStatistics))
                 return new HttpUnauthorizedResult();
             return Index(new PagerParameters {
                 Page = page,
@@ -89,12 +84,26 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         [HttpPost]
         [Admin]
         public ActionResult Index(PagerParameters pagerParameters, StatsSearchContext searchContext) {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics))
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics) && !_orchardServices.Authorizer.Authorize(Permissions.AccessSpecificQuestionnaireStatistics))
                 return new HttpUnauthorizedResult();
             var contentQuery = _orchardServices.ContentManager.Query()
                 .ForVersion(VersionOptions.Latest);
             contentQuery = contentQuery
                 .Join<QuestionnairePartRecord>();
+
+            // Only get questionnaires current user has access to
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics)) {
+                contentQuery = contentQuery
+                    .Join<QuestionnaireSpecificAccessPartRecord>()
+                    .Where<QuestionnaireSpecificAccessPartRecord>(qsapr => qsapr.SerializedUserIds
+                        .Contains(string.Format("{{0}}", _orchardServices.WorkContext.CurrentUser.Id.ToString())));
+            }
+            //contentQuery = contentQuery
+            //    .Where<QuestionnairePartRecord>(qpr => _questionnairesServices.CheckPermission(Permissions.AccessSpecificQuestionnaireStatistics, qpr.Id));
+            //contentQuery = contentQuery
+            //    .Where<QuestionnairePartRecord>(qpr => _orchardServices.Authorizer
+            //        .Authorize(Permission.Named(string.Format("{0}{1}", Permissions.AccessSpecificQuestionnaireStatistics.Name, qpr.Id))));
+
             if (!string.IsNullOrEmpty(searchContext.SearchText)) {
                 if (searchContext.SearchType == StatsSearchContext.SearchTypeOptions.Contents) {
                     contentQuery = contentQuery

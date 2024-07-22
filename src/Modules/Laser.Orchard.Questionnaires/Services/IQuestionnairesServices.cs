@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using Laser.Orchard.Questionnaires.Models;
+﻿using Laser.Orchard.Questionnaires.Models;
 using Laser.Orchard.Questionnaires.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Security;
-using Orchard.Tasks.Scheduling;
+using Orchard.Security.Permissions;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+
 namespace Laser.Orchard.Questionnaires.Services {
     public interface IQuestionnairesServices : IDependency {
         void UpdateForContentItem(ContentItem item, QuestionnaireEditModel partEditModel);
@@ -67,5 +68,12 @@ namespace Laser.Orchard.Questionnaires.Services {
         /// </summary>
         /// <returns></returns>
         IEnumerable<SelectListItem> GetEnabledUsers();
+        /// <summary>
+        /// Checks for user permission to a specific questionnaire.
+        /// </summary>
+        /// <param name="permission"></param>
+        /// <param name="questionnaireId"></param>
+        /// <returns></returns>
+        bool CheckPermission(Permission permission, int questionnaireId);
     }
 }

@@ -98,6 +98,7 @@
     <Compile Include="Models\QuestionnairePart.cs" />
     <Compile Include="Models\QuestionnairePartRecord.cs" />
     <Compile Include="Models\QuestionnaireSpecificAccessPart.cs" />
+    <Compile Include="Models\QuestionnaireSpecificAccessPartRecord.cs" />
     <Compile Include="Models\QuestionnaireStatsSettingsPart.cs" />
     <Compile Include="Models\QuestionRecord.cs" />
     <Compile Include="Models\RankingPart.cs" />

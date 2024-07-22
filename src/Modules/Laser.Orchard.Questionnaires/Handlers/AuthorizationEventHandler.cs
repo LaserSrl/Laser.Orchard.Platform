@@ -1,15 +1,22 @@
 ﻿using Laser.Orchard.Questionnaires.Models;
+using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Security;
+using Orchard.Tokens.Providers;
+using System.Linq;
 using Contents = Orchard.Core.Contents; //need this because Permissions class for Questionnaires is called like the default one
 
 namespace Laser.Orchard.Questionnaires.Handlers {
     public class AuthorizationEventHandler : IAuthorizationServiceEventHandler {
 
         private readonly IAuthorizer _authorizer;
-        public AuthorizationEventHandler(IAuthorizer authorizer) {
+        private readonly IOrchardServices _orchardServices;
+
+        public AuthorizationEventHandler(IAuthorizer authorizer,
+            IOrchardServices orchardServices) {
 
             _authorizer = authorizer;
+            _orchardServices = orchardServices;   
         }
         public void Adjust(CheckAccessContext context) {
             if (!context.Granted && 
@@ -19,14 +26,26 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                     context.Adjusted = true;
                     context.Permission = Permissions.SubmitQuestionnaire; //will check this permission next
                 }
-            }
+            } 
+            //else if (!context.Granted &&
+            //      context.Content.Has<QuestionnaireSpecificAccessPart>()) {
+            //    // Check for the permission to access to a specific questionnaire for current user
+            //    if (context.Permission.Name.StartsWith(Permissions.AccessSpecificQuestionnaireStatistics.Name) || context.Permission.Name.StartsWith(Permissions.ExportSpecificQuestionnaireStatistics.Name)) {
+            //        var qsap = context.Content.As<QuestionnaireSpecificAccessPart>();
+            //            var idToCheck = context.Permission.Name.Substring(context.Permission.Name.LastIndexOf("_"));
+            //        if (qsap != null && int.TryParse(idToCheck, out var intId)) {
+            //            context.Granted = qsap.UserIds.Contains(_orchardServices.WorkContext.CurrentUser.Id);
+            //            context.Adjusted = true;
+            //        }
+            //    }
+            //}
         }
 
         public void Checking(CheckAccessContext context) { }
 
         public void Complete(CheckAccessContext context) {
             //If we granted permissions for the content, we still need to check for the
-            //permission specific for questionnaires. Thisd is because if a Rolw has the "ViewContent"
+            //permission specific for questionnaires. This is because if a Role has the "ViewContent"
             //permission it will be able to view everything even though it does not have the
             //permission that is specific to questionnaires
             if (context.Granted && 

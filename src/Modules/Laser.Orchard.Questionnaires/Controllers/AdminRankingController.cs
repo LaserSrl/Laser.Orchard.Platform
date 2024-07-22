@@ -9,7 +9,6 @@ using Orchard.Data;
 using Orchard.Security;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
-using Orchard.UI.Notify;
 using System;
 using System.Collections.Generic;
 using System.Linq;
