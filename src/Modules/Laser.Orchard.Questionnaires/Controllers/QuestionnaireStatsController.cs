@@ -58,25 +58,20 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         [HttpGet]
         [Admin]
         public ActionResult Detail(int idQuestionario, StatsDetailFilterContext filterContext) {
+            var qci = _orchardServices.ContentManager.Get(idQuestionario);
             // Check for the permissions on the specific questionnaire, using the QuestionnaireSpecificAccessPart
-            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics) && !_orchardServices.Authorizer.Authorize(Permissions.AccessSpecificQuestionnaireStatistics)) {
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessSpecificQuestionnaireStatistics, qci)) {
                 return new HttpUnauthorizedResult();
-            }
-            if (_orchardServices.Authorizer.Authorize(Permissions.AccessSpecificQuestionnaireStatistics)) {
-                var qci = _orchardServices.ContentManager.Get(idQuestionario);
-                if (qci != null) {
-                    var accessPart = qci.As<QuestionnaireSpecificAccessPart>();
-                    if (accessPart != null) {
-                        if (!accessPart.UserIds
-                             .Contains(_orchardServices.WorkContext.CurrentUser.Id)) {
-                            return new HttpUnauthorizedResult();
-                        }
-                    }
-                }
             }
 
             var model = _questionnairesServices.GetStats(idQuestionario, filterContext);
             if (filterContext.Export == true) {
+                // Check for the permission to export specific questionnaires
+                if (!_orchardServices.Authorizer.Authorize(Permissions.ExportSpecificQuestionnaireStatistics, qci)) {
+                    _notifier.Error(T("Not authorized to export questionnaire stats"));
+                    return View((object)model);
+                }
+
                 ContentItem filters = _orchardServices.ContentManager.Create("QuestionnaireStatsExport");
                 filters.As<TitlePart>().Title = string.Format("id={0}&from={1:yyyyMMdd}&to={2:yyyyMMdd}&filtercontext={3}", idQuestionario, filterContext.DateFrom.HasValue ? filterContext.DateFrom.Value : new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime(), filterContext.Context);
                 _orchardServices.ContentManager.Publish(filters);
