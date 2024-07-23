@@ -16,9 +16,11 @@ namespace Laser.Orchard.Questionnaires.Handlers {
         private readonly IContentDefinitionManager _contentDefinitionManager;
 
         public QuestionnaireHandler(IRepository<QuestionnairePartRecord> repository,
-            IContentDefinitionManager contentDefinitionManager) {
+            IContentDefinitionManager contentDefinitionManager,
+            IRepository<QuestionnaireSpecificAccessPartRecord> accessRepository) {
 
             Filters.Add(StorageFilter.For(repository));
+            Filters.Add(StorageFilter.For(accessRepository));
             _contentDefinitionManager = contentDefinitionManager;
 
             OnLoaded<QuestionnairePart>((context, part) => InitializeQuestionsToDisplay(part));

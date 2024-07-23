@@ -58,10 +58,27 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         [HttpGet]
         [Admin]
         public ActionResult Detail(int idQuestionario, StatsDetailFilterContext filterContext) {
+            // Check for the permissions on the specific questionnaire, using the QuestionnaireSpecificAccessPart
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics) && !_orchardServices.Authorizer.Authorize(Permissions.AccessSpecificQuestionnaireStatistics)) {
+                return new HttpUnauthorizedResult();
+            }
+            if (_orchardServices.Authorizer.Authorize(Permissions.AccessSpecificQuestionnaireStatistics)) {
+                var qci = _orchardServices.ContentManager.Get(idQuestionario);
+                if (qci != null) {
+                    var accessPart = qci.As<QuestionnaireSpecificAccessPart>();
+                    if (accessPart != null) {
+                        if (!accessPart.UserIds
+                             .Contains(_orchardServices.WorkContext.CurrentUser.Id)) {
+                            return new HttpUnauthorizedResult();
+                        }
+                    }
+                }
+            }
+
             var model = _questionnairesServices.GetStats(idQuestionario, filterContext);
             if (filterContext.Export == true) {
                 ContentItem filters = _orchardServices.ContentManager.Create("QuestionnaireStatsExport");
-                filters.As<TitlePart>().Title = string.Format("id={0}&from={1:yyyyMMdd}&to={2:yyyyMMdd}&filtercontext={3}", idQuestionario, filterContext.DateFrom.HasValue? filterContext.DateFrom.Value:new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime(), filterContext.Context);
+                filters.As<TitlePart>().Title = string.Format("id={0}&from={1:yyyyMMdd}&to={2:yyyyMMdd}&filtercontext={3}", idQuestionario, filterContext.DateFrom.HasValue ? filterContext.DateFrom.Value : new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime(), filterContext.Context);
                 _orchardServices.ContentManager.Publish(filters);
                 _taskManager.CreateTask(StatsExportScheduledTaskHandler.TaskType, DateTime.UtcNow.AddSeconds(-1), filters);
                 //_questionnairesServices.SaveQuestionnaireUsersAnswers(idQuestionario, fromDate, toDate);
@@ -96,7 +113,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                 contentQuery = contentQuery
                     .Join<QuestionnaireSpecificAccessPartRecord>()
                     .Where<QuestionnaireSpecificAccessPartRecord>(qsapr => qsapr.SerializedUserIds
-                        .Contains(string.Format("{{0}}", _orchardServices.WorkContext.CurrentUser.Id.ToString())));
+                        .Contains("{" + _orchardServices.WorkContext.CurrentUser.Id.ToString() + "}"));
             }
             //contentQuery = contentQuery
             //    .Where<QuestionnairePartRecord>(qpr => _questionnairesServices.CheckPermission(Permissions.AccessSpecificQuestionnaireStatistics, qpr.Id));
@@ -108,8 +125,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                 if (searchContext.SearchType == StatsSearchContext.SearchTypeOptions.Contents) {
                     contentQuery = contentQuery
                         .Where<TitlePartRecord>(w => w.Title.Contains(searchContext.SearchText));
-                }
-                else {
+                } else {
                     contentQuery = contentQuery
                         .Where<WidgetPartRecord>(w => w.Title.Contains(searchContext.SearchText));
                 }

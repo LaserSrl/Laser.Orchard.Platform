@@ -481,7 +481,7 @@ namespace Laser.Orchard.Questionnaires {
             SchemaBuilder
                 .CreateTable("QuestionnaireSpecificAccessPartRecord", table => table
                 .ContentPartRecord()
-                .Column<string>("UserIds", col => col.WithLength(500)));
+                .Column<string>("SerializedUserIds", col => col.WithLength(500)));
             return 34;
         }
     }

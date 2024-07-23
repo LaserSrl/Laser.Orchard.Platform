@@ -26,19 +26,18 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                     context.Adjusted = true;
                     context.Permission = Permissions.SubmitQuestionnaire; //will check this permission next
                 }
-            } 
-            //else if (!context.Granted &&
-            //      context.Content.Has<QuestionnaireSpecificAccessPart>()) {
-            //    // Check for the permission to access to a specific questionnaire for current user
-            //    if (context.Permission.Name.StartsWith(Permissions.AccessSpecificQuestionnaireStatistics.Name) || context.Permission.Name.StartsWith(Permissions.ExportSpecificQuestionnaireStatistics.Name)) {
-            //        var qsap = context.Content.As<QuestionnaireSpecificAccessPart>();
-            //            var idToCheck = context.Permission.Name.Substring(context.Permission.Name.LastIndexOf("_"));
-            //        if (qsap != null && int.TryParse(idToCheck, out var intId)) {
-            //            context.Granted = qsap.UserIds.Contains(_orchardServices.WorkContext.CurrentUser.Id);
-            //            context.Adjusted = true;
-            //        }
-            //    }
-            //}
+            } else if (!context.Granted &&
+                    context.Content.Has<QuestionnaireSpecificAccessPart>()) {
+                // Check for the permission to access to a specific questionnaire for current user
+                if (context.Permission.Name.StartsWith(Permissions.AccessSpecificQuestionnaireStatistics.Name) || context.Permission.Name.StartsWith(Permissions.ExportSpecificQuestionnaireStatistics.Name)) {
+                    var qsap = context.Content.As<QuestionnaireSpecificAccessPart>();
+                    var idToCheck = context.Permission.Name.Substring(context.Permission.Name.LastIndexOf("_"));
+                    if (qsap != null && int.TryParse(idToCheck, out var intId)) {
+                        context.Granted = qsap.UserIds.Contains(_orchardServices.WorkContext.CurrentUser.Id);
+                        context.Adjusted = true;
+                    }
+                }
+            }
         }
 
         public void Checking(CheckAccessContext context) { }

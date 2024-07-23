@@ -39,7 +39,9 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                    () => shapeHelper.EditorTemplate(TemplateName: "Parts/EmptyShape"));
             }
 
-            if (!updater.TryUpdateModel(part, Prefix, null, null)) {
+            if (updater.TryUpdateModel(part, Prefix, null, null)) {
+                //part.Record.SerializedUserIds = part.Record.EncodeIds(part.UserIds);
+            } else {
                 updater.AddModelError("QuestionnaireUpdateError", T("Cannot update questionnaire"));
             }
 

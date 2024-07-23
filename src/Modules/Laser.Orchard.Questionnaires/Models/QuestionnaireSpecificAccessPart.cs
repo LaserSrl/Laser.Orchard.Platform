@@ -5,10 +5,13 @@ namespace Laser.Orchard.Questionnaires.Models {
     public class QuestionnaireSpecificAccessPart : ContentPart<QuestionnaireSpecificAccessPartRecord> {
         public IEnumerable<int> UserIds {
             get {
-                return Record.UserIds;
+                if (Record == null) {
+                    Record = new QuestionnaireSpecificAccessPartRecord();
+                }
+                return Record.DecodeIds(Record.SerializedUserIds);
             }
             set {
-                Record.UserIds = value;
+                Record.SerializedUserIds = Record.EncodeIds(value);
             }
         }
     }

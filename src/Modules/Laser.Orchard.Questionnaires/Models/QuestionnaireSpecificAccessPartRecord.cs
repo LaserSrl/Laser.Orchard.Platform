@@ -7,18 +7,22 @@ namespace Laser.Orchard.Questionnaires.Models {
     public class QuestionnaireSpecificAccessPartRecord : ContentPartRecord {
         private static readonly char[] separator = new[] { '{', '}', ',' };
 
-        public IEnumerable<int> UserIds {
-            get {
-                return DecodeIds(this.SerializedUserIds);
-            }
-            set {
-                this.SerializedUserIds = EncodeIds(value);
-            }
+        public QuestionnaireSpecificAccessPartRecord() {
+            SerializedUserIds = string.Empty;
         }
 
-        public string SerializedUserIds { get; set; }
+        public virtual string SerializedUserIds { get; set; }
 
-        private static string EncodeIds(IEnumerable<int> ids) {
+        //public virtual IEnumerable<int> UserIds {
+        //    get {
+        //        return DecodeIds(SerializedUserIds);
+        //    }
+        //    set {
+        //        SerializedUserIds = EncodeIds(value);
+        //    }
+        //}
+
+        public string EncodeIds(IEnumerable<int> ids) {
             if (ids == null || !ids.Any()) {
                 return string.Empty;
             }
@@ -28,8 +32,8 @@ namespace Laser.Orchard.Questionnaires.Models {
         }
 
 
-        public static IEnumerable<int> DecodeIds(string ids) {
-            if (String.IsNullOrWhiteSpace(ids)) {
+        public IEnumerable<int> DecodeIds(string ids) {
+            if (string.IsNullOrWhiteSpace(ids)) {
                 return new int[0];
             }
             // if some of the slices of the string cannot be properly parsed,
