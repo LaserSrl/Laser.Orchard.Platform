@@ -12,6 +12,11 @@ namespace Laser.Orchard.Questionnaires {
             Description = "Access questionnaire statistics",
             Name = "AccessStatistics"
         };
+        public static readonly Permission ExportStatistics = new Permission {
+            Description = "Export questionnaire statistics",
+            Name = "ExportStatistics",
+            ImpliedBy = new[] { AccessStatistics }
+        };
         public static readonly Permission GameRanking = new Permission {
             Description = "View game rankings",
             Name = "GameRanking"
@@ -39,6 +44,7 @@ namespace Laser.Orchard.Questionnaires {
             return new[] {
                 SubmitQuestionnaire,
                 AccessStatistics,
+                ExportStatistics,
                 GameRanking,
                 AccessExportQuestionnairesStatistics,
                 ManageAccessToSpecificQuestionnaireStatistics,
@@ -68,7 +74,7 @@ namespace Laser.Orchard.Questionnaires {
                 },
                 new PermissionStereotype {
                     Name = "Editor",
-                    Permissions = new[] {AccessStatistics, GameRanking } //} //
+                    Permissions = new[] {AccessStatistics, GameRanking }
                 }
             };
         }

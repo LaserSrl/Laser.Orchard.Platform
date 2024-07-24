@@ -25,48 +25,20 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                 if (context.Permission.Name == Contents.Permissions.ViewContent.Name) {
                     context.Adjusted = true;
                     context.Permission = Permissions.SubmitQuestionnaire; //will check this permission next
-                }
-            } else if (context.Content.Has<QuestionnaireSpecificAccessPart>()) {
-                // Check for the permission to access to a specific questionnaire for current user
-                if (context.Permission.Name == Permissions.AccessSpecificQuestionnaireStatistics.Name) {
-                    context.Adjusted = true;
-
-                    var accessPart = context.Content.As<QuestionnaireSpecificAccessPart>();
-                    if (accessPart != null) {
-                        if (accessPart.UserIds
-                            .Contains(_orchardServices.WorkContext.CurrentUser.Id)) {
-
-                            context.Granted = true;
-                        } else {
-                            context.Granted = false;
-                        }
+                } else if (context.Content.Has<QuestionnaireSpecificAccessPart>()) {
+                    // Check for the permission to access to a specific questionnaire for current user
+                    if (context.Permission.Name == Permissions.AccessStatistics.Name) {
+                        context.Adjusted = true;
+                        context.Permission = Permissions.AccessSpecificQuestionnaireStatistics;
                     }
 
-                    // Check the generic permission next.
-                    // If user has the generic permission, he can access and export any questionnaire
-                    context.Permission = Permissions.AccessStatistics;
-                }
-
-                // Check for the permission to export to a specific questionnaire for current user
-                if (context.Permission.Name == Permissions.ExportSpecificQuestionnaireStatistics.Name) {
-                    context.Adjusted = true;
-
-                    var accessPart = context.Content.As<QuestionnaireSpecificAccessPart>();
-                    if (accessPart != null) {
-                        if (accessPart.UserIds
-                            .Contains(_orchardServices.WorkContext.CurrentUser.Id)) {
-
-                            context.Granted = true;
-                        } else {
-                            context.Granted = false;
-                        }
+                    // Check for the permission to export to a specific questionnaire for current user
+                    if (context.Permission.Name == Permissions.ExportStatistics.Name) {
+                        context.Adjusted = true;
+                        context.Permission = Permissions.ExportSpecificQuestionnaireStatistics;
                     }
-
-                    // Check the generic permission next.
-                    // If user has the generic permission, he can access and export any questionnaire
-                    context.Permission = Permissions.AccessStatistics;
                 }
-            }
+            } 
         }
 
         public void Checking(CheckAccessContext context) { }
@@ -80,6 +52,20 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                 context.Content.Is<QuestionnairePart>()) {
 
                 context.Granted = _authorizer.Authorize(Permissions.SubmitQuestionnaire);
+            }
+
+            if (context.Granted &&
+                context.Content.Is<QuestionnaireSpecificAccessPart>()) {
+
+                if (context.Permission.Name == Permissions.AccessSpecificQuestionnaireStatistics.Name ||
+                    context.Permission.Name == Permissions.ExportSpecificQuestionnaireStatistics.Name) {
+
+                    var accessPart = context.Content.As<QuestionnaireSpecificAccessPart>();
+                    if (accessPart != null) {
+                        context.Granted = accessPart.UserIds
+                            .Contains(_orchardServices.WorkContext.CurrentUser.Id);
+                    }
+                }
             }
         }
     }

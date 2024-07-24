@@ -1,10 +1,20 @@
 ﻿@using Laser.Orchard.Questionnaires.Models
 @using Laser.Orchard.Questionnaires.ViewModels
 @using Orchard.ContentManagement
+@using Orchard.Security
 @using System.Linq
 
 @model QuestionnaireStatsViewModel
 @{
+    IAuthorizer _authorizer = WorkContext.Resolve<IAuthorizer>();
+    IContentManager _contentManager = WorkContext.Resolve<IContentManager>();
+    var qci = _contentManager.Get(Model.Id, VersionOptions.Latest);
+
+    var showExportButtons = false;
+    if (qci != null) {
+        showExportButtons = _authorizer.Authorize(Laser.Orchard.Questionnaires.Permissions.ExportStatistics, qci);
+    }
+
     var dateContext = new DateContext {
         Format = "dd/MM/yyyy"
     };
@@ -36,25 +46,27 @@
         if (maxAnswers.Answers.Count <= 4) {
             width = 500;
             height = 300;
-        }
-        else {
+        } else {
             width = 600;
             height = 400;
         }
     }
 
     var showCsvButton = false;
-    var settings = WorkContext.CurrentSite.As<QuestionnaireModuleSettingsPart>();
-    if (settings != null) {
-        showCsvButton = settings.EnableCsvExport;
-    }
-
     var showPdfButton = false;
     var showExcelButton = false;
-    var advSettings = WorkContext.CurrentSite.As<QuestionnaireStatsSettingsPart>();
-    if (advSettings != null) {
-        showPdfButton = advSettings.EnablePdfExport;
-        showExcelButton = advSettings.EnableExcelExport;
+
+    if (showExportButtons) {
+        var settings = WorkContext.CurrentSite.As<QuestionnaireModuleSettingsPart>();
+        if (settings != null) {
+            showCsvButton = settings.EnableCsvExport;
+        }
+
+        var advSettings = WorkContext.CurrentSite.As<QuestionnaireStatsSettingsPart>();
+        if (advSettings != null) {
+            showPdfButton = advSettings.EnablePdfExport;
+            showExcelButton = advSettings.EnableExcelExport;
+        }
     }
 
     var dateFrom = Model.FilterContext.DateFrom.HasValue ? Model.FilterContext.DateFrom.Value.ToString(dateContext.Format) : "";
@@ -118,26 +130,28 @@
                             </fieldset>
                         </div>
                     </div>
-                    <!-- /.col -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
-                                @if (showPdfButton) {
-                                    <a href="@Url.Action("PdfExport", "QuestionnaireStatsExport", new { area = "Laser.Orchard.Questionnaires", questionnaireId = Model.Id, dateFrom = dateFrom, dateTo = dateTo, dateFormat = dateContext.Format, context = context, redirectUrl = urlBack })" class="button">@T("Export to Pdf")</a>
-                                }
-                                @if (showExcelButton) {
-                                    <a href="@Url.Action("ExcelExport", "QuestionnaireStatsExport", new { area = "Laser.Orchard.Questionnaires", questionnaireId = Model.Id, dateFrom = dateFrom, dateTo = dateTo, dateFormat = dateContext.Format, context = context, redirectUrl = urlBack })" class="button">@T("Export to Excel")</a>
-                                }
-                                @if (showCsvButton) {
-                                    <button type="submit" name="@Html.FieldNameFor(m => m.FilterContext.Export)" value="true">@T("Export to Csv")</button>
-                                }
-                                <a href="@Url.Action("Index", "FileDownloader", 
+                    @if (showExportButtons) {
+                        <!-- /.col -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
+                                    @if (showPdfButton) {
+                                        <a href="@Url.Action("PdfExport", "QuestionnaireStatsExport", new { area = "Laser.Orchard.Questionnaires", questionnaireId = Model.Id, dateFrom = dateFrom, dateTo = dateTo, dateFormat = dateContext.Format, context = context, redirectUrl = urlBack })" class="button">@T("Export to Pdf")</a>
+                                    }
+                                    @if (showExcelButton) {
+                                        <a href="@Url.Action("ExcelExport", "QuestionnaireStatsExport", new { area = "Laser.Orchard.Questionnaires", questionnaireId = Model.Id, dateFrom = dateFrom, dateTo = dateTo, dateFormat = dateContext.Format, context = context, redirectUrl = urlBack })" class="button">@T("Export to Excel")</a>
+                                    }
+                                    @if (showCsvButton) {
+                                        <button type="submit" name="@Html.FieldNameFor(m => m.FilterContext.Export)" value="true">@T("Export to Csv")</button>
+                                    }
+                                    <a href="@Url.Action("Index", "FileDownloader",
                                         new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=@Model.Id&ParentFolder=QuestionnairesStatistics" class="button">@T("Show Exported Files")</a>
-                            </fieldset>
+                                </fieldset>
+                            </div>
+                            <!-- /.form-group -->
                         </div>
-                        <!-- /.form-group -->
-                    </div>
-                    <!-- /.col -->
+                        <!-- /.col -->
+                    }
                 </div>
                 <!-- /.row -->
             }
@@ -197,7 +211,7 @@
                     });
                 </Text>
                 }
-                
+
             });
         </script>
     }

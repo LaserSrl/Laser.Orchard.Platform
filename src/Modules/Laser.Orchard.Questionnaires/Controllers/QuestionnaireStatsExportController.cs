@@ -33,6 +33,11 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         }
 
         public ActionResult PdfExport(int questionnaireId, string dateFrom, string dateTo, string dateFormat, string context, string redirectUrl) {
+            var qci = _orchardServices.ContentManager.Get(questionnaireId);
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ExportStatistics, qci)) {
+                return new HttpUnauthorizedResult();
+            }
+
             DateTime? dtDateFrom = null;
             DateTime? dtDateTo = null;
             if (DateTime.TryParse(dateFrom, out var dt1)) {
@@ -59,6 +64,11 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         }
 
         public ActionResult ExcelExport(int questionnaireId, string dateFrom, string dateTo, string dateFormat, string context, string redirectUrl) {
+            var qci = _orchardServices.ContentManager.Get(questionnaireId);
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ExportStatistics, qci)) {
+                return new HttpUnauthorizedResult();
+            }
+
             DateTime? dtDateFrom = null;
             DateTime? dtDateTo = null;
             if (DateTime.TryParse(dateFrom, out var dt1)) {
