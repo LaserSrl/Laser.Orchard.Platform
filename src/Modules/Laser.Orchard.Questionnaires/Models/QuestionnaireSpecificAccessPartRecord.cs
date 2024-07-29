@@ -13,15 +13,6 @@ namespace Laser.Orchard.Questionnaires.Models {
 
         public virtual string SerializedUserIds { get; set; }
 
-        //public virtual IEnumerable<int> UserIds {
-        //    get {
-        //        return DecodeIds(SerializedUserIds);
-        //    }
-        //    set {
-        //        SerializedUserIds = EncodeIds(value);
-        //    }
-        //}
-
         public string EncodeIds(IEnumerable<int> ids) {
             if (ids == null || !ids.Any()) {
                 return string.Empty;

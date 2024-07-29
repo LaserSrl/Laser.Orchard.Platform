@@ -10,6 +10,7 @@
 }
 
 <fieldset>
+    <input type="hidden" name="@Html.FieldNameFor(m => m.UserIds)" />
     <label for="@Html.FieldIdFor(m => m.UserIds)">@T("Enabled users")</label>
     @Html.ListBoxFor(m => m.UserIds, users)
 </fieldset>
