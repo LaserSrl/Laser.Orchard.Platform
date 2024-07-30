@@ -229,8 +229,8 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MiniExcel, Version=1.33.0.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\MiniExcel.1.33.0\lib\net45\MiniExcel.dll</HintPath>
+    <Reference Include="MiniExcel, Version=1.34.0.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\MiniExcel.1.34.0\lib\net45\MiniExcel.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
