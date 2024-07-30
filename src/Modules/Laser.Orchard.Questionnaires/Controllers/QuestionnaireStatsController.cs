@@ -1,27 +1,22 @@
-﻿using Laser.Orchard.Questionnaires.Services;
+﻿using Laser.Orchard.Questionnaires.Handlers;
+using Laser.Orchard.Questionnaires.Models;
+using Laser.Orchard.Questionnaires.Services;
 using Laser.Orchard.Questionnaires.ViewModels;
-using Laser.Orchard.Questionnaires.Handlers;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
+using Orchard.Core.Containers.Extensions;
 using Orchard.Core.Title.Models;
+using Orchard.Environment.Configuration;
+using Orchard.Localization;
+using Orchard.Tasks.Scheduling;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Linq;
-using System;
-using System.Globalization;
-using Orchard.Tasks.Scheduling;
 using Orchard.UI.Notify;
-using Orchard.Localization;
-using Laser.Orchard.StartupConfig.FileDownloader.ViewModels;
-using Orchard.Environment.Configuration;
-using System.Text;
-using Laser.Orchard.Questionnaires.Models;
-using NHibernate.Linq;
-using System.Runtime.ConstrainedExecution;
 using Orchard.Widgets.Models;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.Questionnaires.Controllers {
     public class QuestionnaireStatsController : Controller {
@@ -63,12 +58,24 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         [HttpGet]
         [Admin]
         public ActionResult Detail(int idQuestionario, StatsDetailFilterContext filterContext) {
+            var qci = _orchardServices.ContentManager.Get(idQuestionario);
+            // Check for the permissions on the specific questionnaire, using the QuestionnaireSpecificAccessPart
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics, qci)) {
+                return new HttpUnauthorizedResult();
+            }
+
             var model = _questionnairesServices.GetStats(idQuestionario, filterContext);
             if (filterContext.Export == true) {
+                // Check for the permission to export specific questionnaires
+                if (!_orchardServices.Authorizer.Authorize(Permissions.ExportStatistics, qci)) {
+                    _notifier.Error(T("Not authorized to export questionnaire stats"));
+                    return View((object)model);
+                }
+
                 ContentItem filters = _orchardServices.ContentManager.Create("QuestionnaireStatsExport");
-                filters.As<TitlePart>().Title = string.Format("id={0}&from={1:yyyyMMdd}&to={2:yyyyMMdd}&filtercontext={3}", idQuestionario, filterContext.DateFrom.HasValue? filterContext.DateFrom.Value:new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime(), filterContext.Context);
+                filters.As<TitlePart>().Title = string.Format("id={0}&from={1:yyyyMMdd}&to={2:yyyyMMdd}&filtercontext={3}", idQuestionario, filterContext.DateFrom.HasValue ? filterContext.DateFrom.Value : new DateTime(), filterContext.DateTo.HasValue ? filterContext.DateTo.Value : new DateTime(), filterContext.Context);
                 _orchardServices.ContentManager.Publish(filters);
-                _taskManager.CreateTask(StasExportScheduledTaskHandler.TaskType, DateTime.UtcNow.AddSeconds(-1), filters);
+                _taskManager.CreateTask(StatsExportScheduledTaskHandler.TaskType, DateTime.UtcNow.AddSeconds(-1), filters);
                 //_questionnairesServices.SaveQuestionnaireUsersAnswers(idQuestionario, fromDate, toDate);
                 _notifier.Add(NotifyType.Information, T("Export started. Please check 'Show Exported Files' in a few minutes to get the result."));
             }
@@ -78,8 +85,9 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         [HttpGet]
         [Admin]
         public ActionResult Index(int? page, int? pageSize, StatsSearchContext searchContext) {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics))
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics) && !_orchardServices.Authorizer.Authorize(Permissions.AccessSpecificQuestionnaireStatistics)) {
                 return new HttpUnauthorizedResult();
+            }
             return Index(new PagerParameters {
                 Page = page,
                 PageSize = pageSize
@@ -89,18 +97,27 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         [HttpPost]
         [Admin]
         public ActionResult Index(PagerParameters pagerParameters, StatsSearchContext searchContext) {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics))
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics) && !_orchardServices.Authorizer.Authorize(Permissions.AccessSpecificQuestionnaireStatistics)) {
                 return new HttpUnauthorizedResult();
+            }
             var contentQuery = _orchardServices.ContentManager.Query()
                 .ForVersion(VersionOptions.Latest);
             contentQuery = contentQuery
                 .Join<QuestionnairePartRecord>();
+
+            // Only get questionnaires current user has access to
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessStatistics)) {
+                contentQuery = contentQuery
+                    .Join<QuestionnaireSpecificAccessPartRecord>()
+                    .Where<QuestionnaireSpecificAccessPartRecord>(qsapr => qsapr.SerializedUserIds
+                        .Contains("{" + _orchardServices.WorkContext.CurrentUser.Id.ToString() + "}"));
+            }
+            
             if (!string.IsNullOrEmpty(searchContext.SearchText)) {
                 if (searchContext.SearchType == StatsSearchContext.SearchTypeOptions.Contents) {
                     contentQuery = contentQuery
                         .Where<TitlePartRecord>(w => w.Title.Contains(searchContext.SearchText));
-                }
-                else {
+                } else {
                     contentQuery = contentQuery
                         .Where<WidgetPartRecord>(w => w.Title.Contains(searchContext.SearchText));
                 }

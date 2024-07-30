@@ -1,0 +1,16 @@
+﻿@using Laser.Orchard.Questionnaires.Models;
+@using Laser.Orchard.Questionnaires.Services;
+
+@model QuestionnaireSpecificAccessPart
+
+@{ 
+    IQuestionnairesServices _questionnaireServices = WorkContext.Resolve<IQuestionnairesServices>();
+
+    var users = _questionnaireServices.GetEnabledUsers();
+}
+
+<fieldset>
+    <input type="hidden" name="@Html.FieldNameFor(m => m.UserIds)" />
+    <label for="@Html.FieldIdFor(m => m.UserIds)">@T("Enabled users")</label>
+    @Html.ListBoxFor(m => m.UserIds, users)
+</fieldset>

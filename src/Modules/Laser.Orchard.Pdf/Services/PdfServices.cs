@@ -44,7 +44,15 @@ namespace Laser.Orchard.Pdf.Services {
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
         }
-        public byte[] PdfFromHtml(string html, string pageSize = "A4", float marginLeft = 50, float marginRight = 50, float marginTop = 10, float marginBottom = 10, bool landscape = false, IPdfPageEvent pdfPageEvent = null) {
+        public byte[] PdfFromHtml(string html, 
+            string pageSize = "A4", 
+            float marginLeft = 50, 
+            float marginRight = 50, 
+            float marginTop = 10, 
+            float marginBottom = 10,
+            bool landscape = false, 
+            IPdfPageEvent pdfPageEvent = null) {
+
             var effectivePageSize = PageSize.A4;
             switch (pageSize.ToUpper()) {
                 case "A5":

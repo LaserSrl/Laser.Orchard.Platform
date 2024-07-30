@@ -1,0 +1,16 @@
+﻿@using Laser.Orchard.Questionnaires.Models;
+
+@model QuestionnaireStatsSettingsPart
+
+<fieldset>
+    <legend>@T("Advanced questionnaire stats options")</legend>
+    @Html.CheckBoxFor(m => m.EnablePdfExport)
+    <label class="forcheckbox" for="@Html.FieldIdFor(m => m.EnablePdfExport)">@T("Enable pdf export of statistics")</label>
+    <span class="hint">@T("Display a button to export the statistics of a single questionnaire in pdf format.")</span>
+
+    @Html.CheckBoxFor(m => m.EnableExcelExport)
+    <label class="forcheckbox" for="@Html.FieldIdFor(m => m.EnableExcelExport)">@T("Enable Excel export of statistics")</label>
+    <span class="hint">@T("Display a button to export the statistics of a single questionnaire in Excel format.")</span>
+    <span class="hint">@T("For each section of the questionnaire one Excel spreadsheet will be created.")</span>
+    <span class="hint">@T("In each spreadsheet, for each question, a single sheet will be added.")</span>
+</fieldset>

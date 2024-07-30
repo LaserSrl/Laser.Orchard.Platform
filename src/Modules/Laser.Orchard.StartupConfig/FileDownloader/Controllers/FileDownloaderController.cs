@@ -1,16 +1,14 @@
 ﻿using Laser.Orchard.StartupConfig.FileDownloader.ViewModels;
 using Orchard;
-using Orchard.Security.Permissions;
 using Orchard.Environment.Configuration;
 using Orchard.Localization;
+using Orchard.Security.Permissions;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
 using Orchard.UI.Notify;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.StartupConfig.FileDownloader.Controllers {
@@ -52,25 +50,29 @@ namespace Laser.Orchard.StartupConfig.FileDownloader.Controllers {
         [HttpGet]
         [Admin]
         public ActionResult Index(FilesListVM model, PagerParameters pagerParameters) {
-            // controlla i permessi dell'utente
+            // Check user permission
             if (CheckPermission(model.FolderName, model.ParentFolder) == false) {
                 return new HttpUnauthorizedResult();
             }
-            // crea la struttura di cartelle se necessario
+            // Check if folders exist
+            var folderExists = true;
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Server.MapPath(FileRootRelativePath + "/" + model.ParentFolder));
-            if (dir.Exists == false) {
-                dir.Create();
+            folderExists = dir.Exists;
+            if (folderExists) {
+                dir = new System.IO.DirectoryInfo(Server.MapPath(FileRootRelativePath + "/" + model.ParentFolder + "/" + model.FolderName));
+                folderExists = dir.Exists;
             }
-            dir = new System.IO.DirectoryInfo(Server.MapPath(FileRootRelativePath + "/" + model.ParentFolder + "/" + model.FolderName));
-            if (dir.Exists == false) {
-                dir.Create();
+            if (folderExists) {
+                var files = dir.GetFiles(model.FileFilter, System.IO.SearchOption.TopDirectoryOnly);
+                foreach (var file in files) {
+                    model.FileInfos.Add(file);
+                }
+                model.FileInfos = model.FileInfos.OrderByDescending(x => x.LastWriteTimeUtc).ToList();
+            } else {
+                model.FileInfos = new List<FileSystemInfo>();
             }
-            var files = dir.GetFiles(model.FileFilter, System.IO.SearchOption.TopDirectoryOnly);
-            foreach (var file in files) {
-                model.FileInfos.Add(file);
-            }
-            model.FileInfos = model.FileInfos.OrderByDescending(x => x.LastWriteTimeUtc).ToList();
-            // gestione della paginazione
+
+            // Paging
             Pager pager = new Pager(_orchardServices.WorkContext.CurrentSite, pagerParameters);
             var pagerShape = _orchardServices.New.Pager(pager).TotalItemCount(model.FileInfos.Count);
             model.FileInfos = model.FileInfos.Skip(pager.GetStartIndex()).Take(pager.PageSize).ToList();
@@ -78,7 +80,7 @@ namespace Laser.Orchard.StartupConfig.FileDownloader.Controllers {
             return View("Index", model);
         }
         public ActionResult DownloadFile(string fName, string folderName, string parentFolder = "Export") {
-            // controlla i permessi dell'utente
+            // Check user permission
             if (CheckPermission(folderName, parentFolder) == false) {
                 return new HttpUnauthorizedResult();
             }
@@ -88,7 +90,7 @@ namespace Laser.Orchard.StartupConfig.FileDownloader.Controllers {
         }
         [Admin]
         public ActionResult RemoveFile(string fName, string folderName, string urlBack, string parentFolder = "Export") {
-            // controlla i permessi dell'utente
+            // Check user permission
             if (CheckPermission(folderName, parentFolder) == false) {
                 return new HttpUnauthorizedResult();
             }
@@ -97,8 +99,7 @@ namespace Laser.Orchard.StartupConfig.FileDownloader.Controllers {
             if (file.Exists) {
                 file.Delete();
                 _notifier.Information(T("File removed."));
-            }
-            else {
+            } else {
                 _notifier.Error(T("File does not exist. It should have been removed by someone else."));
             }
             return RedirectToAction("Index", new { UrlBack = urlBack, FolderName = folderName, ParentFolder = parentFolder });

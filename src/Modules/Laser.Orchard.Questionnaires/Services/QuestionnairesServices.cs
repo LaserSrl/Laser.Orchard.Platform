@@ -33,6 +33,11 @@ using System.Security.Cryptography;
 using System.Linq.Expressions;
 using Orchard.Core.Contents.Settings;
 using Orchard.Widgets.Models;
+using System.Web.Mvc;
+using Orchard.Roles.Services;
+using Orchard.Roles.Models;
+using Orchard.Core.Common.OwnerEditor;
+using Orchard.Security.Permissions;
 
 namespace Laser.Orchard.Questionnaires.Services {
 
@@ -54,6 +59,9 @@ namespace Laser.Orchard.Questionnaires.Services {
         private readonly ITokenizer _tokenizer;
         private readonly IQuestionAnswerRepositoryService _questionAnswerRepositoryService;
         private readonly IQuestionnaireHelperServices _questionnaireHelperService;
+        private readonly IRoleService _roleService;
+        private readonly IRepository<UserRolesPartRecord> _userRolesRepository;
+        private readonly IAuthorizer _authorizer;
 
         public Localizer T { get; set; }
 
@@ -73,7 +81,10 @@ namespace Laser.Orchard.Questionnaires.Services {
             IQuestionAnswerRepositoryService questionAnswerRepositoryService,
             ShellSettings shellSettings,
             IRepository<UserAnswerInstanceRecord> repositoryinstanceRecords,
-            IQuestionnaireHelperServices questionnaireHelperService) {
+            IQuestionnaireHelperServices questionnaireHelperService,
+            IRoleService roleService,
+            IRepository<UserRolesPartRecord> userRolesRepository,
+            IAuthorizer authorizer) {
 
             _orchardServices = orchardServices;
             _repositoryTitle = repositoryTitle;
@@ -93,18 +104,19 @@ namespace Laser.Orchard.Questionnaires.Services {
             _shellSettings = shellSettings;
             _repositoryinstanceRecords = repositoryinstanceRecords;
             _questionnaireHelperService = questionnaireHelperService;
+            _roleService = roleService;
+            _userRolesRepository = userRolesRepository;
+            _authorizer = authorizer;
         }
 
         private string getusername(int id) {
             if (id > 0) {
                 try {
                     return ((dynamic)_orchardServices.ContentManager.Get(id)).UserPart.UserName;
-                }
-                catch (Exception) {
+                } catch (Exception) {
                     return "No User";
                 }
-            }
-            else
+            } else
                 return "No User";
         }
 
@@ -226,12 +238,10 @@ namespace Laser.Orchard.Questionnaires.Services {
                     data.Add("Recipients", emailRecipe);
                     _messageManager.Value.Process(data);
                     return true;
-                }
-                else { // Nessun template selezionato non mando una mail e ritorno false, mail non inviata
+                } else { // Nessun template selezionato non mando una mail e ritorno false, mail non inviata
                     return false;
                 }
-            }
-            else
+            } else
                 return false;
         }
 
@@ -263,12 +273,10 @@ namespace Laser.Orchard.Questionnaires.Services {
                     data.Add("Recipients", emailRecipe);
                     _messageManager.Value.Process(data);
                     return true;
-                }
-                else { // Nessun template selezionato non mando una mail e ritorno false, mail non inviata
+                } else { // Nessun template selezionato non mando una mail e ritorno false, mail non inviata
                     return false;
                 }
-            }
-            else
+            } else
                 return false;
         }
 
@@ -503,8 +511,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 && x.Context == editModel.Context).Count() > 0) {
                         exit = true;
                     }
-                }
-                else { // anonymous user => check SessionID
+                } else { // anonymous user => check SessionID
                     var answeredInstance = !string.IsNullOrWhiteSpace(SessionID)
                         ? GetMostRecentInstanceId(part, SessionID, editModel.Context)
                         : string.Empty;
@@ -574,8 +581,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                             userAnswer.AnswerText = q.OpenAnswerAnswerText;
                             CreationAction(userAnswer);
                         }
-                    }
-                    else if (q.QuestionType == QuestionType.SingleChoice) {
+                    } else if (q.QuestionType == QuestionType.SingleChoice) {
                         if (q.SingleChoiceAnswer > 0) {
                             var userAnswer = new UserAnswersRecord();
                             userAnswer.AnswerRecord_Id = q.SingleChoiceAnswer;
@@ -593,8 +599,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 AnswerText = answerTexts[q.SingleChoiceAnswer].Answer
                             });
                         }
-                    }
-                    else if (q.QuestionType == QuestionType.MultiChoice) {
+                    } else if (q.QuestionType == QuestionType.MultiChoice) {
                         var answerList = q.AnswersWithResult.Where(w => w.Answered);
                         foreach (var a in answerList) {
                             var userAnswer = new UserAnswersRecord();
@@ -654,8 +659,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                     .OrderByDescending(uair => uair.AnswerDate)
                     .Select(uair => uair.AnswerInstance)
                     .FirstOrDefault();
-            }
-            else {
+            } else {
                 instanceId = _repositoryinstanceRecords
                     .Table
                     .Where(uair => uair.User_Id == user.Id
@@ -683,8 +687,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                     .OrderByDescending(uair => uair.AnswerDate)
                     .Select(uair => uair.AnswerInstance)
                     .FirstOrDefault();
-            }
-            else {
+            } else {
                 instanceId = _repositoryinstanceRecords
                     .Table
                     .Where(uair => uair.SessionID == sessionId
@@ -800,8 +803,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             AnswerRecord answerRecord;
             if (!string.IsNullOrWhiteSpace(answer.GUIdentifier)) {
                 answerRecord = storedAnswers.SingleOrDefault(x => x.GUIdentifier == answer.GUIdentifier) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
-            }
-            else {
+            } else {
                 answerRecord = storedAnswers.SingleOrDefault(x => x.Id == answer.Id) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
             }
             var originalAnswerRecordId = answerRecord.Id; // 0 if new, a valid Id if get from DB
@@ -855,8 +857,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                     if (!string.IsNullOrWhiteSpace(quest.GUIdentifier)) {
                         questionRecord = storedQuestions.SingleOrDefault(x =>
                         x.GUIdentifier == quest.GUIdentifier) ?? new QuestionRecord(); //Get data of question by Identifier or create a new question
-                    }
-                    else {
+                    } else {
                         questionRecord = storedQuestions.SingleOrDefault(x =>
                         x.Id == quest.Id) ?? new QuestionRecord(); //Get data of question by Id or create a new question
                     }
@@ -886,8 +887,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 var operation = (item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable) ? T("Publish") : T("Save");
 
                                 throw new Exception(T("Cannot delete the question: \"{0}\" since it already contains one or more user answers.The question has been set to \"not visible\". {1} the content to accept these changes.", quest.Question, operation).Text);
-                            }
-                            else {
+                            } else {
                                 // Delete all the possible answers for this question
                                 foreach (var answer in questionRecord.Answers) {
                                     if (answer.Id > 0) {
@@ -898,8 +898,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 _questionAnswerRepositoryService.DeleteQuestion(quest.Id);
                             }
                         }
-                    }
-                    else {
+                    } else {
                         SaveQuestion(quest, questionRecord, questionMapper, PartID, originalQuestionRecordId);
                         var recordQuestionID = questionRecord.Id;
                         foreach (var answer in quest.Answers) { ///Insert, Update and delete Answer
@@ -915,13 +914,11 @@ namespace Laser.Orchard.Questionnaires.Services {
                                         var operation = (item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable) ? T("Publish") : T("Save");
 
                                         throw new Exception(T("Cannot delete the answer: \"{0}\" since it has already been selected in one or more user answers. The answer has been set to \"not visible\". {1} the content to accept these changes.", answer.Answer, operation).Text);
-                                    }
-                                    else {
+                                    } else {
                                         _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 SaveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
                             }
                         }
@@ -933,15 +930,13 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
                                 re = null;
                             }
-                        }
-                        catch (Exception ex) {
+                        } catch (Exception ex) {
                             throw new Exception("quest.CorrezioneCondizioni\r\n" + ex.Message);
                         }
 
                     }
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -986,24 +981,21 @@ namespace Laser.Orchard.Questionnaires.Services {
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published)));
                         cfg.CreateMap<QuestionnairePart, QuestionnaireWithResultsViewModel>().ForMember(dest => dest.QuestionsWithResults, opt => opt.MapFrom(src => src.Questions.Where(w => w.Published)));
                     });
-                }
-                else {
+                } else {
                     mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published)));
                         cfg.CreateMap<QuestionnairePart, QuestionnaireWithResultsViewModel>().ForMember(dest => dest.QuestionsWithResults, opt => opt.MapFrom(src => src.Questions.Where(w => w.Published).OrderBy(o => o.Position)));
                     });
                 }
-            }
-            else {
+            } else {
                 if (part.Settings.GetModel<QuestionnairesPartSettingVM>().RandomResponse) {
                     mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published).OrderBy(o => o.Position)));
                         cfg.CreateMap<QuestionnairePart, QuestionnaireWithResultsViewModel>().ForMember(dest => dest.QuestionsWithResults, opt => opt.MapFrom(src => src.Questions.Where(w => w.Published)));
                     });
-                }
-                else {
+                } else {
                     mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published).OrderBy(o => o.Position)));
@@ -1065,8 +1057,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                     var ci = _orchardServices.ContentManager.Get(contentId);
                     if (ci.As<TitlePart>() != null) {
                         title = ci.As<TitlePart>().Title;
-                    }
-                    else if (ci.As<WidgetPart>() != null) {
+                    } else if (ci.As<WidgetPart>() != null) {
                         title = ci.As<WidgetPart>().Title;
                     }
                     if (!String.IsNullOrWhiteSpace(title)) {
@@ -1083,16 +1074,14 @@ namespace Laser.Orchard.Questionnaires.Services {
             string fileName = "";
             if (ci.As<TitlePart>() != null) {
                 fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<TitlePart>().Title, "questionnaire", ' '), context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
-            }
-            else if (ci.As<WidgetPart>() != null) {
+            } else if (ci.As<WidgetPart>() != null) {
                 fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<WidgetPart>().Title, "questionnaire", ' '), context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
-            }
-            else if (ci.As<WidgetPart>() != null) {
+            } else if (ci.As<WidgetPart>() != null) {
                 fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", "questionnaire", context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
             }
             string filePath = HostingEnvironment.MapPath(
-                string.Format("~/App_Data/Sites/{0}/Export/QuestionnairesStatistics/{1}",
-                    _shellSettings.Name, fileName));
+                string.Format("~/App_Data/Sites/{0}/QuestionnairesStatistics/{1}/{2}",
+                    _shellSettings.Name, questionnaireId, fileName));
             // Creo la directory Export
             FileInfo fi = new FileInfo(filePath);
             if (fi.Directory.Parent.Exists == false) {
@@ -1146,8 +1135,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             var title = "";
             if (questionnaireData.As<TitlePart>() != null) {
                 title = questionnaireData.As<TitlePart>().Title;
-            }
-            else {
+            } else {
                 title = questionnaireData.As<WidgetPart>().Title;
             }
 
@@ -1160,8 +1148,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                     FilterContext = (StatsDetailFilterContext)filterContext
                 };
                 return empty;
-            }
-            else {
+            } else {
                 var aggregatedStats = questionnaireStats.Select(s => new QuestionStatsViewModel {
                     QuestionnairePart_Id = s.Questions.QuestionnairePartRecord_Id,
                     QuestionnaireTitle = title,
@@ -1229,5 +1216,65 @@ namespace Laser.Orchard.Questionnaires.Services {
             return fullStat.OrderBy(o => o.QuestionnaireTitle).ThenBy(o => o.Question).ThenBy(o => o.Answer).ToList();
         }
 
+        public IEnumerable<SelectListItem> GetEnabledUsers() {
+            List<string> permissionsToCheck = new List<string> {
+                Permissions.AccessSpecificQuestionnaireStatistics.Name,
+                Permissions.ExportSpecificQuestionnaireStatistics.Name
+            };
+
+            // Get all the roles with the required permissions
+            var roles = _roleService.GetRoles()
+                .Where(r => _roleService.GetPermissionsForRole(r.Id)
+                    .Any(p => permissionsToCheck.Contains(p)))
+                .Select(r2 => r2.Id)
+                .ToList();
+
+            // Get the users for the required roles
+            var userIds = _userRolesRepository
+                .Fetch(urpr => roles.Contains(urpr.Role.Id))
+                .Select(urpr2 => urpr2.UserId)
+                .ToList();
+
+            // Get the approved users based on the list of ids
+            var users2 = _orchardServices.ContentManager
+                .Query<UserPart, UserPartRecord>()
+                .Where(u => userIds.Contains(u.Id) &&
+                    u.RegistrationStatus == UserStatus.Approved)
+                .List();
+
+            var users = users2
+                .Select(up => new SelectListItem {
+                    Value = up.Id.ToString(),
+                    Text = up.UserName,
+                    Selected = false
+                });
+
+            return users;
+        }
+
+        public bool CheckPermission(Permission permission, int questionnaireId) {
+            if (_authorizer.Authorize(Permissions.AccessStatistics)) {
+                // Retrocompatibility behaviour: if user has AccessStatistics permission, they can view or export every questionnaires.
+                return true;
+            }
+
+            // Check provided permission, i.e. AccessSpecificQuestionnaireStatistics or ExportSpecificQuestionnaireStatistics
+            if (Permissions.SpecificQuestionnairePermissions.Contains(permission) &&
+                _authorizer.Authorize(permission)) {
+
+                var accessPart = _orchardServices.ContentManager
+                    .Query()
+                    .ForPart<QuestionnaireSpecificAccessPart>()
+                    .List()
+                    .FirstOrDefault(qsap => qsap.Id == questionnaireId);
+
+                if (accessPart != null) {
+                    return accessPart.UserIds.Contains(_orchardServices.WorkContext.CurrentUser.Id);
+                }
+            }
+
+
+            return false;
+        }
     }
 }

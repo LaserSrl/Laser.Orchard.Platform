@@ -476,5 +476,13 @@ namespace Laser.Orchard.Questionnaires {
                     t.AlterColumn("SessionID", col => col.WithType(System.Data.DbType.String).WithLength(400)));
             return 33;
         }
+
+        public int UpdateFrom33() {
+            SchemaBuilder
+                .CreateTable("QuestionnaireSpecificAccessPartRecord", table => table
+                .ContentPartRecord()
+                .Column<string>("SerializedUserIds", col => col.WithLength(500)));
+            return 34;
+        }
     }
 }

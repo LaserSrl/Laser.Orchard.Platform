@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Laser.Orchard.Questionnaires.Models;
+﻿using Laser.Orchard.Questionnaires.Models;
 using Laser.Orchard.Questionnaires.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Security;
-using Orchard.Tasks.Scheduling;
+using Orchard.Security.Permissions;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+
 namespace Laser.Orchard.Questionnaires.Services {
     public interface IQuestionnairesServices : IDependency {
         void UpdateForContentItem(ContentItem item, QuestionnaireEditModel partEditModel);
@@ -60,5 +62,18 @@ namespace Laser.Orchard.Questionnaires.Services {
         List<RankingTemplateVM> QueryForRanking(
            Int32 gameId, string device = "General", int page = 1, int pageSize = 10, bool Ascending = false);
         void SaveQuestionnaireUsersAnswers(int questionnaireId, StatsDetailFilterContext context);
+        /// <summary>
+        /// Returns a list of users.
+        /// It is used to display the users enabled to be assigned to view or export the statistics of specific questionnaires.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<SelectListItem> GetEnabledUsers();
+        /// <summary>
+        /// Checks for user permission to a specific questionnaire.
+        /// </summary>
+        /// <param name="permission"></param>
+        /// <param name="questionnaireId"></param>
+        /// <returns></returns>
+        bool CheckPermission(Permission permission, int questionnaireId);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.Pdf.Models;
 using Laser.Orchard.Pdf.ViewModels;
-using Newtonsoft.Json.Linq;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Localization;
@@ -20,9 +19,11 @@ namespace Laser.Orchard.Pdf.Drivers {
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
         }
+
         protected override DriverResult Editor(PdfButtonPart part, IUpdateModel updater, dynamic shapeHelper) {
             return Editor(part, shapeHelper);
         }
+
         protected override DriverResult Editor(PdfButtonPart part, dynamic shapeHelper) {
             var settings = part.Settings.GetModel<PdfButtonPartSettings>();
             string toParse = "";

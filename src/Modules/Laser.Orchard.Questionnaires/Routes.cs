@@ -1,6 +1,5 @@
 ﻿using Orchard.Mvc.Routes;
 using Orchard.WebApi.Routes;
-using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -32,7 +31,8 @@ namespace Laser.Orchard.Questionnaires {
                 AddRenamedRoute("QuestionnaireStats","QuestionDetail", "/{idQuestionario}/{idDomanda}"),
                 AddRenamedRoute("AdminRanking","Index"),
                 AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}/{deviceType}"),
-                AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}")
+                AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}"),
+                AddRenamedRoute("QuestionnaireStatsExport", "PdfExport")
             };
         }
 

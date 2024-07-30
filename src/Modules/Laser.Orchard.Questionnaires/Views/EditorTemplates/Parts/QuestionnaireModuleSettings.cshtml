@@ -1,7 +1,11 @@
-﻿@model Laser.Orchard.Questionnaires.Models.QuestionnaireModuleSettingsPart
+﻿@using Laser.Orchard.Questionnaires.Models;
+
+@model QuestionnaireModuleSettingsPart
 <fieldset>
     <legend>@T("Questionnaire Settings")</legend>
     @Html.CheckBoxFor(m => m.Disposable)
     <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Disposable)">@T("Disposable Action")</label>
     <span class="hint">@T("If checked only one user answer is enable for each questionnaire")</span>
+    <label class="forcheckbox" for="@Html.FieldIdFor(m => m.EnableCsvExport)">@T("Enable csv export of statistics")</label>
+    <span class="hint">@T("Display a button to export the statistics of a single questionnaire in csv format.")</span>
 </fieldset>

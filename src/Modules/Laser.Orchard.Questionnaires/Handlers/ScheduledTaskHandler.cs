@@ -2,9 +2,7 @@
 using Orchard.Logging;
 using Orchard.Tasks.Scheduling;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.Questionnaires.Handlers {
 

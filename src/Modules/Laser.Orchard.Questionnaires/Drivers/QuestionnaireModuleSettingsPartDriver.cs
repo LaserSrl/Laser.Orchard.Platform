@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.Questionnaires.Models;
+﻿using Laser.Orchard.Questionnaires.Helpers;
+using Laser.Orchard.Questionnaires.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 
@@ -14,7 +15,8 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                 () => shapeHelper.EditorTemplate(
                     TemplateName: TemplateName,
                     Model: part,
-                    Prefix: Prefix));
+                    Prefix: Prefix))
+                 .OnGroup(QuestionnaireHelper.SettingsGroupId);
         }
 
         protected override DriverResult Editor(QuestionnaireModuleSettingsPart part, IUpdateModel updater, dynamic shapeHelper) {

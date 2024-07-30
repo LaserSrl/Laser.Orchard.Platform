@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Orchard.ContentManagement;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Orchard.ContentManagement;
 
 namespace Laser.Orchard.Questionnaires.Models {
     public class QuestionnairePart : ContentPart<QuestionnairePartRecord> {

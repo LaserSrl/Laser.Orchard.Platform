@@ -1,0 +1,183 @@
+﻿@using Laser.Orchard.Questionnaires.ViewModels;
+
+@*@model QuestionnaireStatsViewModel*@
+@{ 
+    QuestionnaireStatsViewModel qsvm = Model.Model;
+    const int answersToShow = 3;
+    var width = 0;
+    var height = 0;
+    var maxAnswers = qsvm.QuestionsStatsList.OrderByDescending(o => o.Answers.Count).FirstOrDefault();
+
+    if (maxAnswers != null) {
+        if (maxAnswers.Answers.Count <= 4) {
+            width = 500;
+            height = 300;
+        } else {
+            width = 600;
+            height = 400;
+        }
+    }
+}
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">@T("Statistics for {0}", qsvm.Title)</h3>
+        </div>
+        <div class="box-body">
+            @if (qsvm.QuestionsStatsList.Count == 0) {
+                <div class="row">
+                    <div class="col-12">
+                        @T("This questionnaire contains no answers.")
+                    </div>
+                </div>
+            } else {
+                <div class="row">
+                    <div class="col-4">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>@qsvm.ReplyingPeopleCount</h3>
+                                <p>@T("People")</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                            <span class="small-box-footer">@T("Number of people replying to questionnaire") </span>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-4">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3>@qsvm.QuestionsStatsList.Select(x => x.Answers.Sum(c => c.Count)).Sum()</h3>
+
+                                <p>@T("Answers")</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-commenting" aria-hidden="true"></i>
+                            </div>
+                            <span class="small-box-footer">@T("Total number of given answers") </span>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-4">
+                        <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3>@((qsvm.FullyAnsweringPeople * 100 / qsvm.ReplyingPeopleCount).ToString("F0"))<sup style="font-size: 20px">%</sup></h3>
+
+                                <p>@T("Completeness")</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            </div>
+                            <span class="small-box-footer">@T("Percentage of reply to all questions") </span>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        @{
+                            foreach (var question in qsvm.QuestionsStatsList) {
+                                <div id="answer-@question.QuestionId" class="st-answer">
+                                    <div id="answerlist-@question.QuestionId" class="answerlist">
+                                        <h5>@question.Question</h5>
+                                        @{
+                                            List<AnswerStatsViewModel> answersList = new List<AnswerStatsViewModel>();
+
+                                            if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                                answersList = question.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(x => x.Count).ThenBy(x => x.Answer).Take(answersToShow).ToList();
+                                            } else {
+                                                answersList = question.Answers.OrderByDescending(x => x.Count).ThenBy(x => x.Answer).ToList();
+                                            }
+                                        }
+
+                                        @foreach (var answer in answersList) {
+                                            <div>
+                                                &bull; @answer.Answer
+                                                <span style="font-weight: bold">( @answer.Count )</span>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    @if (question.QuestionType != Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                        <div id="answerchart-@question.QuestionId" class="answerchart" style="width:@(width + "px"); height:@(height + "px");"></div>
+                                    }
+                                </div>
+
+                                if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer && question.Answers.Count > answersToShow) {
+                                    var routeValues = new RouteValueDictionary();
+                                    routeValues.Add("area", "Laser.Orchard.Questionnaires");
+                                    routeValues.Add("idQuestionario", qsvm.QuestionsStatsList.First().QuestionnairePart_Id);
+                                    routeValues.Add("idDomanda", question.QuestionId);
+                                    routeValues.Add(Html.FieldNameFor(m => qsvm.FilterContext.DateFrom), qsvm.FilterContext.DateFrom);
+                                    routeValues.Add(Html.FieldNameFor(m => qsvm.FilterContext.DateTo), qsvm.FilterContext.DateTo);
+                                    routeValues.Add(Html.FieldNameFor(m => qsvm.FilterContext.Context), qsvm.FilterContext.Context);
+
+                                    <div style="margin-top: 5px; margin-left: 9px;">
+
+                                        <a href="@Url.Action("QuestionDetail", "QuestionnaireStats", routeValues)">
+                                            @T("Show all answers")
+                                        </a>
+                                    </div>
+                                }
+                                <div class="line-separator"></div>
+                                <br />
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @foreach (var question in qsvm.QuestionsStatsList) {
+                if (question.QuestionType != Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                    <Text>
+            var data = [];
+            var tooltips = [];
+                        @if (question.Answers != null) {
+                            foreach (var answer in question.Answers) {
+                                var legendLabel = answer.Answer;
+                                if(legendLabel.Length > 20) {
+                                    legendLabel = legendLabel.Substring(0, 9) + "..." + legendLabel.Substring(legendLabel.Length - 8);
+                                }
+                                <Text>data.push(['@HttpUtility.JavaScriptStringEncode(legendLabel)', @answer.Count]);</Text>
+                                <Text>tooltips.push('@HttpUtility.JavaScriptStringEncode(answer.Answer)');</Text>
+                            }
+                        }
+            $.jqplot('answerchart-@question.QuestionId', [data],
+                {
+                    width: @width,
+                    height: @height,
+                    seriesDefaults: {
+                        renderer: jQuery.jqplot.PieRenderer,
+                        rendererOptions: {
+                            showDataLabels: true,
+                            //dataLabelFormatString: '%.2f'
+                        }
+                    },
+                    legend: {
+                        show: true,
+                        location: 'e',
+                        renderer: $.jqplot.EnhancedPieLegendRenderer,
+                        rendererOptions: {
+                            numberColumns: 1,
+                            toolTips: tooltips
+                        }
+                    }
+                });
+                </Text>
+
+            }
+        }
+        });
+    </script>
+}

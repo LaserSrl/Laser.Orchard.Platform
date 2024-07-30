@@ -1,0 +1,279 @@
+﻿@using Laser.Orchard.Questionnaires.ViewModels;
+
+@*@model QuestionnaireStatsViewModel*@
+@{
+    QuestionnaireStatsViewModel qsvm = Model.Model;
+
+}
+<html>
+<head>
+    <title>@T("Statistics for {0}", qsvm.Title)</title>
+
+    <style type="text/css">
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, button, submit {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            font-weight: inherit;
+            font-style: inherit;
+            font-size: 100%;
+            font-family: inherit;
+            vertical-align: baseline;
+        }
+
+        .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .box {
+            background: #ffffff none repeat scroll 0 0;
+            border-radius: 3px;
+            border: 1px solid #f6f6f6;
+            border-top: 3px solid #d2d6de;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            position: relative;
+            width: 100%;
+        }
+
+            .box.box-primary {
+                border-top-color: #3c8dbc;
+            }
+
+        .box-header {
+            color: #444;
+            display: block;
+            padding: 10px;
+            position: relative;
+        }
+
+            .box-header.with-border {
+                border-bottom: 1px solid #f4f4f4;
+            }
+
+            .box-header .box-title {
+                display: inline-block;
+                font-size: 18px;
+                margin: 0;
+                line-height: 1;
+            }
+
+        h3 {
+            margin: .5em 0;
+        }
+
+        h5 {
+            font-weight: 500;
+        }
+
+        .box-body {
+            border-radius: 0 0 3px 3px;
+            padding: 10px;
+        }
+
+            .box-body::before {
+                content: " ";
+                display: table;
+            }
+
+        .col-4, .col-12 {
+            position: relative;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .col-4 {
+            -ms-flex: 0 0 33.333333%;
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .col-12 {
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .small-box {
+            border-radius: 2px;
+            position: relative;
+            display: block;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+            .small-box .inner {
+                padding: 10px;
+            }
+
+            .small-box h3 {
+                font-size: 38px;
+                font-weight: bold;
+                margin: 0 0 10px 0;
+                white-space: nowrap;
+                padding: 0;
+            }
+
+            .small-box p {
+                font-size: 15px;
+            }
+
+            .small-box .icon {
+                top: 10px;
+                -webkit-transition: all 0.3s linear;
+                -o-transition: all 0.3s linear;
+                transition: all 0.3s linear;
+                position: absolute;
+                right: 10px;
+                z-index: 0;
+                font-size: 90px;
+                color: rgba(0, 0, 0, 0.15);
+            }
+
+            .small-box > .small-box-footer {
+                position: relative;
+                text-align: center;
+                padding: 3px 0;
+                color: #fff;
+                color: rgba(255, 255, 255, 0.8);
+                display: block;
+                z-index: 10;
+                background: rgba(0, 0, 0, 0.1);
+                text-decoration: none;
+            }
+
+        .fa {
+            display: inline-block;
+            font: normal normal normal 14px / 1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .bg-aqua {
+            background-color: #00c0ef !important;
+        }
+
+        .bg-green {
+            background-color: #00a65a !important;
+        }
+
+        .bg-yellow {
+            background-color: #f39c12 !important;
+        }
+
+        .st-answer {
+            display: inline-block;
+            width: 100%;
+        }
+
+        .answerlist {
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">@T("Statistics for {0}", qsvm.Title)</h3>
+            </div>
+            <div class="box-body">
+                @if (qsvm.QuestionsStatsList.Count == 0) {
+                    <div class="row">
+                        <div class="col-12">
+                            @T("This questionnaire contains no answers.")
+                        </div>
+                    </div>
+                } else {
+                    <div class="row">
+                        <div class="col-4">
+                            <!-- small box -->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>@qsvm.ReplyingPeopleCount</h3>
+                                    <p>@T("People")</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </div>
+                                <span class="small-box-footer">@T("Number of people replying to questionnaire") </span>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-4">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>@qsvm.QuestionsStatsList.Select(x => x.Answers.Sum(c => c.Count)).Sum()</h3>
+
+                                    <p>@T("Answers")</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-commenting" aria-hidden="true"></i>
+                                </div>
+                                <span class="small-box-footer">@T("Total number of given answers") </span>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-4">
+                            <!-- small box -->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h3>@((qsvm.FullyAnsweringPeople * 100 / qsvm.ReplyingPeopleCount).ToString("F0"))<sup style="font-size: 20px">%</sup></h3>
+
+                                    <p>@T("Completeness")</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                </div>
+                                <span class="small-box-footer">@T("Percentage of reply to all questions") </span>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            @{
+                                foreach (var question in qsvm.QuestionsStatsList) {
+                                    <div id="answer-@question.QuestionId" class="st-answer">
+                                        <div id="answerlist-@question.QuestionId" class="answerlist">
+                                            <h5>@question.Question</h5>
+                                            @{
+                                                List<AnswerStatsViewModel> answersList = new List<AnswerStatsViewModel>();
+                                                answersList = question.Answers.OrderByDescending(x => x.Count).ThenBy(x => x.Answer).ToList();
+                                            }
+
+                                            @foreach (var answer in answersList) {
+                                                <div>
+                                                    &bull; @answer.Answer
+                                                    <span style="font-weight: bold">( @answer.Count )</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="line-separator"></div>
+                                    <br />
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
