@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office.Word;
-using Laser.Orchard.Questionnaires.Models;
+﻿using Laser.Orchard.Questionnaires.Models;
 using Laser.Orchard.Questionnaires.Settings;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
