@@ -1,0 +1,40 @@
+﻿@using Orchard.ContentManagement
+@model Orchard.Layouts.ViewModels.SnippetFieldViewModel
+
+@{
+    Script.Require("jQuery");
+    Script.Include("Elements/Image.js");
+
+    var contentManager = WorkContext.Resolve<IContentManager>();
+    var field = Model;
+    var contentItems = new List<ContentItem>();
+
+    if (!string.IsNullOrWhiteSpace(field.Value)) {
+        if (int.TryParse(field.Value, out var imageId)) {
+            var currentImage = contentManager.Get(imageId);
+            if (currentImage != null) {
+                contentItems.Add(currentImage);
+            }
+        }
+    }
+}
+
+
+<div class="form-group">
+    @Html.Label(field.Descriptor.Name, field.Descriptor.DisplayName?.Text ?? field.Descriptor.Name)
+
+    @if (field.Descriptor.Description != null) {
+        @Html.Hint(field.Descriptor.Description)
+    }
+    <div>
+        @Display.MediaLibraryPicker(
+            Required: false,
+            Multiple: false,
+            DisplayName: field.Descriptor.DisplayName?.Text ?? field.Descriptor.Name,
+            FieldName: field.Descriptor.Name, //Html.FieldNameFor(m => m.Value),
+            ContentItems: contentItems.ToArray(),
+            Hint: "",
+            PromptOnNavigate: false,
+            ShowSaveWarning: false)
+    </div>
+</div>
