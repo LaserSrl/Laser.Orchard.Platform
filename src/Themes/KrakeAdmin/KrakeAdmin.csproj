@@ -219,6 +219,8 @@
     <Content Include="Views\Pager.cshtml" />
     <Content Include="Views\Content-Order.SummaryAdmin.cshtml" />
     <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Image.cshtml" />
+    <Content Include="Views\Elements\Snippet.Design-Krake.cshtml" />
+    <Content Include="Views\SnippetDesignImplementation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminThemeOverride.cs" />
