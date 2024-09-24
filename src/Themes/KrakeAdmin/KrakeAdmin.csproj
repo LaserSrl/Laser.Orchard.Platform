@@ -222,6 +222,7 @@
     <Content Include="Views\Elements\Snippet.Design-Krake.cshtml" />
     <Content Include="Views\SnippetDesignImplementation.cshtml" />
     <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Textarea.cshtml" />
+    <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Numeric.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminThemeOverride.cs" />
