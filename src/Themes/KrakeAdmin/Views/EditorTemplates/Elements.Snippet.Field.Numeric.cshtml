@@ -1,0 +1,15 @@
+@model Orchard.Layouts.ViewModels.SnippetFieldViewModel
+@{
+    Script.Include("AutoFocus.js");
+
+    var field = Model;
+}
+<fieldset class="autofocus">
+    @Html.Label(field.Descriptor.Name, field.Descriptor.DisplayName?.Text ?? field.Descriptor.Name)
+    @Html.TextBox(field.Descriptor.DisplayName?.Text ?? field.Descriptor.Name, (string)field.Value, 
+        new { @class = "text-small", autofocus = "autofocus", type = "number" })
+
+    @if (field.Descriptor.Description != null) {
+        @Html.Hint(field.Descriptor.Description)
+    }
+</fieldset>
