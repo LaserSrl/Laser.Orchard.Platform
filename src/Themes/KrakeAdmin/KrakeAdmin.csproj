@@ -223,6 +223,8 @@
     <Content Include="Views\SnippetDesignImplementation.cshtml" />
     <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Textarea.cshtml" />
     <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Numeric.cshtml" />
+    <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Hidden.cshtml" />
+    <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Html.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminThemeOverride.cs" />

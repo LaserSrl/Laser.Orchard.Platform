@@ -5,9 +5,8 @@
 }
 <fieldset class="autofocus">
     @Html.Label(field.Descriptor.Name, field.Descriptor.DisplayName?.Text ?? field.Descriptor.Name)
-    @*@Html.TextAreaFor(m => m.Descriptor.Name, 25, 80, new { @class = "text large tokenized", autofocus = "autofocus" })*@
-    @Html.TextArea(field.Descriptor.DisplayName?.Text ?? field.Descriptor.Name, (string)field.Value, 25, 80, new { @class = "text large tokenized", autofocus = "autofocus" })
-
+    @Display.Body_Editor(EditorFlavor: "html", Text: field.Value) @*, AutoFocus: true, Part: Model.Part)*@
+    
     @if (field.Descriptor.Description != null) {
         @Html.Hint(field.Descriptor.Description)
     }

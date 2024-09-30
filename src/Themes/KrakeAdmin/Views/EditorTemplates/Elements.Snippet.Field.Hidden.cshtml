@@ -1,0 +1,6 @@
+@model Orchard.Layouts.ViewModels.SnippetFieldViewModel
+@{
+
+    var field = Model;
+}
+@Html.Hidden(field.Descriptor.Name, field.Value)
