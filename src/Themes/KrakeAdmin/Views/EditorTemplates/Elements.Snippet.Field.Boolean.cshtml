@@ -1,0 +1,23 @@
+@model Orchard.Layouts.ViewModels.SnippetFieldViewModel
+@{
+
+    var field = Model;
+    // we use a checkbox and an hidden so we can transfer both true and false value
+    // then to test the value we need to split the resulting string.
+}
+<fieldset class="autofocus">
+    <label class="forcheckbox" for="@(field.Descriptor.Name)">
+        @(field.Descriptor.DisplayName?.Text ?? field.Descriptor.Name)
+    </label>
+    <input type="checkbox" 
+           id="@(Html.FieldIdFor(m => field.Descriptor.Name))" 
+           value="true" 
+           name="@field.Descriptor.Name" 
+           @if (Convert.ToBoolean(((string)field.Value)?.Split(',')[0])) { <text> checked="checked" </text> } />
+    <input name="@field.Descriptor.Name" type="hidden" value="false" />
+
+
+    @if (field.Descriptor.Description != null) {
+        @Html.Hint(field.Descriptor.Description)
+    }
+</fieldset>

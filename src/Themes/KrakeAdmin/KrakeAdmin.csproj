@@ -225,6 +225,7 @@
     <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Numeric.cshtml" />
     <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Hidden.cshtml" />
     <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Html.cshtml" />
+    <Content Include="Views\EditorTemplates\Elements.Snippet.Field.Boolean.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminThemeOverride.cs" />
