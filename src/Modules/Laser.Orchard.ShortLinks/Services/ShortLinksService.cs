@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Orchard;
+﻿using Orchard;
 using Orchard.ContentManagement;
-using Orchard.Environment.Configuration;
-using Orchard.Autoroute.Services;
-using System.Web.Mvc;
-using Orchard.Mvc.Html;
-using Orchard.Mvc.Extensions;
-using System.Net;
-using System.IO;
-using Orchard.UI.Notify;
 using Orchard.Localization;
+using Orchard.Mvc.Extensions;
+using Orchard.Mvc.Html;
+using Orchard.UI.Notify;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Web.Mvc;
+
 namespace Laser.Orchard.ShortLinks.Services {
     public class ShortLinksService : IShortLinksService {
         public Localizer T {get;set;}
@@ -36,9 +35,12 @@ namespace Laser.Orchard.ShortLinks.Services {
                 _notifier.Add(NotifyType.Error, T("No Shorturl Setting Found"));
             }
             else {
-                var apiurl =string.Format("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key={0}", setting.GoogleApiKey);
+                // Firebase doesn't provide url shortened service anymore, so TinyUrl is now used.
+                //var apiurl = string.Format("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key={0}", setting.GoogleApiKey);
+                var apiurl = string.Format("https://api.tinyurl.com/create?api_token={0}", setting.GoogleApiKey);
                 var request = (HttpWebRequest)WebRequest.Create(apiurl);
-                var postData = string.Format("{{\"dynamicLinkInfo\": {{\"dynamicLinkDomain\": \"{0}\",\"link\": \"{1}\"}},\"suffix\": {{\"option\": \"{2}\"}}}}", setting.DynamicLinkDomain, myurl, setting.HasSensitiveData ? @"UNGUESSABLE" : @"SHORT");
+                //var postData = string.Format("{{\"dynamicLinkInfo\": {{\"dynamicLinkDomain\": \"{0}\",\"link\": \"{1}\"}},\"suffix\": {{\"option\": \"{2}\"}}}}", setting.DynamicLinkDomain, myurl, setting.HasSensitiveData ? @"UNGUESSABLE" : @"SHORT");
+                var postData = string.Format("{{\"url\": \"{0}\", \"domain\": \"{1}\", \"description\": \"{2}\"}}", myurl, setting.DynamicLinkDomain, "string");
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 using (var stream = new StreamWriter(request.GetRequestStream())) {
@@ -50,7 +52,11 @@ namespace Laser.Orchard.ShortLinks.Services {
                 using (var streamReader = new StreamReader(response.GetResponseStream())) {
                     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                     var jsondict = serializer.Deserialize<Dictionary<string, object>>(streamReader.ReadToEnd());
-                    shorturl = jsondict["shortLink"].ToString();
+                    var responseData = jsondict["data"];
+                    if (responseData != null) {
+                        shorturl = ((dynamic)responseData)["tiny_url"].ToString();
+                    }
+                    //shorturl = jsondict["shortLink"].ToString();
                  }
             }
             return shorturl;

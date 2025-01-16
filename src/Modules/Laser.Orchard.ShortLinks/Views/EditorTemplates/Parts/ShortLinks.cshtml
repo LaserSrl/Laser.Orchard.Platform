@@ -7,7 +7,6 @@
     var shortUlrSettings = WorkContext.CurrentSite.As<Laser.Orchard.ShortLinks.Models.ShortLinksSettingsPart>();
     var apiKey = shortUlrSettings.GoogleApiKey;
     var dynamicLinkDomain = shortUlrSettings.DynamicLinkDomain;
-    var sensitiveDataOption = shortUlrSettings.HasSensitiveData ? "UNGUESSABLE" : "SHORT";
     //var apiKey = "AIzaSyA8yaRn83trUJcr4cFKRiorhfI7WtUpm2s";
     var settings = WorkContext.Resolve<ShellSettings>();
     var tenantPrefix = settings.RequestUrlPrefix;
@@ -25,40 +24,47 @@
     }
     var fullAbsoluteUrl = "";
     fullAbsoluteUrl = Url.Content(fullUrl);
+
 }
 
 @using (Script.Head()) {
     <script type="text/javascript">
-        function CallGoogleShortLinkGenerator() {
+        function CallShortLinkGenerator() {
             if ('@Model.Url' != '' && '@Model.FullLink' != '@fullAbsoluteUrl') {
-                alert('Salva la pagina prima di chiedere il nuovo short link');
+                alert('@(T("Save the content before requesting new short link."))');
             }
-            $.ajax({
-                type: "POST",
-                data: "{'dynamicLinkInfo': {'dynamicLinkDomain': '@dynamicLinkDomain','link': '@fullAbsoluteUrl'},'suffix': {'option': '@sensitiveDataOption'}}",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                url: "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=@apiKey",
-                success: function (data) {
-                    $('#@Html.FieldIdFor(model => model.Url)').val(data.shortLink);
-                    $('#@Html.FieldIdFor(model => model.FullLink)').val('@fullAbsoluteUrl');
-                },
-                error: function (response) {
-                    alert('error urlshortener');
-                },
-                failure: function (response) {
-                    alert('failure urlshortener');
-                }
-            });
+
+            var url = '@Url.Action("GenerateShortLink",
+                "ShortLinks",
+                new {
+                    area = "Laser.Orchard.ShortLinks",
+                    contentId = Model.Id
+                })';
+
+            var formData = {
+                __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()'
+            };
+
+            $.post(url, formData)
+                .done(function (data, status, jqXhr) {
+                    if (data.ko) {
+                        alert(data.message);
+                    } else if (data.ok) {
+                        $('#@Html.FieldIdFor(model => model.Url)').val(data.shorturl);
+                        $('#@Html.FieldIdFor(model => model.FullLink)').val('@fullAbsoluteUrl');
+                    }
+                })
+                .fail(function (jqXhr, status, error) {
+                    alert('@T("Short url generation error.")');
+                });
+
         }
 
-        function TestGoogleShortLink() {
+
+        function TestShortLink() {
             var urlToTest = $('#@Html.FieldIdFor(model => model.Url)').val();
             window.open(urlToTest, '_blank');
         }
-
-
-
     </script>
 }
 
@@ -68,7 +74,7 @@
 
     <div class="editor-field">
         @if (string.IsNullOrEmpty(apiKey)) { //se non ho salvato l'api key
-            @T("You must save a valid Google API KEY on settings before be able to create short link.")
+            @T("You must save a valid API KEY on settings before be able to create short link.")
         }
         else {
             @Html.TextBoxFor(model => model.Url, new { @class = "text medium" })
@@ -78,8 +84,8 @@
             </span><br />
             <br />
             if (Model.Id != 0) { //se non ho salvato la pagina non ho un url corretto.
-                <button type='button' onclick='CallGoogleShortLinkGenerator();'>@T("Ask New Short Link")</button>
-                <button type='button' onclick="TestGoogleShortLink();">@T("Test Short Link")</button>
+                <button type='button' onclick='CallShortLinkGenerator();'>@T("Ask New Short Link")</button>
+                <button type='button' onclick="TestShortLink();">@T("Test Short Link")</button>
             }
             else {
                 @T("You must save content before be able to create short link.")

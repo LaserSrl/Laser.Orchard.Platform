@@ -90,6 +90,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ShortLinksController.cs" />
     <Compile Include="Services\MissingSettingsBanner.cs" />
     <Compile Include="Services\IShortLinksService.cs" />
     <Compile Include="Services\ShortLinksService.cs" />
@@ -107,9 +108,7 @@
     <Compile Include="Migration.cs" />
     <Compile Include="Models\ShortLinksPart.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Parts\ShortLinks.cshtml" />
   </ItemGroup>
