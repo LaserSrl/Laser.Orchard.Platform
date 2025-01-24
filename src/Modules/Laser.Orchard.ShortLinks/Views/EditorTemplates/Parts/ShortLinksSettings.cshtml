@@ -7,16 +7,12 @@
         @Html.TextBoxFor(model => model.DynamicLinkDomain, new { @class = "text medium" })
         @Html.ValidationMessageFor(model => model.DynamicLinkDomain)
     </div>
-    <div class="editor-field">
-        @Html.CheckBoxFor(model => model.HasSensitiveData)
-        @Html.LabelFor(model => model.HasSensitiveData, T("Consider url to have sensitive data").Text, new { @class = "forcheckbox" })
-        @Html.ValidationMessageFor(model => model.HasSensitiveData)
-    </div>
+    
     <div class="editor-field">        
         @Html.LabelFor(model => model.GoogleApiKey, T("ApiKey"))
         @Html.TextBoxFor(model => model.GoogleApiKey, new { @class = "text medium" })
         @Html.ValidationMessageFor(model => model.GoogleApiKey)    
-        <br /><span>@T("Set <a target=\"_blank\" href=\"{0}\">the domain and the apikey</a> of your application.", "https://firebase.google.com/docs/dynamic-links/create-links") </span>
+        <br /><span>@T("Set <a target=\"_blank\" href=\"{0}\">the domain and the apikey</a> of your application.", "https://tinyurl.com/app/dev") </span>
     </div>
 
 </fieldset>

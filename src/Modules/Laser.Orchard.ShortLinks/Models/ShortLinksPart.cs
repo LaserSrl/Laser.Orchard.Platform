@@ -34,7 +34,7 @@ namespace Laser.Orchard.ShortLinks.Models {
 
     public class ShortLinksSettingsPart : ContentPart {
                
-        [DisplayName("FirebaseApiKey")]
+        [DisplayName("ApiKey")]
         public string GoogleApiKey {
             get { return this.Retrieve(r => r.GoogleApiKey); }
             set { this.Store(r => r.GoogleApiKey, value); }
@@ -46,11 +46,11 @@ namespace Laser.Orchard.ShortLinks.Models {
             set { this.Store(r => r.DynamicLinkDomain, value); }
         }
 
-        [DisplayName("Has sensitive data")]
-        public bool HasSensitiveData {
-            get { return this.Retrieve(r => r.HasSensitiveData); }
-            set { this.Store(r => r.HasSensitiveData, value); }
-        }
+        //[DisplayName("Has sensitive data")]
+        //public bool HasSensitiveData {
+        //    get { return this.Retrieve(r => r.HasSensitiveData); }
+        //    set { this.Store(r => r.HasSensitiveData, value); }
+        //}
 
 
     }
