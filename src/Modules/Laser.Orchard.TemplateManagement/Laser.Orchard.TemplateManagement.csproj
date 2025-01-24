@@ -324,7 +324,9 @@
     <Compile Include="Routes\WebTrackingRoutes.cs" />
     <Compile Include="Services\CustomRazorTemplateResolver.cs" />
     <Compile Include="Services\IParserEngine.cs" />
-    <Compile Include="Parsers\ParserEngineBase.cs" />
+    <Compile Include="Parsers\ParserEngineBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Settings\TemplatePartSettings.cs" />
     <Compile Include="Settings\TemplatePartSettingsEvents.cs" />
     <Compile Include="Shapes\ParserPickerShape.cs" />
@@ -340,9 +342,15 @@
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\SiteSettingsPart.cs" />
     <Compile Include="Models\TemplatePart.cs" />
-    <Compile Include="Parsers\RazorParserEngine.cs" />
-    <Compile Include="Services\TemplateService.cs" />
-    <Compile Include="Parsers\SimpleTextParserEngine.cs" />
+    <Compile Include="Parsers\RazorParserEngine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\TemplateService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Parsers\SimpleTextParserEngine.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ViewModels\TemplateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

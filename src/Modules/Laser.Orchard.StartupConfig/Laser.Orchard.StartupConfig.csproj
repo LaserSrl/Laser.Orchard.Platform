@@ -476,7 +476,9 @@
     <Compile Include="AuditTrail\Handlers\AuditTrailOutputSettingsPartHandler.cs" />
     <Compile Include="AuditTrail\Models\AuditTrailOutputSettingsPart.cs" />
     <Compile Include="AuditTrail\Providers\ChannelsAuditTrailProvider.cs" />
-    <Compile Include="AuditTrail\Services\TrailLogTrimmingBackgroundTask.cs" />
+    <Compile Include="AuditTrail\Services\TrailLogTrimmingBackgroundTask.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="AuditTrail\ViewModels\AuditTrailOutputSettingsPartViewModel.cs" />
     <Compile Include="ColorPicker\ColorPickerField.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
