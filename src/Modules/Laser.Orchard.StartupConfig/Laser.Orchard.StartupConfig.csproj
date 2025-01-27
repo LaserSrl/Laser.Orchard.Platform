@@ -595,6 +595,7 @@
     <Compile Include="Services\IJsonDataTableService.cs" />
     <Compile Include="Services\IThemeHelperService.cs" />
     <Compile Include="Services\JsonDataTableService.cs" />
+    <Compile Include="Services\oEmbedProvidersService.cs" />
     <Compile Include="Services\ThemeHelperService.cs" />
     <Compile Include="Settings\CacheEvictorPartSettingsHook.cs" />
     <Compile Include="Settings\FrontendEditorConfigurationSettings.cs" />
