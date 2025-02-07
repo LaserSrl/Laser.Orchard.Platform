@@ -463,6 +463,14 @@ namespace Laser.Orchard.Questionnaires.Services {
                 .CurrentSite.As<QuestionnaireModuleSettingsPart>();
             var part = _orchardServices.ContentManager
                 .Get<QuestionnairePart>(editModel.Id);
+            //// Boolean variable to check if current questionnaire is a draft.
+            //// This means questionnaire needs to be validated but the answers don't have to be saved.
+            //var preview = false;
+            //if (part == null) {
+            //    part = _orchardServices.ContentManager
+            //        .Get<QuestionnairePart>(editModel.Id, VersionOptions.Latest);
+            //    preview = true;
+            //}
             var questionnairePartSettings = part
                 .Settings.GetModel<QuestionnairesPartSettingVM>();
             var content = _orchardServices.ContentManager.Get(editModel.Id);
@@ -1006,6 +1014,8 @@ namespace Laser.Orchard.Questionnaires.Services {
             var mapper = mapperConfiguration.CreateMapper();
             var viewModel = mapper.Map<QuestionnaireWithResultsViewModel>(part);
             viewModel.QuestionnaireHelperService = _questionnaireHelperService;
+            viewModel.IsPublished = part.ContentItem.IsPublished();
+            viewModel.Version = part.ContentItem.Version;
             return (viewModel);
         }
 

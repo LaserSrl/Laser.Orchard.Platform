@@ -54,7 +54,14 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                     TempData["HasAcceptedTerms"] = editModel.HasAcceptedTerms;
 
                     QuestionnairesPartSettingVM questionnairePartSettings = null;
-                    var questionnaire = _orchardServices.ContentManager.Get(editModel.Id);
+                    // If questionnaire is not published, get the version and avoid the draft version of the questionnaire to have its answers saved.
+                    ContentItem questionnaire;
+                    if (editModel.IsPublished) {
+                        questionnaire = _orchardServices.ContentManager.Get(editModel.Id);
+                    } else {
+                        questionnaire = _orchardServices.ContentManager.Get(editModel.Id, VersionOptions.Number(2));
+                    }
+
                     if (questionnaire != null && questionnaire.As<QuestionnairePart>() != null) {
                         questionnairePartSettings = questionnaire.As<QuestionnairePart>().Settings.GetModel<QuestionnairesPartSettingVM>();
                     }
@@ -78,18 +85,25 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                         var request = ControllerContext.HttpContext.Request;
 
                         if (request != null && request.Headers["x-uuid"] != null) {
-                             uniqueId = request.Headers["x-uuid"];
+                            uniqueId = request.Headers["x-uuid"];
                         } else {
                             uniqueId = ControllerContext.HttpContext.Session.SessionID;
                         }
 
-                        canBeFilled = _questionnairesServices.Save(editModel, currentUser, uniqueId);
+                        if (editModel.IsPublished) {
+                            canBeFilled = _questionnairesServices.Save(editModel, currentUser, uniqueId);
+                        } else {
+                            TempData["QuestSuccess"] = T("The questionnaire has been checked, but will not be submitted because it is a draft.");
+                        }
                     }
                     if (canBeFilled == false) {
                         TempData["QuestError"] = T("Sorry, you already submitted this questionnaire.");
                         TempData["AlreadySubmitted"] = true;
                     } else {
-                        TempData["QuestSuccess"] = T("Thank you for submitting your feedback.");
+                        // If questionnaire is a draft, QuestSuccess string has already been compiled.
+                        if (editModel.IsPublished) {
+                            TempData["QuestSuccess"] = T("Thank you for submitting your feedback.");
+                        }
                     }
                 } else {
                     TempData["QuestUpdatedEditModel"] = editModel; // devo avere modo di fare non perdere le risposte date finora!!!
