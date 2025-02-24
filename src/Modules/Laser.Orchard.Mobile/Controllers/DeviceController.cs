@@ -1,27 +1,23 @@
 ﻿using Laser.Orchard.Mobile.Models;
 using Laser.Orchard.Mobile.Services;
 using Laser.Orchard.Mobile.ViewModels;
-using Orchard;
+using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
 using Orchard.Localization;
 using System;
 using System.Collections.Generic;
-using System.Web.Http;
 using System.Net.Http;
-using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
 using System.Web;
+using System.Web.Http;
 
 namespace Laser.Orchard.Mobile.Controllers {
     [WebApiKeyFilter(false)]
     public class DeviceController : ApiController {
 
-        private readonly IOrchardServices _orchardServices;
         private readonly IPushNotificationService _pushNotificationService;
         public Localizer T { get; set; }
 
         public DeviceController(
-             IOrchardServices orchardServices,
             IPushNotificationService pushNotificationService) {
-            _orchardServices = orchardServices;
             _pushNotificationService = pushNotificationService;
             T = NullLocalizer.Instance;
         }

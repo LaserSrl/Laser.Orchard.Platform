@@ -1,4 +1,31 @@
-﻿using System;
+﻿using Laser.Orchard.CommunicationGateway.Models;
+using Laser.Orchard.CommunicationGateway.Services;
+using Laser.Orchard.Mobile.Models;
+using Laser.Orchard.Mobile.Settings;
+using Laser.Orchard.Mobile.ViewModels;
+using Laser.Orchard.Queries.Models;
+using Laser.Orchard.Queries.Services;
+using Laser.Orchard.ShortLinks.Services;
+using Newtonsoft.Json.Linq;
+using NHibernate;
+using NHibernate.Criterion;
+using NHibernate.Transform;
+using Orchard;
+using Orchard.Autoroute.Models;
+using Orchard.ContentManagement;
+using Orchard.Core.Common.Fields;
+using Orchard.Core.Title.Models;
+using Orchard.Data;
+using Orchard.Environment.Configuration;
+using Orchard.Environment.Extensions;
+using Orchard.Localization;
+using Orchard.Tokens;
+using Orchard.UI.Notify;
+using PushSharp.Apple;
+using PushSharp.Core;
+using PushSharp.Google;
+using PushSharp.Windows;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -7,34 +34,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Hosting;
 using System.Xml.Linq;
-using Laser.Orchard.CommunicationGateway.Models;
-using Laser.Orchard.CommunicationGateway.Services;
-using Laser.Orchard.Mobile.Models;
-using Laser.Orchard.Mobile.Settings;
-using Laser.Orchard.Mobile.ViewModels;
-using Laser.Orchard.Queries.Models;
-using Laser.Orchard.Queries.Services;
-using Newtonsoft.Json.Linq;
-using NHibernate.Transform;
-using Orchard;
-using Orchard.Autoroute.Models;
-using Orchard.ContentManagement;
-using Orchard.Core.Title.Models;
-using Orchard.Data;
-using Orchard.Environment.Configuration;
-using Orchard.Environment.Extensions;
-using Orchard.Localization;
 using OrchardLogging = Orchard.Logging;
-using Orchard.Tokens;
-using Orchard.UI.Notify;
-using PushSharp.Apple;
-using PushSharp.Core;
-using PushSharp.Google;
-using PushSharp.Windows;
-using Orchard.Core.Common.Fields;
-using Laser.Orchard.ShortLinks.Services;
-using NHibernate;
-using NHibernate.Criterion;
 
 namespace Laser.Orchard.Mobile.Services {
 
@@ -88,7 +88,19 @@ namespace Laser.Orchard.Mobile.Services {
         private ConcurrentBag<DeviceChange> _deviceChanges;
         private ConcurrentBag<DeviceChange> _deviceExpired;
 
-        public PushGatewayService(IPushNotificationService pushNotificationService, IQueryPickerService queryPickerServices, IOrchardServices orchardServices, ITransactionManager transactionManager, IRepository<SentRecord> sentRepository, IRepository<PushNotificationRecord> pushNotificationRepository, INotifier notifier, ICommunicationService communicationService, ITokenizer tokenizer, ShellSettings shellSetting, IShortLinksService shortLinksService) {
+        public PushGatewayService(
+            IPushNotificationService pushNotificationService, 
+            IQueryPickerService queryPickerServices, 
+            IOrchardServices orchardServices, 
+            ITransactionManager transactionManager, 
+            IRepository<SentRecord> sentRepository, 
+            IRepository<PushNotificationRecord> pushNotificationRepository, 
+            INotifier notifier, 
+            ICommunicationService communicationService, 
+            ITokenizer tokenizer, 
+            ShellSettings shellSetting, 
+            IShortLinksService shortLinksService) {
+
             _pushNotificationService = pushNotificationService;
             _queryPickerServices = queryPickerServices;
             _orchardServices = orchardServices;
