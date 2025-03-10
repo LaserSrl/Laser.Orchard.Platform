@@ -1,6 +1,7 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
 using Orchard.Environment.Extensions;
+using System.Web;
 
 namespace Laser.Orchard.Mobile.Models {
     [OrchardFeature("Laser.Orchard.PushGateway")]
@@ -83,6 +84,9 @@ namespace Laser.Orchard.Mobile.Models {
             get { return Record.MaxPushPerIteration; }
             set { Record.MaxPushPerIteration = value; }
         }
+
+        public string FirebasePushConfiguration { get; set; }
+        public HttpPostedFileBase FirebasePushConfigurationFile { get; set; }
     }
 
     [OrchardFeature("Laser.Orchard.PushGateway")]

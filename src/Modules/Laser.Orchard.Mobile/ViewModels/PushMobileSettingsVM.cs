@@ -3,6 +3,7 @@ using System.IO;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Orchard.Environment.Extensions;
+using System.Web;
 
 namespace Laser.Orchard.Mobile.ViewModels {
     [OrchardFeature("Laser.Orchard.PushGateway")]
@@ -45,5 +46,8 @@ namespace Laser.Orchard.Mobile.ViewModels {
             if (!Directory.Exists(stringpath))
                 Directory.CreateDirectory(stringpath);
         }
+
+        public string FirebasePushConfiguration { get; set; }
+        public HttpPostedFileBase FirebasePushConfigurationFile { get; set; }
     }
 }

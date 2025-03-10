@@ -1,19 +1,28 @@
 ﻿@model Laser.Orchard.Mobile.ViewModels.PushMobileSettingsVM
+
 <fieldset>
     <legend>@T("Push Mobile Settings")</legend>
     <span class="hint">@T("To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3")</span>
     <div class="editor-field">
-        <fieldset>
-            <h2>Android</h2>
-            @Html.LabelFor(m => m.AndroidApiKey, T("Android ApiKey"))
-            @Html.TextBoxFor(m => m.AndroidApiKey)
-        </fieldset>
+        @*<fieldset>
+                <h2>Android</h2>
+                @Html.LabelFor(m => m.AndroidApiKey, T("Android ApiKey"))
+                @Html.TextBoxFor(m => m.AndroidApiKey)
+            </fieldset>
+
+            <fieldset>
+                <h2>Android Development</h2>
+                @Html.LabelFor(m => m.AndroidApiKeyDevelopment, T("Android ApiKey Development"))
+                @Html.TextBoxFor(m => m.AndroidApiKeyDevelopment)
+            </fieldset>*@
 
         <fieldset>
-            <h2>Android Development</h2>
-            @Html.LabelFor(m => m.AndroidApiKeyDevelopment, T("Android ApiKey Development"))
-            @Html.TextBoxFor(m => m.AndroidApiKeyDevelopment)
+            <h2>Firebase Push Configuration File</h2>
+            @Html.LabelFor(m => m.FirebasePushConfigurationFile, T("Firebase push configuration"))
+            @Html.TextBoxFor(m => m.FirebasePushConfigurationFile, new { type = "file" })
+            <span class="hint">@T("Json file with the configuration to use for Firebase service push")</span>
         </fieldset>
+
         <fieldset>
             <h2>Android Push Service URL</h2>
             @Html.LabelFor(m => m.AndroidPushServiceUrl, T("Push service URL"))
