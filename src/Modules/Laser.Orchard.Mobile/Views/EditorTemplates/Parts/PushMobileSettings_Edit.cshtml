@@ -27,7 +27,7 @@
             </div>
 
             @Html.LabelFor(m => m.FirebasePushConfiguration, T("Firebase push configuration"))
-            @Html.TextBoxFor(m => m.FirebasePushConfiguration)
+            @Html.TextBoxFor(m => m.FirebasePushConfiguration, new { @readonly = "readonly" })
             <span class="hint">@T("Json file with the configuration to use for Firebase service push")</span>
         </fieldset>
 
