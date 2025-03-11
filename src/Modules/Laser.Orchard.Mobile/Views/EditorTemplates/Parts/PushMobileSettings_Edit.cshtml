@@ -18,8 +18,16 @@
 
         <fieldset>
             <h2>Firebase Push Configuration File</h2>
-            @Html.LabelFor(m => m.FirebasePushConfigurationFile, T("Firebase push configuration"))
-            @Html.TextBoxFor(m => m.FirebasePushConfigurationFile, new { type = "file" })
+
+            <div>
+                <input id="fpcFilePath" name="fbcFilePath" type="file" value="@T("Browse")" size="64" />
+            </div>
+            <div>
+                <button id="fpcUploadButton" class="primaryAction">@T("Upload")</button>
+            </div>
+
+            @Html.LabelFor(m => m.FirebasePushConfiguration, T("Firebase push configuration"))
+            @Html.TextBoxFor(m => m.FirebasePushConfiguration)
             <span class="hint">@T("Json file with the configuration to use for Firebase service push")</span>
         </fieldset>
 
@@ -108,3 +116,44 @@
         </fieldset>
     </div>
 </fieldset>
+
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#fpcUploadButton").click(function () {
+                var fileField = $("#fpcFilePath");
+                var files = $("#fpcFilePath")[0].files;
+                if (files.length > 0) {
+                    var postedFile = files[0];
+                    if (postedFile) {
+                        var fileContent = '';
+
+                        var fileReader = new FileReader();
+                        fileReader.readAsText(postedFile);
+                        fileReader.onload = function (data) {
+                            fileContent = data.target.result;
+
+                            $.ajax({
+                                url: '@Url.Action("UploadConfiguration", "FileUpload", new { area = "Laser.Orchard.Mobile" })',
+                                data: {
+                                   __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
+                                   conf: fileContent
+                                },
+                                type: 'POST',
+                                success: function (data) {
+                                    if (data) {
+                                        if (data.Success) {
+                                            $("#@Html.FieldIdFor(m => m.FirebasePushConfiguration)").val(data.Filename);
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+                return false;
+            });
+        });
+    </script>
+}

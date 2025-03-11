@@ -85,8 +85,10 @@ namespace Laser.Orchard.Mobile.Models {
             set { Record.MaxPushPerIteration = value; }
         }
 
-        public string FirebasePushConfiguration { get; set; }
-        public HttpPostedFileBase FirebasePushConfigurationFile { get; set; }
+        public string FirebasePushConfiguration {
+            get { return Record.FirebasePushConfiguration; }
+            set { Record.FirebasePushConfiguration = value; }
+        }
     }
 
     [OrchardFeature("Laser.Orchard.PushGateway")]
@@ -110,6 +112,7 @@ namespace Laser.Orchard.Mobile.Models {
         public virtual int DelayMinutesBeforeRetry { get; set; }
         public virtual int MaxNumRetry { get; set; }
         public virtual int MaxPushPerIteration { get; set; }
+        public virtual string FirebasePushConfiguration { get; set; }
     }
 }
 

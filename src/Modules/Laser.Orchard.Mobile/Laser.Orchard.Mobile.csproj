@@ -213,6 +213,7 @@
     <Compile Include="Controllers\ContactListController.cs" />
     <Compile Include="Controllers\CountPanelController.cs" />
     <Compile Include="Controllers\ExternalPushController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\ManifestAppFileAdminController.cs" />
     <Compile Include="Controllers\ManifestAppFileController.cs" />
     <Compile Include="Controllers\SmsDeliveryReportController.cs" />

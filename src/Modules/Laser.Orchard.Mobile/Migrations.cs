@@ -364,5 +364,12 @@ namespace Laser.Orchard.Mobile {
 
             return 38;
         }
+
+        public int UpdateFrom38() {
+            SchemaBuilder.AlterTable("PushMobileSettingsPartRecord", table => table
+                .AddColumn<string>("FirebasePushConfiguration", col => col.WithLength(255))
+            );
+            return 39;
+        }
     }
 }

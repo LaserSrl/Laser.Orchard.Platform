@@ -48,6 +48,5 @@ namespace Laser.Orchard.Mobile.ViewModels {
         }
 
         public string FirebasePushConfiguration { get; set; }
-        public HttpPostedFileBase FirebasePushConfigurationFile { get; set; }
     }
 }

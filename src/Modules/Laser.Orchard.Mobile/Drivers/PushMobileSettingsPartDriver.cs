@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.Mobile.Models;
 using Laser.Orchard.Mobile.ViewModels;
-using NHibernate.Util;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
@@ -40,28 +39,20 @@ namespace Laser.Orchard.Mobile.Drivers {
             if (!System.IO.Directory.Exists(mobile_folder)) {
                 System.IO.Directory.CreateDirectory(mobile_folder);
             }
-
-            string firebase_conf_folder = HostingEnvironment.MapPath(
-                string.Format("~/App_Data/Sites/{0}/PushConfiguration/",
-                    _shellSettings.Name));
-            if (!System.IO.Directory.Exists(firebase_conf_folder)) {
-                System.IO.Directory.CreateDirectory(firebase_conf_folder);
-            }
         }
 
         protected override string Prefix {
             get { return "Laser.Mobile.Settings"; }
         }
 
-
         protected override DriverResult Editor(PushMobileSettingsPart part, dynamic shapeHelper) {
             return Editor(part, null, shapeHelper);
 
         }
 
-
-
-        protected override DriverResult Editor(PushMobileSettingsPart part, IUpdateModel updater, dynamic shapeHelper) {
+        protected override DriverResult Editor(PushMobileSettingsPart part, 
+            IUpdateModel updater, 
+            dynamic shapeHelper) {
 
             return ContentShape("Parts_PushMobileSettings_Edit", () => {
                 var viewModel = new PushMobileSettingsVM();
@@ -87,11 +78,7 @@ namespace Laser.Orchard.Mobile.Drivers {
                 viewModel.MaxNumRetry = getpart.MaxNumRetry;
                 viewModel.MaxPushPerIteration = getpart.MaxPushPerIteration;
 
-                if (_orchardServices.WorkContext.HttpContext.Request.Files.Count > 0) {
-                    var f = _orchardServices.WorkContext.HttpContext.Request.Files[0];
-
-                    viewModel.FirebasePushConfigurationFile = f;
-                }
+                viewModel.FirebasePushConfiguration = getpart.FirebasePushConfiguration;
 
 
                 List<TaxonomyPart> tps = _taxonomyService.GetTaxonomies().ToList();
@@ -125,8 +112,6 @@ namespace Laser.Orchard.Mobile.Drivers {
                         part.DelayMinutesBeforeRetry = viewModel.DelayMinutesBeforeRetry;
                         part.MaxNumRetry = viewModel.MaxNumRetry;
                         part.MaxPushPerIteration = viewModel.MaxPushPerIteration;
-
-                        var fileName = viewModel.FirebasePushConfigurationFile.FileName;
 
                         part.FirebasePushConfiguration = viewModel.FirebasePushConfiguration;
                     }
