@@ -1,12 +1,11 @@
 ﻿using Laser.Orchard.Commons.Attributes;
 using Laser.Orchard.Mobile.Services;
 using Orchard;
-using Orchard.Environment.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Web.Mvc;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.Mobile.Controllers {
     public class CountPanelController : Controller {

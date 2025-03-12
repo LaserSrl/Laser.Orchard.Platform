@@ -1,13 +1,8 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
 using Orchard.Environment.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.Mobile.Models {
-    [OrchardFeature("Laser.Orchard.PushGateway")]
     public class MobilePushPart : ContentPart<MobilePushPartRecord> {
         public string TitlePush {
             get { return Record.TitlePush; }

@@ -1,23 +1,18 @@
-﻿using Orchard;
-using Orchard.Data;
+﻿using Laser.Orchard.Mobile.Models;
+using Laser.Orchard.StartupConfig.Services;
+using Laser.Orchard.StartupConfig.ViewModels;
+using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
+using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Localization;
 using Orchard.Security;
+using Orchard.Taxonomies.Fields;
+using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Web;
 using System.Web.Http;
-using Laser.Orchard.Mobile.Models;
-using Orchard.Taxonomies.Models;
-using System.Web.Mvc;
-using Orchard.ContentManagement;
-using Orchard.Taxonomies.Fields;
-using Laser.Orchard.StartupConfig.Models;
-using Laser.Orchard.StartupConfig.Services;
-using Laser.Orchard.StartupConfig.ViewModels;
-using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
 
 namespace Laser.Orchard.Mobile.Controllers {
     public class category {

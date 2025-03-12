@@ -7,14 +7,12 @@ using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using Orchard.Logging;
 using Orchard.Tasks.Scheduling;
 using Orchard.UI.Notify;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.Logging;
 
 namespace Laser.Orchard.Mobile.Handlers {
     [OrchardFeature("Laser.Orchard.SmsGateway")]

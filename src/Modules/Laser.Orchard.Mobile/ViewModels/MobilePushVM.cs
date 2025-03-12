@@ -1,9 +1,7 @@
 ﻿using Laser.Orchard.Mobile.Models;
-using Orchard.Environment.Extensions;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.Mobile.ViewModels {
-    [OrchardFeature("Laser.Orchard.PushGateway")]
     public class MobilePushVM {
         public MobilePushVM() {
             PartId = 0;

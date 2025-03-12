@@ -1,10 +1,7 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
-using Orchard.Environment.Extensions;
-using System.Web;
 
 namespace Laser.Orchard.Mobile.Models {
-    [OrchardFeature("Laser.Orchard.PushGateway")]
     public class PushMobileSettingsPart : ContentPart<PushMobileSettingsPartRecord> {
         public string ApplePathCertificateFile {
             get { return Record.ApplePathCertificateFile; }
@@ -91,7 +88,6 @@ namespace Laser.Orchard.Mobile.Models {
         }
     }
 
-    [OrchardFeature("Laser.Orchard.PushGateway")]
     public class PushMobileSettingsPartRecord : ContentPartRecord {
         public virtual string ApplePathCertificateFile { get; set; }
         public virtual string AppleCertificatePassword { get; set; }

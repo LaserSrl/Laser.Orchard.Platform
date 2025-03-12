@@ -3,7 +3,6 @@ using Orchard.ContentManagement.Records;
 using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.Mobile.Models {
-    [OrchardFeature("Laser.Orchard.BannerAgent")]
     public class BannerAgentPart : ContentPart<BannerAgentPartRecord> {
         public string title {
             get{return this.Retrieve(r => r.title);}

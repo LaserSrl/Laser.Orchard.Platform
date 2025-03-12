@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using Orchard.Environment.Extensions;
-using System.Web;
 
 namespace Laser.Orchard.Mobile.ViewModels {
-    [OrchardFeature("Laser.Orchard.PushGateway")]
     public class PushMobileSettingsVM {
         public string ApplePathCertificateFile { get; set; }
         public string AppleCertificatePassword { get; set; }

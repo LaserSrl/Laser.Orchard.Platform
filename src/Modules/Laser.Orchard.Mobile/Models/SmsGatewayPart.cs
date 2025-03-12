@@ -2,14 +2,8 @@
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
 using Orchard.Data.Conventions;
-using Orchard.Environment.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.Mobile.Models {
-    [OrchardFeature("Laser.Orchard.SmsGateway")]
     public class SmsGatewayPartRecord : ContentPartRecord {
 
         public virtual string Message { get; set; }
@@ -28,7 +22,6 @@ namespace Laser.Orchard.Mobile.Models {
         public virtual bool SendToRecipientList { get; set; }
     }
 
-    [OrchardFeature("Laser.Orchard.SmsGateway")]
     public class SmsGatewayPart : ContentPart<SmsGatewayPartRecord> {
 
         public string Message {

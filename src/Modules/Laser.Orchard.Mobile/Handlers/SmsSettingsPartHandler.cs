@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Laser.Orchard.Mobile.Models;
+﻿using Laser.Orchard.Mobile.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using Orchard.Logging;
 
 namespace Laser.Orchard.Mobile.Handlers {
 

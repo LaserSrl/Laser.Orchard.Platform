@@ -1,11 +1,6 @@
-﻿using Orchard.Environment.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 
 namespace Laser.Orchard.Mobile.Models {
-    [OrchardFeature("Laser.Orchard.PushGateway")]
     public class SentRecord {
         public virtual int Id { get; set; }
         public virtual int PushNotificationRecord_Id { get; set; }

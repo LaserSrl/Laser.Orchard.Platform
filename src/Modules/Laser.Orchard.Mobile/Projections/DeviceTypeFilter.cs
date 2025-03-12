@@ -1,5 +1,4 @@
 ﻿using Laser.Orchard.CommunicationGateway.Models;
-using Laser.Orchard.StartupConfig.Projections;
 using Orchard.ContentManagement;
 using Orchard.Localization;
 using Orchard.Projections.Descriptors.Filter;

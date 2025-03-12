@@ -3,7 +3,6 @@ using Orchard.ContentManagement.Records;
 using Orchard.ContentManagement.Utilities;
 using System.Collections.Generic;
 
-
 namespace Laser.Orchard.Mobile.Models {
     public interface IMobileRecord : IContent {
         IList<PushNotificationRecord> MobileRecord { get; }
