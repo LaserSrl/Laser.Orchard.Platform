@@ -1008,15 +1008,15 @@ namespace Laser.Orchard.Mobile.Services {
                 return;
             }
 
-            var config = new GcmConfiguration(setting);
+            //var config = new GcmConfiguration(setting);
 
             // Get configuration file from PushMobileSettingsPart
             string firebase_conf_folder = HostingEnvironment.MapPath(
                     string.Format("~/App_Data/Sites/{0}/PushConfiguration/",
                         _shellSettings.Name));
             var configPath = System.IO.Path.Combine(firebase_conf_folder, pushSettings.FirebasePushConfiguration);
-            //var config = new GcmConfiguration();
-            //config.FromFile(configPath);
+            var config = new GcmConfiguration();
+            config.SetConfigFile(configPath);
 
             var serviceUrl = pushSettings.AndroidPushServiceUrl;
             var notificationIcon = pushSettings.AndroidPushNotificationIcon;
@@ -1094,7 +1094,6 @@ namespace Laser.Orchard.Mobile.Services {
                 sb.AppendFormat("\"Al\": \"{0}\",", FormatJsonValue(pushMessage.Al));
             }
 
-
             // old format implementation
             /*
             if (tipoDispositivo == TipoDispositivo.Android) {
@@ -1133,6 +1132,20 @@ namespace Laser.Orchard.Mobile.Services {
             }
             */ // end of old implementation
 
+            Dictionary<string, string> data;
+
+            if (!string.IsNullOrWhiteSpace(pushMessage.Eu)) {
+                data = new Dictionary<string, string>() {
+                    { "Eu", pushMessage.Eu }
+                };
+            } else {
+                data = new Dictionary<string, string>() {
+                    { "Id", pushMessage.idContent.ToString() },
+                    { "Rid", pushMessage.idRelated.ToString() },
+                    { "Ct", pushMessage.Ct },
+                    { "Al", pushMessage.Al }
+                };
+            }
 
             // Notification contains the standard information for the actual notification (title, body and image url).
             sbNotification.AppendFormat("\"Title\": \"{0}\"", FormatJsonValue(pushMessage.Title));
@@ -1182,7 +1195,15 @@ namespace Laser.Orchard.Mobile.Services {
                         try {
                             // handle proper payload creation
                             objNotification = new GcmNotification {
-                                
+                                Message = new GcmMessage {
+                                    Token = device.Key,
+                                    Topic = null,
+                                    Data = data,
+                                    Notification = new GcmMessageNotification {
+                                        Body = pushMessage.Text,
+                                        Title = pushMessage.Title
+                                    }
+                                },
                                 //Message = new GcmMessage {
                                 //    Data = sbParsed,
                                 //    Notification = sbNotificationParsed,
