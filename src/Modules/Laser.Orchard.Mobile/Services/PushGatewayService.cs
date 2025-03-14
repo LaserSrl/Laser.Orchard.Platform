@@ -984,7 +984,7 @@ namespace Laser.Orchard.Mobile.Services {
             TipoDispositivo tipoDispositivo, // Android or AppleFCM
             bool repeatable = false) {
 
-            if (tipoDispositivo != TipoDispositivo.Android || tipoDispositivo != TipoDispositivo.AppleFCM) {
+            if (tipoDispositivo != TipoDispositivo.Android && tipoDispositivo != TipoDispositivo.AppleFCM) {
                 // we manage only these two categories of devices.
                 return;
             }
@@ -996,17 +996,17 @@ namespace Laser.Orchard.Mobile.Services {
             }
             // Compute configuration
             var pushSettings = _orchardServices.WorkContext.CurrentSite.As<PushMobileSettingsPart>();
-            string setting = "";
-            if (produzione) {
-                setting = pushSettings.AndroidApiKey;
-            } else {
-                setting = pushSettings.AndroidApiKeyDevelopment;
-            }
-            if (string.IsNullOrWhiteSpace(setting)) {
-                LogInfo("Error push FCM: missing API Key.");
-                _result.Errors = "Error PushFCM: missing API Key.";
-                return;
-            }
+            //string setting = "";
+            //if (produzione) {
+            //    setting = pushSettings.AndroidApiKey;
+            //} else {
+            //    setting = pushSettings.AndroidApiKeyDevelopment;
+            //}
+            //if (string.IsNullOrWhiteSpace(setting)) {
+            //    LogInfo("Error push FCM: missing API Key.");
+            //    _result.Errors = "Error PushFCM: missing API Key.";
+            //    return;
+            //}
 
             //var config = new GcmConfiguration(setting);
 
@@ -1017,6 +1017,8 @@ namespace Laser.Orchard.Mobile.Services {
             var configPath = System.IO.Path.Combine(firebase_conf_folder, pushSettings.FirebasePushConfiguration);
             var config = new GcmConfiguration();
             config.SetConfigFile(configPath);
+
+            //LogError("Config Path: " +  configPath);
 
             var serviceUrl = pushSettings.AndroidPushServiceUrl;
             var notificationIcon = pushSettings.AndroidPushNotificationIcon;
@@ -1037,100 +1039,6 @@ namespace Laser.Orchard.Mobile.Services {
                 sbaps.AppendFormat("{{ \"alert\":{{\"body\": \"{0}\", \"sound\":\"{1}\"}}}}", FormatJsonValue(pushMessage.Text), FormatJsonValue(pushMessage.Sound));
                 sbapsParsed = JObject.Parse(sbaps.ToString());
             }
-            StringBuilder sb = new StringBuilder();
-            sb.Clear();
-
-            // TODO: change payload based on new format
-            /* NEW FORMAT
-            {
-                "message": {
-                    "topic": "news",
-                    "notification": {
-                        "title": "Breaking News",
-                        "body": "New news story available."
-                    },
-                    "data": {
-                        "story_id": "story_12345"
-                    }
-                }
-            }
-            */
-
-            /* complete json implementation (not needed?)
-            sb.Append("{ \"message\": {");
-
-            sb.Append("{ \"notification\": {");
-
-            sb.AppendFormat("\"Title\": \"{0}\"", FormatJsonValue(pushMessage.Title));
-            sb.AppendFormat("\"Body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
-
-            sb.Append("}"); // Closing "notification"
-
-            sb.Append("\"data\": {");
-
-            if (!string.IsNullOrWhiteSpace (pushMessage.Eu)) {
-                sb.AppendFormat ("\"Eu\": \"{0}\"", FormatJsonValue(pushMessage.Eu));
-            } else {
-                sb.AppendFormat("\"Id\": {0},", pushMessage.idContent);
-                sb.AppendFormat("\"Rid\": {0},", pushMessage.idRelated);
-                sb.AppendFormat("\"Ct\": \"{0}\",", FormatJsonValue(pushMessage.Ct));
-                sb.AppendFormat("\"Al\": \"{0}\",", FormatJsonValue(pushMessage.Al));
-            }
-
-            sb.Append("}"); // Closing "data"
-            sb.Append("}"); // Closing "message"
-            sb.Append("}"); // Closing json
-            */ // end of complete json implementation
-
-
-            // Data contains the optional parameters of the push
-            // This means that the custom information to be sent to the app (for instance the content id) have to be put inside the Data property
-            if (!string.IsNullOrWhiteSpace(pushMessage.Eu)) {
-                sb.AppendFormat("\"Eu\": \"{0}\"", FormatJsonValue(pushMessage.Eu));
-            } else {
-                sb.AppendFormat("\"Id\": {0},", pushMessage.idContent);
-                sb.AppendFormat("\"Rid\": {0},", pushMessage.idRelated);
-                sb.AppendFormat("\"Ct\": \"{0}\",", FormatJsonValue(pushMessage.Ct));
-                sb.AppendFormat("\"Al\": \"{0}\",", FormatJsonValue(pushMessage.Al));
-            }
-
-            // old format implementation
-            /*
-            if (tipoDispositivo == TipoDispositivo.Android) {
-                sb.AppendFormat("{{ \"Text\": \"{0}\"", FormatJsonValue(pushMessage.Text));
-            } else {
-                sb.AppendFormat("{{ \"body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
-            }
-            if (!string.IsNullOrEmpty(pushMessage.Eu)) {
-                sb.AppendFormat(",\"Eu\":\"{0}\"", FormatJsonValue(pushMessage.Eu));
-            } else {
-                sb.AppendFormat(",\"Id\":{0}", pushMessage.idContent);
-                sb.AppendFormat(",\"Rid\":{0}", pushMessage.idRelated);
-                sb.AppendFormat(",\"Ct\":\"{0}\"", FormatJsonValue(pushMessage.Ct));
-                sb.AppendFormat(",\"Al\":\"{0}\"", FormatJsonValue(pushMessage.Al));
-            }
-            sb.Append("}");
-            */ // end of old implementation
-
-
-            var sbParsed = JObject.Parse(sb.ToString());
-            // sezione notification
-            StringBuilder sbNotification = new StringBuilder();
-            sbNotification.Clear();
-            JObject sbNotificationParsed = null;
-
-
-            /* old implementation
-            if (tipoDispositivo == TipoDispositivo.AppleFCM) {
-                sbNotification.AppendFormat("{{ \"body\": \"{0}\"}}", FormatJsonValue(pushMessage.Text));
-                sbNotificationParsed = JObject.Parse(sbNotification.ToString());
-            } else if (!string.IsNullOrWhiteSpace(notificationIcon)) {
-                sbNotification.AppendFormat("{{ \"body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
-                sbNotification.AppendFormat(",\"icon\":\"{0}\"", notificationIcon);
-                sbNotification.Append("}");
-                sbNotificationParsed = JObject.Parse(sbNotification.ToString());
-            }
-            */ // end of old implementation
 
             Dictionary<string, string> data;
 
@@ -1146,11 +1054,6 @@ namespace Laser.Orchard.Mobile.Services {
                     { "Al", pushMessage.Al }
                 };
             }
-
-            // Notification contains the standard information for the actual notification (title, body and image url).
-            sbNotification.AppendFormat("\"Title\": \"{0}\"", FormatJsonValue(pushMessage.Title));
-            sbNotification.AppendFormat("\"Body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
-            sbNotificationParsed = JObject.Parse(sbNotification.ToString());
 
             int offset = 0;
             int size = pushSettings.PushSendBufferSize == 0 ? 50 : pushSettings.PushSendBufferSize;
@@ -1190,6 +1093,7 @@ namespace Laser.Orchard.Mobile.Services {
                             return true;
                         });
                     };
+
                     push.Start();
                     foreach (var device in _sentRecords.Where(x => x.Value.Outcome == "")) {
                         try {
@@ -1204,22 +1108,21 @@ namespace Laser.Orchard.Mobile.Services {
                                         Title = pushMessage.Title
                                     }
                                 },
-                                //Message = new GcmMessage {
-                                //    Data = sbParsed,
-                                //    Notification = sbNotificationParsed,
-                                //    Topic = topic,
-                                //    To = device.Key
-                                //},
                                 RegistrationIds = new List<string> { device.Key },
-                                Data = sbParsed,
                                 Aps = sbapsParsed,
                                 Priority = GcmNotificationPriority.High
                                 // necessario per bypassare il fatto che l'app non sia in whitelist
                                 //TimeToLive = 172800 //2 giorni espressi in secondi
                             };
-                            if (sbNotification.Length > 0) {
-                                objNotification.Notification = sbNotificationParsed;
-                            }
+
+                            //LogError("Token: " + device.Key);
+                            //LogError("Body: " + pushMessage.Text);
+                            //LogError("Eu: " + pushMessage.Title);
+                            //LogError("Id: " + pushMessage.idContent.ToString());
+                            //LogError("Rid: " + pushMessage.idRelated.ToString());
+                            //LogError("Ct: " + pushMessage.Ct);
+                            //LogError("Al: " + pushMessage.Al);
+
                             push.QueueNotification(objNotification);
                         } catch (Exception ex) {
                             LogError("Push FCM retry error:  " + ex.Message + " StackTrace: " + ex.StackTrace);
