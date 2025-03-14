@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Laser.Orchard.Mobile.Models;
+using Laser.Orchard.Mobile.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
+using Orchard;
 using Orchard.Caching;
 using Orchard.Data;
-using Orchard;
-using Laser.Orchard.Mobile.Models;
-using Newtonsoft.Json.Schema;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using Laser.Orchard.Mobile.ViewModels;
-using System.ServiceModel.Channels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Laser.Orchard.Mobile.Services
-{
+namespace Laser.Orchard.Mobile.Services {
 
     public interface IManifestAppFileServices : IDependency
     {

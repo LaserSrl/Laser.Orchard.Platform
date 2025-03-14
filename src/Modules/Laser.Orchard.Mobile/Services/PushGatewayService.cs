@@ -1,4 +1,31 @@
-﻿using System;
+﻿using Laser.Orchard.CommunicationGateway.Models;
+using Laser.Orchard.CommunicationGateway.Services;
+using Laser.Orchard.Mobile.Models;
+using Laser.Orchard.Mobile.Settings;
+using Laser.Orchard.Mobile.ViewModels;
+using Laser.Orchard.Queries.Models;
+using Laser.Orchard.Queries.Services;
+using Laser.Orchard.ShortLinks.Services;
+using Newtonsoft.Json.Linq;
+using NHibernate;
+using NHibernate.Criterion;
+using NHibernate.Transform;
+using Orchard;
+using Orchard.Autoroute.Models;
+using Orchard.ContentManagement;
+using Orchard.Core.Common.Fields;
+using Orchard.Core.Title.Models;
+using Orchard.Data;
+using Orchard.Environment.Configuration;
+using Orchard.Environment.Extensions;
+using Orchard.Localization;
+using Orchard.Tokens;
+using Orchard.UI.Notify;
+using PushSharp.Apple;
+using PushSharp.Core;
+using PushSharp.Google;
+using PushSharp.Windows;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -7,59 +34,9 @@ using System.Linq;
 using System.Text;
 using System.Web.Hosting;
 using System.Xml.Linq;
-using Laser.Orchard.CommunicationGateway.Models;
-using Laser.Orchard.CommunicationGateway.Services;
-using Laser.Orchard.Mobile.Models;
-using Laser.Orchard.Mobile.Settings;
-using Laser.Orchard.Mobile.ViewModels;
-using Laser.Orchard.Queries.Models;
-using Laser.Orchard.Queries.Services;
-using Newtonsoft.Json.Linq;
-using NHibernate.Transform;
-using Orchard;
-using Orchard.Autoroute.Models;
-using Orchard.ContentManagement;
-using Orchard.Core.Title.Models;
-using Orchard.Data;
-using Orchard.Environment.Configuration;
-using Orchard.Environment.Extensions;
-using Orchard.Localization;
 using OrchardLogging = Orchard.Logging;
-using Orchard.Tokens;
-using Orchard.UI.Notify;
-using PushSharp.Apple;
-using PushSharp.Core;
-using PushSharp.Google;
-using PushSharp.Windows;
-using Orchard.Core.Common.Fields;
-using Laser.Orchard.ShortLinks.Services;
-using NHibernate;
-using NHibernate.Criterion;
 
 namespace Laser.Orchard.Mobile.Services {
-
-    public interface IPushGatewayService : IDependency {
-
-        IList GetPushQueryResult(Int32[] ids, bool countOnly = false, int contentId = 0);
-
-        IList GetPushQueryResult(Int32[] ids, TipoDispositivo? tipodisp, bool produzione, string language, bool countOnly = false, ContentItem advItem = null);
-
-        List<PushNotificationRecord> GetPushQueryResultByUserNames(string[] userNames, TipoDispositivo? tipodisp, bool produzione, string language);
-
-        IList CountPushQueryResultByUserNames(string[] userNames, TipoDispositivo? tipodisp, bool produzione, string language);
-
-        void PublishedPushEventTest(ContentItem ci);
-
-        PushState PublishedPushEvent(ContentItem ci);
-
-        IList<IDictionary> GetContactsWithDevice(string nameFilter);
-
-        void SendPushToContact(ContentItem ci, string contactTitle);
-
-        NotificationsCounters GetNotificationsCounters(ContentItem ci);
-        void ResetNotificationFailures(ContentItem ci);
-    }
-
     [OrchardFeature("Laser.Orchard.PushGateway")]
     public class PushGatewayService : IPushGatewayService {
         private readonly IPushNotificationService _pushNotificationService;
@@ -71,7 +48,7 @@ namespace Laser.Orchard.Mobile.Services {
         private readonly INotifier _notifier;
         private readonly ICommunicationService _communicationService;
         private readonly ITokenizer _tokenizer;
-        private readonly ShellSettings _shellSetting;
+        private readonly ShellSettings _shellSettings;
         private readonly IShortLinksService _shortLinksService;
         public Localizer T { get; set; }
         private const string outcomeToTryAgain = "ko";
@@ -88,7 +65,19 @@ namespace Laser.Orchard.Mobile.Services {
         private ConcurrentBag<DeviceChange> _deviceChanges;
         private ConcurrentBag<DeviceChange> _deviceExpired;
 
-        public PushGatewayService(IPushNotificationService pushNotificationService, IQueryPickerService queryPickerServices, IOrchardServices orchardServices, ITransactionManager transactionManager, IRepository<SentRecord> sentRepository, IRepository<PushNotificationRecord> pushNotificationRepository, INotifier notifier, ICommunicationService communicationService, ITokenizer tokenizer, ShellSettings shellSetting, IShortLinksService shortLinksService) {
+        public PushGatewayService(
+            IPushNotificationService pushNotificationService,
+            IQueryPickerService queryPickerServices,
+            IOrchardServices orchardServices,
+            ITransactionManager transactionManager,
+            IRepository<SentRecord> sentRepository,
+            IRepository<PushNotificationRecord> pushNotificationRepository,
+            INotifier notifier,
+            ICommunicationService communicationService,
+            ITokenizer tokenizer,
+            ShellSettings shellSettings,
+            IShortLinksService shortLinksService) {
+
             _pushNotificationService = pushNotificationService;
             _queryPickerServices = queryPickerServices;
             _orchardServices = orchardServices;
@@ -98,7 +87,7 @@ namespace Laser.Orchard.Mobile.Services {
             _notifier = notifier;
             _communicationService = communicationService;
             _tokenizer = tokenizer;
-            _shellSetting = shellSetting;
+            _shellSettings = shellSettings;
             _shortLinksService = shortLinksService;
             _messageSent = 0;
             _pushNumber = 0;
@@ -144,8 +133,8 @@ namespace Laser.Orchard.Mobile.Services {
             string query;
             string groupby;
             IList<IDictionary> lista;
-            string hostCheck = _shellSetting.RequestUrlHost ?? "";
-            string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
+            string hostCheck = _shellSettings.RequestUrlHost ?? "";
+            string prefixCheck = _shellSettings.RequestUrlPrefix ?? "";
             if (nameFilter.StartsWith("token:")) {
                 string[] machineNameCheck = GetMachineNames();
                 var session = _transactionManager.GetSession();
@@ -241,8 +230,8 @@ namespace Laser.Orchard.Mobile.Services {
                 "join cir.MobileContactPartRecord as MobileContact " +
                 "join MobileContact.MobileRecord as MobileRecord " +
                 "WHERE civr.Published=1 AND MobileRecord.Validated";
-            string hostCheck = _shellSetting.RequestUrlHost ?? "";
-            string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
+            string hostCheck = _shellSettings.RequestUrlHost ?? "";
+            string prefixCheck = _shellSettings.RequestUrlPrefix ?? "";
             string machineNameCheck = GetMachineNamesForSql();
 
             queryForPush += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName in ({2})", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck);
@@ -277,8 +266,8 @@ namespace Laser.Orchard.Mobile.Services {
             " WHERE pnr.Validated AND upr.RegistrationStatus = 'Approved' " +
             " AND pnr.UUIdentifier=udr.UUIdentifier " +
             " AND (upr.UserName IN (" + userNamesCSV + ") OR upr.Email IN (" + userNamesCSV + ") )";
-            string hostCheck = _shellSetting.RequestUrlHost ?? "";
-            string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
+            string hostCheck = _shellSettings.RequestUrlHost ?? "";
+            string prefixCheck = _shellSettings.RequestUrlPrefix ?? "";
             string machineNameCheck = GetMachineNamesForSql();
             query += string.Format(" AND pnr.RegistrationUrlHost='{0}' AND pnr.RegistrationUrlPrefix='{1}' AND pnr.RegistrationMachineName in ({2})", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck);
             if (tipodisp.HasValue) {
@@ -327,8 +316,8 @@ namespace Laser.Orchard.Mobile.Services {
                 " join MobileContact.MobileRecord as MobileRecord " +
                 " WHERE civr.Published=1 AND MobileRecord.Validated" +
                 " AND tp.Title='" + contactTitle.Replace("'", "''") + "'";
-            string hostCheck = _shellSetting.RequestUrlHost ?? "";
-            string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
+            string hostCheck = _shellSettings.RequestUrlHost ?? "";
+            string prefixCheck = _shellSettings.RequestUrlPrefix ?? "";
             string machineNameCheck = GetMachineNamesForSql();
             query += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName in ({2})", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck);
             var fullStatement = _transactionManager.GetSession()
@@ -346,8 +335,8 @@ namespace Laser.Orchard.Mobile.Services {
                 " FROM Laser.Orchard.Mobile.Models.PushNotificationRecord as MobileRecord " +
                 " WHERE MobileRecord.Validated" +
                 " AND MobileRecord.Token='" + token.Replace("'", "''").Replace("token:", "").Trim() + "'";
-            string hostCheck = _shellSetting.RequestUrlHost ?? "";
-            string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
+            string hostCheck = _shellSettings.RequestUrlHost ?? "";
+            string prefixCheck = _shellSettings.RequestUrlPrefix ?? "";
             string machineNameCheck = GetMachineNamesForSql();
             query += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName in ({2})", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck);
             var fullStatement = _transactionManager.GetSession()
@@ -406,7 +395,7 @@ namespace Laser.Orchard.Mobile.Services {
                 if (device.Device == TipoDispositivo.AppleFCM) {
                     PushAppleFCM(singoloDevice, device.Produzione, pushMessage, true);
                 }
-                    if (device.Device == TipoDispositivo.WindowsMobile) {
+                if (device.Device == TipoDispositivo.WindowsMobile) {
                     PushWindows(singoloDevice, device.Produzione, pushMessage, true);
                 }
             }
@@ -797,9 +786,9 @@ namespace Laser.Orchard.Mobile.Services {
             }
 
             allDevice = GetListMobileDevice(contenttype, queryDevice, TipoDispositivo.AppleFCM, produzione, language, queryIds);
-           // if (newpush.ValidPayload) {
-                PushAppleFCM(allDevice, produzione, newpush, repeatable);
-//            }
+            // if (newpush.ValidPayload) {
+            PushAppleFCM(allDevice, produzione, newpush, repeatable);
+            //            }
 
         }
 
@@ -828,8 +817,8 @@ namespace Laser.Orchard.Mobile.Services {
                 listdispositivo = RemoveSent(listdispositivo, idContent);
             }
             // elimina i dispositivi non registrati sulla macchina corrente
-            string hostCheck = _shellSetting.RequestUrlHost ?? "";
-            string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
+            string hostCheck = _shellSettings.RequestUrlHost ?? "";
+            string prefixCheck = _shellSettings.RequestUrlPrefix ?? "";
             string[] machineNameCheck = GetMachineNames();
             return listdispositivo.Where(x => x.RegistrationUrlHost == hostCheck
                 && x.RegistrationUrlPrefix == prefixCheck && machineNameCheck.Contains(x.RegistrationMachineName)).ToList();
@@ -973,40 +962,145 @@ namespace Laser.Orchard.Mobile.Services {
             }
             return result;
         }
-        private void PushAndroid(List<PushNotificationRecord> listdispositivo, bool produzione, PushMessage pushMessage, bool repeatable = false) {
-            listdispositivo = CleanRecipients(listdispositivo, pushMessage.idContent, repeatable);
+        private void PushAndroid(
+            List<PushNotificationRecord> listdispositivo, bool produzione,
+            PushMessage pushMessage, bool repeatable = false) {
 
-            // calcola la configurazione per Android
-            var pushSettings = _orchardServices.WorkContext.CurrentSite.As<PushMobileSettingsPart>();
-            string setting = "";
-            if (produzione)
-                setting = pushSettings.AndroidApiKey;
-            else
-                setting = pushSettings.AndroidApiKeyDevelopment;
-            if (listdispositivo.Count > 0) {
-                if (string.IsNullOrWhiteSpace(setting)) {
-                    LogInfo("Error PushAndroid: missing Android API Key.");
-                    _result.Errors = "Error PushAndroid: missing Android API Key.";
-                    return;
-                }
-            } else {
-                // nessuna push da inviare
+            PushFCM(listdispositivo, produzione, pushMessage, TipoDispositivo.Android, repeatable);
+            // check se ha tentato di inviare tutto o se è uscito per limite di push per ogni run
+        }
+
+
+        private void PushAppleFCM(List<PushNotificationRecord> listdispositivo, bool produzione, PushMessage pushMessage, bool repeatable = false) {
+            pushMessage.Sound = "sound.caf";
+
+            PushFCM(listdispositivo, produzione, pushMessage, TipoDispositivo.AppleFCM, repeatable);
+            // check se ha tentato di inviare tutto o se è uscito per limite di push per ogni run
+        }
+
+        private void PushFCM(
+            List<PushNotificationRecord> listdispositivo, bool produzione,
+            PushMessage pushMessage,
+            TipoDispositivo tipoDispositivo, // Android or AppleFCM
+            bool repeatable = false) {
+
+            if (tipoDispositivo != TipoDispositivo.Android || tipoDispositivo != TipoDispositivo.AppleFCM) {
+                // we manage only these two categories of devices.
                 return;
             }
-            var config = new GcmConfiguration(setting);
+
+            listdispositivo = CleanRecipients(listdispositivo, pushMessage.idContent, repeatable);
+            if (listdispositivo.Count <= 0) {
+                // No push to send
+                return;
+            }
+            // Compute configuration
+            var pushSettings = _orchardServices.WorkContext.CurrentSite.As<PushMobileSettingsPart>();
+            string setting = "";
+            if (produzione) {
+                setting = pushSettings.AndroidApiKey;
+            } else {
+                setting = pushSettings.AndroidApiKeyDevelopment;
+            }
+            if (string.IsNullOrWhiteSpace(setting)) {
+                LogInfo("Error push FCM: missing API Key.");
+                _result.Errors = "Error PushFCM: missing API Key.";
+                return;
+            }
+
+            //var config = new GcmConfiguration(setting);
+
+            // Get configuration file from PushMobileSettingsPart
+            string firebase_conf_folder = HostingEnvironment.MapPath(
+                    string.Format("~/App_Data/Sites/{0}/PushConfiguration/",
+                        _shellSettings.Name));
+            var configPath = System.IO.Path.Combine(firebase_conf_folder, pushSettings.FirebasePushConfiguration);
+            var config = new GcmConfiguration();
+            config.SetConfigFile(configPath);
+
             var serviceUrl = pushSettings.AndroidPushServiceUrl;
             var notificationIcon = pushSettings.AndroidPushNotificationIcon;
             if (string.IsNullOrWhiteSpace(serviceUrl)) {
                 // default: FCM
-                config.OverrideUrl("https://fcm.googleapis.com/fcm/send");
+                // TODO: change default override url
+                //config.OverrideUrl("https://fcm.googleapis.com/fcm/send");
+                config.OverrideUrl("https://fcm.googleapis.com");
             } else {
                 config.OverrideUrl(serviceUrl);
             }
 
-            // compone il payload
+            // generate JObjects
+            JObject sbapsParsed = null;
+            if (tipoDispositivo == TipoDispositivo.AppleFCM) {
+                StringBuilder sbaps = new StringBuilder();
+                sbaps.Clear();
+                sbaps.AppendFormat("{{ \"alert\":{{\"body\": \"{0}\", \"sound\":\"{1}\"}}}}", FormatJsonValue(pushMessage.Text), FormatJsonValue(pushMessage.Sound));
+                sbapsParsed = JObject.Parse(sbaps.ToString());
+            }
             StringBuilder sb = new StringBuilder();
             sb.Clear();
-            sb.AppendFormat("{{ \"Text\": \"{0}\"", FormatJsonValue(pushMessage.Text));
+
+            // TODO: change payload based on new format
+            /* NEW FORMAT
+            {
+                "message": {
+                    "topic": "news",
+                    "notification": {
+                        "title": "Breaking News",
+                        "body": "New news story available."
+                    },
+                    "data": {
+                        "story_id": "story_12345"
+                    }
+                }
+            }
+            */
+
+            /* complete json implementation (not needed?)
+            sb.Append("{ \"message\": {");
+
+            sb.Append("{ \"notification\": {");
+
+            sb.AppendFormat("\"Title\": \"{0}\"", FormatJsonValue(pushMessage.Title));
+            sb.AppendFormat("\"Body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
+
+            sb.Append("}"); // Closing "notification"
+
+            sb.Append("\"data\": {");
+
+            if (!string.IsNullOrWhiteSpace (pushMessage.Eu)) {
+                sb.AppendFormat ("\"Eu\": \"{0}\"", FormatJsonValue(pushMessage.Eu));
+            } else {
+                sb.AppendFormat("\"Id\": {0},", pushMessage.idContent);
+                sb.AppendFormat("\"Rid\": {0},", pushMessage.idRelated);
+                sb.AppendFormat("\"Ct\": \"{0}\",", FormatJsonValue(pushMessage.Ct));
+                sb.AppendFormat("\"Al\": \"{0}\",", FormatJsonValue(pushMessage.Al));
+            }
+
+            sb.Append("}"); // Closing "data"
+            sb.Append("}"); // Closing "message"
+            sb.Append("}"); // Closing json
+            */ // end of complete json implementation
+
+
+            // Data contains the optional parameters of the push
+            // This means that the custom information to be sent to the app (for instance the content id) have to be put inside the Data property
+            if (!string.IsNullOrWhiteSpace(pushMessage.Eu)) {
+                sb.AppendFormat("\"Eu\": \"{0}\"", FormatJsonValue(pushMessage.Eu));
+            } else {
+                sb.AppendFormat("\"Id\": {0},", pushMessage.idContent);
+                sb.AppendFormat("\"Rid\": {0},", pushMessage.idRelated);
+                sb.AppendFormat("\"Ct\": \"{0}\",", FormatJsonValue(pushMessage.Ct));
+                sb.AppendFormat("\"Al\": \"{0}\",", FormatJsonValue(pushMessage.Al));
+            }
+
+            // old format implementation
+            /*
+            if (tipoDispositivo == TipoDispositivo.Android) {
+                sb.AppendFormat("{{ \"Text\": \"{0}\"", FormatJsonValue(pushMessage.Text));
+            } else {
+                sb.AppendFormat("{{ \"body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
+            }
             if (!string.IsNullOrEmpty(pushMessage.Eu)) {
                 sb.AppendFormat(",\"Eu\":\"{0}\"", FormatJsonValue(pushMessage.Eu));
             } else {
@@ -1016,29 +1110,59 @@ namespace Laser.Orchard.Mobile.Services {
                 sb.AppendFormat(",\"Al\":\"{0}\"", FormatJsonValue(pushMessage.Al));
             }
             sb.Append("}");
+            */ // end of old implementation
+
+
             var sbParsed = JObject.Parse(sb.ToString());
             // sezione notification
             StringBuilder sbNotification = new StringBuilder();
             sbNotification.Clear();
             JObject sbNotificationParsed = null;
-            if (string.IsNullOrWhiteSpace(notificationIcon) == false) {
+
+
+            /* old implementation
+            if (tipoDispositivo == TipoDispositivo.AppleFCM) {
+                sbNotification.AppendFormat("{{ \"body\": \"{0}\"}}", FormatJsonValue(pushMessage.Text));
+                sbNotificationParsed = JObject.Parse(sbNotification.ToString());
+            } else if (!string.IsNullOrWhiteSpace(notificationIcon)) {
                 sbNotification.AppendFormat("{{ \"body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
-                //sbNotification.AppendFormat(",\"title\":\"{0}\"", FormatJsonValue(pushMessage.Text));
                 sbNotification.AppendFormat(",\"icon\":\"{0}\"", notificationIcon);
                 sbNotification.Append("}");
                 sbNotificationParsed = JObject.Parse(sbNotification.ToString());
             }
+            */ // end of old implementation
+
+            Dictionary<string, string> data;
+
+            if (!string.IsNullOrWhiteSpace(pushMessage.Eu)) {
+                data = new Dictionary<string, string>() {
+                    { "Eu", pushMessage.Eu }
+                };
+            } else {
+                data = new Dictionary<string, string>() {
+                    { "Id", pushMessage.idContent.ToString() },
+                    { "Rid", pushMessage.idRelated.ToString() },
+                    { "Ct", pushMessage.Ct },
+                    { "Al", pushMessage.Al }
+                };
+            }
+
+            // Notification contains the standard information for the actual notification (title, body and image url).
+            sbNotification.AppendFormat("\"Title\": \"{0}\"", FormatJsonValue(pushMessage.Title));
+            sbNotification.AppendFormat("\"Body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
+            sbNotificationParsed = JObject.Parse(sbNotification.ToString());
 
             int offset = 0;
             int size = pushSettings.PushSendBufferSize == 0 ? 50 : pushSettings.PushSendBufferSize;
             while (offset < listdispositivo.Count) {
                 InitializeRecipients(listdispositivo, offset, size, pushMessage.idContent, repeatable, pushSettings);
-                if (pushSettings.CommitSentOnly == false) {
+                if (!pushSettings.CommitSentOnly) {
                     InitializeRecipientsOnDb();
                 }
-                // ciclo con retry sui nuovi
+                // loop and retry
                 GcmNotification objNotification = null;
-                for (int i = 0; i < 2; i++) { // cicla 2 volte: la prima per i device in input, la seconda per quelli changed
+                for (int i = 0; i < 2; i++) {
+                    // cicla 2 volte: la prima per i device in input, la seconda per quelli changed
                     var push = new GcmServiceBroker(config);
                     push.OnNotificationSucceeded += (notification) => {
                         NotificationSent(notification);
@@ -1050,9 +1174,15 @@ namespace Laser.Orchard.Mobile.Services {
                                 var oldId = expiredException.OldSubscriptionId;
                                 var newId = expiredException.NewSubscriptionId;
                                 if (!string.IsNullOrWhiteSpace(newId)) {
-                                    DeviceSubscriptionChanged(notification.GetType().Name, oldId, newId, expiredException.Notification, produzione, TipoDispositivo.Android, repeatable);
+                                    DeviceSubscriptionChanged(
+                                        notification.GetType().Name,
+                                        oldId, newId, expiredException.Notification, produzione,
+                                        tipoDispositivo, repeatable);
                                 } else
-                                    DeviceSubscriptionExpired(notification.GetType().Name, oldId, expiredException.ExpiredAt, produzione, TipoDispositivo.Android);
+                                    DeviceSubscriptionExpired(
+                                        notification.GetType().Name,
+                                        oldId, expiredException.ExpiredAt, produzione,
+                                        tipoDispositivo);
                             } else {
                                 NotificationFailed(notification, aggregateEx);
                             }
@@ -1063,9 +1193,26 @@ namespace Laser.Orchard.Mobile.Services {
                     push.Start();
                     foreach (var device in _sentRecords.Where(x => x.Value.Outcome == "")) {
                         try {
+                            // handle proper payload creation
                             objNotification = new GcmNotification {
+                                Message = new GcmMessage {
+                                    Token = device.Key,
+                                    Topic = null,
+                                    Data = data,
+                                    Notification = new GcmMessageNotification {
+                                        Body = pushMessage.Text,
+                                        Title = pushMessage.Title
+                                    }
+                                },
+                                //Message = new GcmMessage {
+                                //    Data = sbParsed,
+                                //    Notification = sbNotificationParsed,
+                                //    Topic = topic,
+                                //    To = device.Key
+                                //},
                                 RegistrationIds = new List<string> { device.Key },
                                 Data = sbParsed,
+                                Aps = sbapsParsed,
                                 Priority = GcmNotificationPriority.High
                                 // necessario per bypassare il fatto che l'app non sia in whitelist
                                 //TimeToLive = 172800 //2 giorni espressi in secondi
@@ -1075,7 +1222,7 @@ namespace Laser.Orchard.Mobile.Services {
                             }
                             push.QueueNotification(objNotification);
                         } catch (Exception ex) {
-                            LogError("PushAndroid retry error:  " + ex.Message + " StackTrace: " + ex.StackTrace);
+                            LogError("Push FCM retry error:  " + ex.Message + " StackTrace: " + ex.StackTrace);
                         }
                     }
                     push.Stop();
@@ -1085,137 +1232,6 @@ namespace Laser.Orchard.Mobile.Services {
                 UpdateDevicesAndOutcomesOnDb(produzione);
                 offset += size;
             }
-            // check se ha tentato di inviare tutto o se è uscito per limite di push per ogni run
-        }
-
-
-        private void PushAppleFCM(List<PushNotificationRecord> listdispositivo, bool produzione, PushMessage pushMessage, bool repeatable = false) {
-            pushMessage.Sound = "sound.caf";
-
-            listdispositivo = CleanRecipients(listdispositivo, pushMessage.idContent, repeatable);
-
-            // calcola la configurazione per Android
-            var pushSettings = _orchardServices.WorkContext.CurrentSite.As<PushMobileSettingsPart>();
-            string setting = "";
-            if (produzione)
-                setting = pushSettings.AndroidApiKey;
-            else
-                setting = pushSettings.AndroidApiKeyDevelopment;
-            
-            if (listdispositivo.Count > 0) {
-                if (string.IsNullOrWhiteSpace(setting)) {
-                    LogInfo("Error PushAppleFCM: missing Android API Key.");
-                    _result.Errors = "Error PushAppleFCM: missing Android API Key.";
-                    return;
-                }
-            }
-            else {
-                // nessuna push da inviare
-                return;
-            }
-            var config = new GcmConfiguration(setting);
-            var serviceUrl = pushSettings.AndroidPushServiceUrl;
-            var notificationIcon = pushSettings.AndroidPushNotificationIcon;
-            if (string.IsNullOrWhiteSpace(serviceUrl)) {
-                // default: FCM
-                config.OverrideUrl("https://fcm.googleapis.com/fcm/send");
-            }
-            else {
-                config.OverrideUrl(serviceUrl);
-            }
-
-            // compone il payload
-            StringBuilder sbaps = new StringBuilder();
-            sbaps.Clear();
-            sbaps.AppendFormat("{{ \"alert\":{{\"body\": \"{0}\", \"sound\":\"{1}\"}}}}", FormatJsonValue(pushMessage.Text), FormatJsonValue(pushMessage.Sound));
-            var sbapsParsed = JObject.Parse(sbaps.ToString());
-            StringBuilder sb = new StringBuilder();
-            sb.Clear();
-            sb.AppendFormat("{{ \"body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
-            if (!string.IsNullOrEmpty(pushMessage.Eu)) {
-                sb.AppendFormat(",\"Eu\":\"{0}\"", FormatJsonValue(pushMessage.Eu));
-            }
-            else {
-                sb.AppendFormat(",\"Id\":{0}", pushMessage.idContent);
-                sb.AppendFormat(",\"Rid\":{0}", pushMessage.idRelated);
-                sb.AppendFormat(",\"Ct\":\"{0}\"", FormatJsonValue(pushMessage.Ct));
-                sb.AppendFormat(",\"Al\":\"{0}\"", FormatJsonValue(pushMessage.Al));
-            }
-            sb.Append("}");
-            var sbParsed = JObject.Parse(sb.ToString());
-            // sezione notification
-            StringBuilder sbNotification = new StringBuilder();
-            sbNotification.Clear();
-            JObject sbNotificationParsed = null;
-         //   if (string.IsNullOrWhiteSpace(notificationIcon) == false) {
-                sbNotification.AppendFormat("{{ \"body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
-                //sbNotification.AppendFormat(",\"title\":\"{0}\"", FormatJsonValue(pushMessage.Text));
-               // sbNotification.AppendFormat(",\"icon\":\"{0}\"", notificationIcon);
-                sbNotification.Append("}");
-                sbNotificationParsed = JObject.Parse(sbNotification.ToString());
-          //  }
-
-            int offset = 0;
-            int size = pushSettings.PushSendBufferSize == 0 ? 50 : pushSettings.PushSendBufferSize;
-            while (offset < listdispositivo.Count) {
-                InitializeRecipients(listdispositivo, offset, size, pushMessage.idContent, repeatable, pushSettings);
-                if (pushSettings.CommitSentOnly == false) {
-                    InitializeRecipientsOnDb();
-                }
-                // ciclo con retry sui nuovi
-                GcmNotification objNotification = null;
-                for (int i = 0; i < 2; i++) { // cicla 2 volte: la prima per i device in input, la seconda per quelli changed
-                    var push = new GcmServiceBroker(config);
-                    push.OnNotificationSucceeded += (notification) => {
-                        NotificationSent(notification);
-                    };
-                    push.OnNotificationFailed += (notification, aggregateEx) => {
-                        aggregateEx.Handle(ex => {
-                            if (ex is DeviceSubscriptionExpiredException) {
-                                var expiredException = (DeviceSubscriptionExpiredException)ex;
-                                var oldId = expiredException.OldSubscriptionId;
-                                var newId = expiredException.NewSubscriptionId;
-                                if (!string.IsNullOrWhiteSpace(newId)) {
-                                    DeviceSubscriptionChanged(notification.GetType().Name, oldId, newId, expiredException.Notification, produzione, TipoDispositivo.AppleFCM, repeatable);
-                                }
-                                else
-                                    DeviceSubscriptionExpired(notification.GetType().Name, oldId, expiredException.ExpiredAt, produzione, TipoDispositivo.AppleFCM);
-                            }
-                            else {
-                                NotificationFailed(notification, aggregateEx);
-                            }
-                            // Mark it as handled
-                            return true;
-                        });
-                    };
-                    push.Start();
-                    foreach (var device in _sentRecords.Where(x => x.Value.Outcome == "")) {
-                        try {
-                            objNotification = new GcmNotification {
-                                RegistrationIds = new List<string> { device.Key },
-                                Data = sbParsed,
-                                Aps= sbapsParsed,
-                                Priority = GcmNotificationPriority.High,
-                    
-
-                            // necessario per bypassare il fatto che l'app non sia in whitelist
-                            //TimeToLive = 172800 //2 giorni espressi in secondi
-                        };
-                            objNotification.Notification = sbNotificationParsed;
-                            push.QueueNotification(objNotification);
-                        }
-                        catch (Exception ex) {
-                            LogError("PushAppleFCM retry error:  " + ex.Message + " StackTrace: " + ex.StackTrace);
-                        }
-                    }
-                    push.Stop();
-                    push = null;
-                } // end retry cicle
-
-                UpdateDevicesAndOutcomesOnDb(produzione);
-                offset += size;
-            }
-            // check se ha tentato di inviare tutto o se è uscito per limite di push per ogni run
         }
 
         private void PushApple(List<PushNotificationRecord> listdispositivo, bool produzione, PushMessage pushMessage, bool repeatable = false) {
@@ -1236,14 +1252,14 @@ namespace Laser.Orchard.Mobile.Services {
                 setting_password = pushSettings.AppleCertificatePassword;
                 setting_file = HostingEnvironment.MapPath(
                     string.Format("~/App_Data/Sites/{0}/Mobile/{1}",
-                        _shellSetting.Name, pushSettings.ApplePathCertificateFile));
+                        _shellSettings.Name, pushSettings.ApplePathCertificateFile));
                 if (string.IsNullOrEmpty(pushSettings.ApplePathCertificateFile))
                     certificateexist = false;
             } else {
                 setting_password = pushSettings.AppleCertificatePasswordDevelopment;
                 setting_file = HostingEnvironment.MapPath(
                     string.Format("~/App_Data/Sites/{0}/Mobile/{1}",
-                        _shellSetting.Name, pushSettings.ApplePathCertificateFileDevelopment));
+                        _shellSettings.Name, pushSettings.ApplePathCertificateFileDevelopment));
                 if (string.IsNullOrEmpty(pushSettings.ApplePathCertificateFileDevelopment))
                     certificateexist = false;
             }
@@ -1319,10 +1335,9 @@ namespace Laser.Orchard.Mobile.Services {
                                 Payload = sbParsed,
                                 LowPriority = false
                             };
-                            if(notification.IsDeviceRegistrationIdValid() && notification.DeviceToken.Length >= ApnsNotification.DEVICE_TOKEN_STRING_MIN_SIZE) {
+                            if (notification.IsDeviceRegistrationIdValid() && notification.DeviceToken.Length >= ApnsNotification.DEVICE_TOKEN_STRING_MIN_SIZE) {
                                 push.QueueNotification(notification);
-                            }
-                            else {
+                            } else {
                                 _sentRecords.AddOrUpdate(device.Key, new SentRecord(), (key, record) => {
                                     record.Outcome = "wr"; // lexical contraction for 'wrong'
                                     return record;
@@ -1569,7 +1584,7 @@ namespace Laser.Orchard.Mobile.Services {
 
         private void LogError(string message) {
             var wrapper = string.Format("PushGatewayService error on {0}: {1}",
-                string.IsNullOrWhiteSpace(_shellSetting?.Name) ? "[could not identify tenant name]" : _shellSetting.Name,
+                string.IsNullOrWhiteSpace(_shellSettings?.Name) ? "[could not identify tenant name]" : _shellSettings.Name,
                 "{0}");
             Logger.Log(OrchardLogging.LogLevel.Error, null, string.Format(wrapper, message), null);
         }
@@ -1579,12 +1594,11 @@ namespace Laser.Orchard.Mobile.Services {
         }
 
         private string[] GetMachineNames() {
-            var list = _shellSetting["PushRegistrationAllowedMachineNames"] ?? System.Environment.MachineName;
+            var list = _shellSettings["PushRegistrationAllowedMachineNames"] ?? System.Environment.MachineName;
             var result = list.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if(result.Contains(System.Environment.MachineName)) {
+            if (result.Contains(System.Environment.MachineName)) {
                 return result;
-            }
-            else {
+            } else {
                 LogError(string.Format("Current machine name \"{0}\" not correctly set in Settings.txt", System.Environment.MachineName));
                 return new string[0];
             }
@@ -1593,7 +1607,7 @@ namespace Laser.Orchard.Mobile.Services {
         private string GetMachineNamesForSql() {
             var list = GetMachineNames();
             var result = new List<string>();
-            foreach(var name in list) {
+            foreach (var name in list) {
                 result.Add(name.Replace("'", "''"));
             }
             return "'" + string.Join("','", result) + "'";

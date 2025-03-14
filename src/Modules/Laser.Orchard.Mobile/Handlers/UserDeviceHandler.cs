@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Laser.Orchard.StartupConfig.Services;
-using Orchard.ContentManagement;
-using Orchard.ContentManagement.Handlers;
-using Orchard.Localization;
-using Orchard.Users.Models;
+﻿using Laser.Orchard.CommunicationGateway.Models;
+using Laser.Orchard.Mobile.Models;
+using Laser.Orchard.Mobile.Services;
+using Laser.Orchard.StartupConfig.Handlers;
+using Orchard.Data;
+using Orchard.Logging;
 using Orchard.Mvc;
 using Orchard.Security;
 using Orchard.Users.Events;
-using Orchard.Data;
-using Laser.Orchard.Mobile.Models;
-using Laser.Orchard.CommunicationGateway.Models;
-using Orchard.Logging;
-using Laser.Orchard.Mobile.Services;
-using Laser.Orchard.StartupConfig.Handlers;
+using System.Linq;
 
 namespace Laser.Orchard.Mobile.Handlers {
     public class UserDeviceHandler : IUserEventHandler {

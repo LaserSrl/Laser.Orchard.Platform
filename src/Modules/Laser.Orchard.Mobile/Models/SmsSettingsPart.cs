@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Orchard.ContentManagement;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using Orchard.ContentManagement;
-using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.Mobile.Models {
-    
-    [OrchardFeature("Laser.Orchard.Sms")]
+
     public class SmsSettingsPart : ContentPart{
 
         ///// <summary>

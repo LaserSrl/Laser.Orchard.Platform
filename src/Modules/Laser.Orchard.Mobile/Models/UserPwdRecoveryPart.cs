@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using Orchard.ContentManagement;
+﻿using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
-using Orchard.Environment.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace Laser.Orchard.Mobile.Models {
-    [OrchardFeature("Laser.Orchard.Sms")]
     public class UserPwdRecoveryPart : ContentPart<UserPwdRecoveryPartRecord> {
 
         [RegularExpression("^(\\+)?\\d{1,3}$", ErrorMessage = "Invalid phone prefix. Only digits accepted.")]
@@ -32,7 +26,6 @@ namespace Laser.Orchard.Mobile.Models {
         }
     }
 
-    [OrchardFeature("Laser.Orchard.Sms")]
     public class UserPwdRecoveryPartRecord : ContentPartRecord {
         public virtual string InternationalPrefix { get; set; }
         public virtual string PhoneNumber { get; set; }

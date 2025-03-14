@@ -1,26 +1,17 @@
 ﻿using Laser.Orchard.Mobile.Models;
 using Laser.Orchard.StartupConfig.Services;
-using Orchard;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
-using Orchard.Data;
 using Orchard.Data.Migration;
-using Orchard.Environment.Configuration;
 using System;
 
 namespace Laser.Orchard.Mobile {
 
     public class Migrations : DataMigrationImpl {
         private readonly IUtilsServices _utilsServices;
-        private readonly IOrchardServices _orchardServices;
-        private readonly ShellSettings _shellSettings;
-        private readonly IRepository<PushNotificationRecord> _repositoryDevice;
 
-        public Migrations(IUtilsServices utilsServices, IOrchardServices orchardServices, ShellSettings shellSettings, IRepository<PushNotificationRecord> repositoryDevice) {
+        public Migrations(IUtilsServices utilsServices) {
             _utilsServices = utilsServices;
-            _orchardServices = orchardServices;
-            _shellSettings = shellSettings;
-            _repositoryDevice = repositoryDevice;
         }
 
         public int Create() {
@@ -372,6 +363,13 @@ namespace Laser.Orchard.Mobile {
                 .Column<string>("UUID", column => column.WithLength(400)));
 
             return 38;
+        }
+
+        public int UpdateFrom38() {
+            SchemaBuilder.AlterTable("PushMobileSettingsPartRecord", table => table
+                .AddColumn<string>("FirebasePushConfiguration", col => col.WithLength(255))
+            );
+            return 39;
         }
     }
 }

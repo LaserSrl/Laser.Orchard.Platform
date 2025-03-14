@@ -1,14 +1,9 @@
-﻿using System;
+﻿using Orchard.ContentManagement;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
-using Orchard.ContentManagement;
-using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.Mobile.Models {
 
-    [OrchardFeature("Laser.Orchard.SmsGateway")]
     public class SmsPlaceholdersSettingsPart : ContentPart {
         private SmsPleaceholdersList _placeholdersList;
         public SmsPleaceholdersList PlaceholdersList {

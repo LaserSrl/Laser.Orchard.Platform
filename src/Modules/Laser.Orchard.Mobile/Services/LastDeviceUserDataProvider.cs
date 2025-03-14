@@ -1,15 +1,14 @@
-﻿using Orchard.Security.Providers;
+﻿using Laser.Orchard.Mobile.Models;
+using Orchard;
+using Orchard.ContentManagement;
+using Orchard.Data;
+using Orchard.Security;
+using Orchard.Security.Providers;
+using Orchard.Settings;
+using Orchard.Users.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Orchard.Security;
-using Orchard.Settings;
-using Orchard.ContentManagement;
-using Laser.Orchard.Mobile.Models;
-using Orchard;
-using Orchard.Users.Models;
-using Orchard.Data;
 
 namespace Laser.Orchard.Mobile.Services {
     public class LastDeviceUserDataProvider : BaseUserDataProvider {

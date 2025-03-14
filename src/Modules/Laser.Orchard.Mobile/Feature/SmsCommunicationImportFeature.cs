@@ -1,15 +1,6 @@
-﻿using Laser.Orchard.Mobile.Models;
-using Laser.Orchard.Mobile.Services;
-using Orchard;
-using Orchard.ContentManagement;
-using Orchard.Core.Title.Models;
-using Orchard.Data;
+﻿using Laser.Orchard.Mobile.Services;
 using Orchard.Environment;
 using Orchard.Environment.Extensions;
-using Orchard.Localization;
-using Orchard.UI.Notify;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Laser.Orchard.Mobile.Feature {
 

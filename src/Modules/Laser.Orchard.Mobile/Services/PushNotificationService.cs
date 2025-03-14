@@ -1,13 +1,11 @@
 ﻿using Laser.Orchard.CommunicationGateway.Models;
 using Laser.Orchard.CommunicationGateway.Services;
 using Laser.Orchard.Mobile.Models;
-using Laser.Orchard.Queries.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.Environment.Configuration;
 using Orchard.Localization;
-using Orchard.Tokens;
 using Orchard.UI.Notify;
 using Orchard.Users.Models;
 using System;
@@ -35,16 +33,13 @@ namespace Laser.Orchard.Mobile.Services {
     public class PushNotificationService : IPushNotificationService {
         private readonly IRepository<PushNotificationRecord> _pushNotificationRepository;
         private readonly IRepository<UserDeviceRecord> _userDeviceRecord;
-        private readonly IQueryPickerService _queryPickerServices;
         public Localizer T { get; set; }
         public OrchardLogging.ILogger Logger { get; set; }
 
         private readonly INotifier _notifier;
         private readonly IOrchardServices _orchardServices;
         private readonly ShellSettings _shellSetting;
-        private readonly ISessionLocator _sessionLocator;
         public ICommunicationService _communicationService;
-        private readonly ITokenizer _tokenizer;
         private readonly ITransactionManager _transactionManager;
         private const int maxPushTextLength = 160;
 
@@ -54,9 +49,6 @@ namespace Laser.Orchard.Mobile.Services {
             IRepository<UserDeviceRecord> userDeviceRecord,
             INotifier notifier,
             ShellSettings shellSetting,
-            ISessionLocator sessionLocator,
-            ITokenizer tokenizer,
-            IQueryPickerService queryPickerService,
             ITransactionManager transactionManager
             
          ) {
@@ -65,13 +57,10 @@ namespace Laser.Orchard.Mobile.Services {
             _pushNotificationRepository = pushNotificationRepository;
             _notifier = notifier;
             _shellSetting = shellSetting;
-            _sessionLocator = sessionLocator;
-            _tokenizer = tokenizer;
             _userDeviceRecord = userDeviceRecord;
             if (_orchardServices.WorkContext != null) {
                 _orchardServices.WorkContext.TryResolve<ICommunicationService>(out _communicationService);
             }
-            _queryPickerServices = queryPickerService;
             _transactionManager = transactionManager;
             Logger = OrchardLogging.NullLogger.Instance;
         }

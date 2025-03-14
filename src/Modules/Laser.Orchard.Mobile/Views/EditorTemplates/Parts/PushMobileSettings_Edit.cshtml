@@ -1,19 +1,36 @@
 ﻿@model Laser.Orchard.Mobile.ViewModels.PushMobileSettingsVM
+
 <fieldset>
     <legend>@T("Push Mobile Settings")</legend>
     <span class="hint">@T("To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3")</span>
     <div class="editor-field">
-        <fieldset>
-            <h2>Android</h2>
-            @Html.LabelFor(m => m.AndroidApiKey, T("Android ApiKey"))
-            @Html.TextBoxFor(m => m.AndroidApiKey)
-        </fieldset>
+        @*<fieldset>
+                <h2>Android</h2>
+                @Html.LabelFor(m => m.AndroidApiKey, T("Android ApiKey"))
+                @Html.TextBoxFor(m => m.AndroidApiKey)
+            </fieldset>
+
+            <fieldset>
+                <h2>Android Development</h2>
+                @Html.LabelFor(m => m.AndroidApiKeyDevelopment, T("Android ApiKey Development"))
+                @Html.TextBoxFor(m => m.AndroidApiKeyDevelopment)
+            </fieldset>*@
 
         <fieldset>
-            <h2>Android Development</h2>
-            @Html.LabelFor(m => m.AndroidApiKeyDevelopment, T("Android ApiKey Development"))
-            @Html.TextBoxFor(m => m.AndroidApiKeyDevelopment)
+            <h2>Firebase Push Configuration File</h2>
+
+            <div>
+                <input id="fpcFilePath" name="fbcFilePath" type="file" value="@T("Browse")" size="64" />
+            </div>
+            <div>
+                <button id="fpcUploadButton" class="primaryAction">@T("Upload")</button>
+            </div>
+
+            @Html.LabelFor(m => m.FirebasePushConfiguration, T("Firebase push configuration"))
+            @Html.TextBoxFor(m => m.FirebasePushConfiguration, new { @readonly = "readonly" })
+            <span class="hint">@T("Json file with the configuration to use for Firebase service push")</span>
         </fieldset>
+
         <fieldset>
             <h2>Android Push Service URL</h2>
             @Html.LabelFor(m => m.AndroidPushServiceUrl, T("Push service URL"))
@@ -45,7 +62,7 @@
             @Html.LabelFor(m => m.ApplePathCertificateFileDevelopment, T("Apple Path Certificate File Development"))
             @Html.DropDownListFor(m => m.ApplePathCertificateFileDevelopment, Model.ListOfCertificatesDevelopment, "")
         </fieldset>
-        <fieldset>
+        @*<fieldset>
             <h2>Windows Mobile</h2>
             @Html.LabelFor(m => m.WindowsAppPackageName, T("Windows App Package Name"))
             @Html.TextBoxFor(m => m.WindowsAppPackageName)
@@ -53,7 +70,7 @@
             @Html.TextBoxFor(m => m.WindowsAppSecurityIdentifier)
             @Html.LabelFor(m => m.WindowsEndPoint, T("Windows EndPoint"))
             @Html.TextBoxFor(m => m.WindowsEndPoint)
-        </fieldset>
+        </fieldset>*@
 
         <fieldset>
             <h2>@T("Setting Backoffice")</h2>
@@ -99,3 +116,44 @@
         </fieldset>
     </div>
 </fieldset>
+
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#fpcUploadButton").click(function () {
+                var fileField = $("#fpcFilePath");
+                var files = $("#fpcFilePath")[0].files;
+                if (files.length > 0) {
+                    var postedFile = files[0];
+                    if (postedFile) {
+                        var fileContent = '';
+
+                        var fileReader = new FileReader();
+                        fileReader.readAsText(postedFile);
+                        fileReader.onload = function (data) {
+                            fileContent = data.target.result;
+
+                            $.ajax({
+                                url: '@Url.Action("UploadConfiguration", "FileUpload", new { area = "Laser.Orchard.Mobile" })',
+                                data: {
+                                   __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
+                                   conf: fileContent
+                                },
+                                type: 'POST',
+                                success: function (data) {
+                                    if (data) {
+                                        if (data.Success) {
+                                            $("#@Html.FieldIdFor(m => m.FirebasePushConfiguration)").val(data.Filename);
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+                return false;
+            });
+        });
+    </script>
+}

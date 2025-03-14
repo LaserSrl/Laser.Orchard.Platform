@@ -5,13 +5,11 @@ using Laser.Orchard.Mobile.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
+using Orchard.UI.Admin;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.UI.Admin;
-using Orchard.ContentManagement.Handlers;
 
 namespace Laser.Orchard.Mobile.Drivers {
 

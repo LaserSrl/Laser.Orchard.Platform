@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.Mobile.ViewModels {
-    [OrchardFeature("Laser.Orchard.PushGateway")]
     public class PushMobileSettingsVM {
         public string ApplePathCertificateFile { get; set; }
         public string AppleCertificatePassword { get; set; }
@@ -45,5 +43,7 @@ namespace Laser.Orchard.Mobile.ViewModels {
             if (!Directory.Exists(stringpath))
                 Directory.CreateDirectory(stringpath);
         }
+
+        public string FirebasePushConfiguration { get; set; }
     }
 }

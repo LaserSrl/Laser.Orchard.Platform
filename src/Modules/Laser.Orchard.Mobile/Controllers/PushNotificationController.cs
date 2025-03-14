@@ -4,7 +4,6 @@ using Laser.Orchard.Mobile.Services;
 using Laser.Orchard.Mobile.ViewModels;
 using Orchard;
 using Orchard.Core.Contents;
-using Orchard.Security;
 using Orchard.Tasks.Scheduling;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;

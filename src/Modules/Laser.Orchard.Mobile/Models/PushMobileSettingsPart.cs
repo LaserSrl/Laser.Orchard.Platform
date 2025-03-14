@@ -1,9 +1,7 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
-using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.Mobile.Models {
-    [OrchardFeature("Laser.Orchard.PushGateway")]
     public class PushMobileSettingsPart : ContentPart<PushMobileSettingsPartRecord> {
         public string ApplePathCertificateFile {
             get { return Record.ApplePathCertificateFile; }
@@ -83,9 +81,13 @@ namespace Laser.Orchard.Mobile.Models {
             get { return Record.MaxPushPerIteration; }
             set { Record.MaxPushPerIteration = value; }
         }
+
+        public string FirebasePushConfiguration {
+            get { return Record.FirebasePushConfiguration; }
+            set { Record.FirebasePushConfiguration = value; }
+        }
     }
 
-    [OrchardFeature("Laser.Orchard.PushGateway")]
     public class PushMobileSettingsPartRecord : ContentPartRecord {
         public virtual string ApplePathCertificateFile { get; set; }
         public virtual string AppleCertificatePassword { get; set; }
@@ -106,6 +108,7 @@ namespace Laser.Orchard.Mobile.Models {
         public virtual int DelayMinutesBeforeRetry { get; set; }
         public virtual int MaxNumRetry { get; set; }
         public virtual int MaxPushPerIteration { get; set; }
+        public virtual string FirebasePushConfiguration { get; set; }
     }
 }
 

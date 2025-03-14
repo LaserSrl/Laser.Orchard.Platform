@@ -6,14 +6,14 @@ using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
+using Orchard.FileSystems.Media;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
 using System.Collections.Generic;
-using System.Web.Mvc;
 using System.Linq;
-using System.Web.UI.WebControls;
 using System.Web.Hosting;
-using System.Net.Mime;
+using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace Laser.Orchard.Mobile.Drivers {
     [OrchardFeature("Laser.Orchard.PushGateway")]
@@ -21,30 +21,38 @@ namespace Laser.Orchard.Mobile.Drivers {
         private readonly IOrchardServices _orchardServices;
         private readonly ShellSettings _shellSettings;
         private readonly ITaxonomyService _taxonomyService;
-        public PushMobileSettingsPartDriver(IOrchardServices orchardServices, ShellSettings shellSettings, ITaxonomyService taxonomyService) {
+        private readonly IStorageProvider _storageProvider;
+
+        public PushMobileSettingsPartDriver(IOrchardServices orchardServices,
+            ShellSettings shellSettings,
+            ITaxonomyService taxonomyService,
+            IStorageProvider storageProvider) {
+
             _orchardServices = orchardServices;
             _shellSettings = shellSettings;
             _taxonomyService = taxonomyService;
-            
+            _storageProvider = storageProvider;
+
             string mobile_folder = HostingEnvironment.MapPath(
                 string.Format("~/App_Data/Sites/{0}/Mobile/",
                     _shellSettings.Name));
-            if (!System.IO.Directory.Exists(mobile_folder))
+            if (!System.IO.Directory.Exists(mobile_folder)) {
                 System.IO.Directory.CreateDirectory(mobile_folder);
+            }
         }
+
         protected override string Prefix {
             get { return "Laser.Mobile.Settings"; }
         }
-
 
         protected override DriverResult Editor(PushMobileSettingsPart part, dynamic shapeHelper) {
             return Editor(part, null, shapeHelper);
 
         }
 
-
-
-        protected override DriverResult Editor(PushMobileSettingsPart part, IUpdateModel updater, dynamic shapeHelper) {
+        protected override DriverResult Editor(PushMobileSettingsPart part, 
+            IUpdateModel updater, 
+            dynamic shapeHelper) {
 
             return ContentShape("Parts_PushMobileSettings_Edit", () => {
                 var viewModel = new PushMobileSettingsVM();
@@ -69,6 +77,9 @@ namespace Laser.Orchard.Mobile.Drivers {
                 viewModel.DelayMinutesBeforeRetry = getpart.DelayMinutesBeforeRetry;
                 viewModel.MaxNumRetry = getpart.MaxNumRetry;
                 viewModel.MaxPushPerIteration = getpart.MaxPushPerIteration;
+
+                viewModel.FirebasePushConfiguration = getpart.FirebasePushConfiguration;
+
 
                 List<TaxonomyPart> tps = _taxonomyService.GetTaxonomies().ToList();
                 IEnumerable<ListItem> selectList =
@@ -101,9 +112,10 @@ namespace Laser.Orchard.Mobile.Drivers {
                         part.DelayMinutesBeforeRetry = viewModel.DelayMinutesBeforeRetry;
                         part.MaxNumRetry = viewModel.MaxNumRetry;
                         part.MaxPushPerIteration = viewModel.MaxPushPerIteration;
+
+                        part.FirebasePushConfiguration = viewModel.FirebasePushConfiguration;
                     }
-                }
-                else {
+                } else {
                     viewModel.AndroidApiKey = part.AndroidApiKey;
                     viewModel.AndroidApiKeyDevelopment = part.AndroidApiKeyDevelopment;
                     viewModel.AndroidPushServiceUrl = part.AndroidPushServiceUrl;
@@ -123,6 +135,8 @@ namespace Laser.Orchard.Mobile.Drivers {
                     viewModel.DelayMinutesBeforeRetry = part.DelayMinutesBeforeRetry;
                     viewModel.MaxNumRetry = part.MaxNumRetry;
                     viewModel.MaxPushPerIteration = part.MaxPushPerIteration;
+
+                    viewModel.FirebasePushConfiguration = part.FirebasePushConfiguration;
                 }
                 return shapeHelper.EditorTemplate(TemplateName: "Parts/PushMobileSettings_Edit", Model: viewModel, Prefix: Prefix);
             })

@@ -1,5 +1,4 @@
 ﻿using Orchard.Data.Migration;
-using System;
 
 namespace Laser.Orchard.Mobile {
     public class ManifestAppFileMigration : DataMigrationImpl {
