@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Laser.Orchard.StartupConfig.Services {
     [OrchardFeature("Laser.Orchard.StartupConfig.MediaExtensions")]
-    public class oEmbedProvidersService : IOEmbedService {
+    public class OEmbedProvidersService : IOEmbedService {
         public XDocument DownloadMediaData(string url) {
             var webClient = new WebClient { Encoding = Encoding.UTF8 };
             XDocument doc = null;
