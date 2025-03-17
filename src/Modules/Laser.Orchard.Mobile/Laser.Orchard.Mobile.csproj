@@ -103,11 +103,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\PushSharp\PushSharp.Apple.dll</HintPath>
     </Reference>
-    <Reference Include="PushSharp.Core, Version=1.0.9204.27558, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+    <Reference Include="PushSharp.Core, Version=1.0.9204.27958, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\PushSharp\PushSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="PushSharp.Google, Version=1.0.9204.27558, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+    <Reference Include="PushSharp.Google, Version=1.0.9207.17188, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\PushSharp\PushSharp.Google.dll</HintPath>
     </Reference>
