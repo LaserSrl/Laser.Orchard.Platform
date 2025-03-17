@@ -107,7 +107,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\PushSharp\PushSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="PushSharp.Google, Version=1.0.9207.17188, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+    <Reference Include="PushSharp.Google, Version=1.0.9207.18501, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\PushSharp\PushSharp.Google.dll</HintPath>
     </Reference>

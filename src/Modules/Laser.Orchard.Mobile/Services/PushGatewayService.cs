@@ -1106,17 +1106,21 @@ namespace Laser.Orchard.Mobile.Services {
                     foreach (var device in _sentRecords.Where(x => x.Value.Outcome == "")) {
                         try {
                             // handle proper payload creation
+                            // If the Notification object is provided, two notifications are received by the app.
+                            GcmMessageNotification notification = null;
+                            // Only provide Notification object for Apple devices.
+                            if (tipoDispositivo == TipoDispositivo.AppleFCM) {
+                                notification = new GcmMessageNotification {
+                                    Body = pushMessage.Text,
+                                    Title = pushMessage.Title
+                                };
+                            }
                             objNotification = new GcmNotification {
                                 Message = new GcmMessage {
                                     Token = device.Key,
                                     Topic = null,
                                     Data = data,
-                                    // If the Notification object is provided, two notifications are received by the app.
-                                    //Notification = new GcmMessageNotification {
-                                    //    Body = pushMessage.Text,
-                                    //    Title = pushMessage.Title
-                                    //}
-                                    Notification = null
+                                    Notification = notification
                                 },
                                 RegistrationIds = new List<string> { device.Key },
                                 Aps = sbapsParsed,
