@@ -1044,14 +1044,22 @@ namespace Laser.Orchard.Mobile.Services {
 
             if (!string.IsNullOrWhiteSpace(pushMessage.Eu)) {
                 data = new Dictionary<string, string>() {
-                    { "Eu", pushMessage.Eu }
+                    { "Eu", pushMessage.Eu },
+                    // Title and Body are inside the Data dictionary to avoid double notifications.
+                    // If the Notification object is provided, two notifications are received by the app.
+                    { "Title", pushMessage.Text },
+                    { "Body", pushMessage.Text }
                 };
             } else {
                 data = new Dictionary<string, string>() {
                     { "Id", pushMessage.idContent.ToString() },
                     { "Rid", pushMessage.idRelated.ToString() },
                     { "Ct", pushMessage.Ct },
-                    { "Al", pushMessage.Al }
+                    { "Al", pushMessage.Al },
+                    // Title and Body are inside the Data dictionary to avoid double notifications.
+                    // If the Notification object is provided, two notifications are received by the app.
+                    { "Title", pushMessage.Text },
+                    { "Body", pushMessage.Text }
                 };
             }
 
@@ -1103,10 +1111,12 @@ namespace Laser.Orchard.Mobile.Services {
                                     Token = device.Key,
                                     Topic = null,
                                     Data = data,
-                                    Notification = new GcmMessageNotification {
-                                        Body = pushMessage.Text,
-                                        Title = pushMessage.Title
-                                    }
+                                    // If the Notification object is provided, two notifications are received by the app.
+                                    //Notification = new GcmMessageNotification {
+                                    //    Body = pushMessage.Text,
+                                    //    Title = pushMessage.Title
+                                    //}
+                                    Notification = null
                                 },
                                 RegistrationIds = new List<string> { device.Key },
                                 Aps = sbapsParsed,
