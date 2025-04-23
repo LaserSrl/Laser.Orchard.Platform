@@ -33,6 +33,16 @@
     Script.Require("OpenLayersAPI");
     Script.Require("OpenStreetMapAPI");
     Script.Require("LaserOrchardMaps");
+    Script.Require("jQuery");
+    Script.Require("jQueryUI_Core");
+    Script.Require("jQueryUI_Autocomplete");
+    Style.Require("jQuery_Autocomplete");
+
+    <style type="text/css">
+        .ui-autocomplete.ui-front {
+            z-index: 9999;
+        }
+    </style>
 }
 @using (Script.Foot()) {
     <script type="text/javascript">
@@ -53,6 +63,60 @@
             return false;
         }
         function initialize() {
+            var map = initializeMap(@lon, @lat, "@Model.Map.LocationInfo", "@Model.Map.LocationAddress", undefined);
+
+           $("#@Html.FieldIdFor(model => model.Map.LocationInfo)").autocomplete({
+                minLenght: 3,
+                source: function (request, response) {
+                    $.ajax({
+                        url: "https://nominatim.openstreetmap.org/search.php",
+                        dataType: "json",
+                        data: {
+                            format: "jsonv2",
+                            q: $("#@Html.FieldIdFor(model => model.Map.LocationInfo)").val()
+                        },
+                        success: function (data) {
+                            var x = data;
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.display_name,
+                                    value: item.name,
+                                    place_id: item.place_id,
+                                    //name: item.name,
+                                    lat: item.lat,
+                                    lon: item.lon
+                                };
+                            }));
+                        }
+                    });
+                }
+            });
+
+            $("#@Html.FieldIdFor(model => model.Map.LocationInfo)").on("autocompleteselect", function (event, ui) {
+                //var x = ui.item;
+                //$("#@Html.FieldIdFor(model => model.Map.LocationInfo)").val(ui.item.name);
+                $("#@Html.FieldIdFor(model => model.Map.LocationAddress)").val(ui.item.label);
+                $("#@Html.FieldIdFor(model => model.Map.Latitude)").val(ui.item.lat.replace(".", ","));
+                $("#@Html.FieldIdFor(model => model.Map.Longitude)").val(ui.item.lon.replace(".", ","));
+                //return false;
+
+                map = initializeMap(ui.item.lon, ui.item.lat, ui.item.value, ui.item.label, map);
+            });
+        }
+
+        if (window.addEventListener) // W3C standard
+        {
+            window.addEventListener('load', initialize, false); // NB **not** 'onload'
+        }
+        else if (window.attachEvent) // Microsoft
+        {
+            window.attachEvent('onload', initialize);
+        }
+
+        function initializeMap(lon, lat, locationInfo, locationAddress, map) {
+            if (map) {
+                map.destroy();
+            }
             map = new OpenLayers.Map("maparea");
             @if (!httpTiles) {
                 if (String.IsNullOrWhiteSpace(tilesType)) {
@@ -92,14 +156,12 @@
                 })
             });
 
-
-
             map.addLayer(kmllayer);
 
             //Set start centrepoint and zoom
             //TODO: Is it possible to just zoom to extents of KML objects instead?
 
-            var lonLat = new OpenLayers.LonLat( @lon ,@lat )
+            var lonLat = new OpenLayers.LonLat( lon, lat )
                         .transform(
                         new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
                         map.getProjectionObject() // to Spherical Mercator Projection
@@ -115,7 +177,7 @@
 
             // A popup with some information about our location
             var popup = new OpenLayers.Popup.FramedCloud("Popup", lonLat, null,
-                "<h3>@Model.Map.LocationInfo</h3><span>@Model.Map.LocationAddress</span>",
+                "<h3>" + locationInfo + "</h3><span>" + locationAddress + "</span>",
                     null,true // <-- true if we want a close (X) button, false otherwise
                         );
             map.addPopup(popup);
@@ -125,14 +187,17 @@
                 selector: new OpenLayers.Control.SelectFeature(kmllayer, { onSelect: createPopup, onUnselect: destroyPopup })
             };
 
+            map.addControl(controls['selector']);
+            controls['selector'].activate();
+
             function createPopup(feature) {
                 feature.popup = new OpenLayers.Popup.FramedCloud("pop",
                     feature.geometry.getBounds().getCenterLonLat(),
                     null,
-                    '<div class="markerContent">'+feature.attributes.description+'</div>',
+                    '<div class="markerContent">' + feature.attributes.description + '</div>',
                     null,
                     true,
-                    function() { controls['selector'].unselectAll(); }
+                    function () { controls['selector'].unselectAll(); }
                 );
                 //feature.popup.closeOnMove = true;
                 map.addPopup(feature.popup);
@@ -143,17 +208,7 @@
                 feature.popup = null;
             }
 
-            map.addControl(controls['selector']);
-            controls['selector'].activate();
-        }
-
-        if (window.addEventListener) // W3C standard
-        {
-            window.addEventListener('load', initialize, false); // NB **not** 'onload'
-        }
-        else if (window.attachEvent) // Microsoft
-        {
-            window.attachEvent('onload', initialize);
+            return map;
         }
 
     </script>
