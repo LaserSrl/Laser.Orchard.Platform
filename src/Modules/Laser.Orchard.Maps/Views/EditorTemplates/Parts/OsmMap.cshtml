@@ -180,7 +180,8 @@
             var popup = new OpenLayers.Popup.FramedCloud("Popup", lonLat, null,
                 "<h3>" + locationInfo + "</h3><span>" + locationAddress + "</span>",
                     null,true // <-- true if we want a close (X) button, false otherwise
-                        );
+            );
+            popup.autoSize = false;
             map.addPopup(popup);
 
             //Add a selector control to the kmllayer with popup functions
