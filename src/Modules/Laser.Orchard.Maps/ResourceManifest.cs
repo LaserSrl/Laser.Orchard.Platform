@@ -1,8 +1,7 @@
 ﻿using Laser.Orchard.Maps.Models;
 using Orchard;
-using Orchard.UI.Resources;
 using Orchard.ContentManagement;
-using System.Reflection;
+using Orchard.UI.Resources;
 
 namespace Laser.Orchard.Maps {
 
@@ -69,10 +68,10 @@ namespace Laser.Orchard.Maps {
 
             // OSM Maps
             manifest.DefineScript("OpenLayersAPI")
-              .SetUrl("http://www.openlayers.org/api/OpenLayers.js");
+              .SetUrl("https://www.openlayers.org/api/OpenLayers.js");
 
             manifest.DefineScript("OpenStreetMapAPI")
-             .SetUrl("http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
+             .SetUrl("https://www.openstreetmap.org/openlayers/OpenStreetMap.js");
 
             // Leaflet
             manifest.DefineStyle("LeafletStyle").SetUrl("leaflet.css");
