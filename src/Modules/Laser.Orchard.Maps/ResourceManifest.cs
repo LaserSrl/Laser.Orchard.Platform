@@ -67,8 +67,10 @@ namespace Laser.Orchard.Maps {
             manifest.DefineStyle("GoogleMaps").SetUrl("GoogleMaps.css");
 
             // OSM Maps
+            //manifest.DefineScript("OpenLayersAPI")
+            //  .SetUrl("https://www.openlayers.org/api/OpenLayers.js");
             manifest.DefineScript("OpenLayersAPI")
-              .SetUrl("https://www.openlayers.org/api/OpenLayers.js");
+              .SetUrl("OpenLayers.min.js");
 
             manifest.DefineScript("OpenStreetMapAPI")
              .SetUrl("https://www.openstreetmap.org/openlayers/OpenStreetMap.js");
