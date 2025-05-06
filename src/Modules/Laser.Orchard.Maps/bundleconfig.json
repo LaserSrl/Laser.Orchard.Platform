@@ -1,0 +1,8 @@
+[
+  {
+    "outputFileName": "Scripts/OpenLayers.min.js",
+    "inputFiles": [
+      "Scripts/OpenLayers.js"
+    ]
+  }
+]

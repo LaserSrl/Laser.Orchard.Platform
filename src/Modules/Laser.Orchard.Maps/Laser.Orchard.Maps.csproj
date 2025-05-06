@@ -103,6 +103,11 @@
     <Content Include="Scripts\markerclusterer.js" />
     <Content Include="Scripts\ol-geocoder.js" />
     <Content Include="Scripts\ol.js" />
+    <Content Include="Scripts\OpenLayers.js" />
+    <Content Include="Scripts\OpenLayers.min.js">
+      <DependentUpon>OpenLayers.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\theme\default\style.css" />
     <Content Include="Styles\GoogleMaps.css" />
     <Content Include="Styles\images\map-pin.png" />
     <Content Include="Styles\images\marker-icon.png" />
@@ -197,6 +202,7 @@
   <ItemGroup>
     <Content Include="App_Data\Localization\it-IT\orchard.module.po" />
     <Content Include="packages.config" />
+    <None Include="bundleconfig.json" />
     <None Include="Properties\PublishProfiles\Orchard_Module_Release.pubxml" />
     <Content Include="Views\GoogleMapForProjections.cshtml" />
     <Content Include="Scripts\Web.config" />
