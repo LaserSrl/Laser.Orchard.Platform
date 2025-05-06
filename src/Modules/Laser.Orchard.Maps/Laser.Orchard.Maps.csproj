@@ -107,6 +107,7 @@
     <Content Include="Scripts\OpenLayers.min.js">
       <DependentUpon>OpenLayers.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\theme\default\style.css" />
     <Content Include="Styles\GoogleMaps.css" />
     <Content Include="Styles\images\map-pin.png" />
     <Content Include="Styles\images\marker-icon.png" />
