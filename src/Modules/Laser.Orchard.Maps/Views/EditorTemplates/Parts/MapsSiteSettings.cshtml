@@ -17,7 +17,7 @@
         @Html.TextBoxFor(m => m.MaxZoom, new { @class = "text large" })
         <span class="hint">@T("The max supported zoom by tiles.")</span>
     </div>
-    <div>
+    <div id="googleApiKeyDiv">
         <label for="@Html.FieldIdFor(m => m.GoogleApiKey)">@T("Google Api Key")</label>
         @Html.TextBoxFor(m => m.GoogleApiKey, new { @class = "text-medium" })
         <span class="hint">@T("Api Key provided by google.")</span>
@@ -27,3 +27,24 @@
         <label for="@Html.FieldIdFor(m => m.KeepCultureConsistentWithContext)" class="forcheckbox">@T("Keep the map's culture/language consistent with the current culture")</label>
     </div>
 </fieldset>
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#@Html.FieldIdFor(m => m.MapsProvider)").on("change", function () {
+                showHideGoogleApiKey($(this));
+            });
+
+            showHideGoogleApiKey($("#@Html.FieldIdFor(m => m.MapsProvider)"));
+        });
+
+        function showHideGoogleApiKey(sender) {
+            var selected = sender.val();
+            if (selected == "OpenStreetMap") {
+                $("#googleApiKeyDiv").hide();
+            } else {
+                $("#googleApiKeyDiv").show();
+            }
+        }
+    </script>
+}
