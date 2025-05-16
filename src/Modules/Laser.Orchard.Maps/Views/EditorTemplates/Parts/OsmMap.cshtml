@@ -1,6 +1,8 @@
 ﻿@using Orchard.UI.Resources;
 @using Orchard.MediaLibrary.Fields;
 @using Laser.Orchard.Maps.Models;
+@using System.Globalization;
+
 @model Laser.Orchard.Maps.ViewModels.MapEditModel
 @{
     MapPartSettings partSettings = Model.Map.Settings.GetModel<MapPartSettings>();
@@ -28,6 +30,7 @@
         }
     } catch { }
 
+    var decimalSeparator = CultureInfo.CurrentUICulture.NumberFormat.CurrencyDecimalSeparator;
 }
 @using (Script.Head()) {
     Script.Require("OpenLayersAPI");
@@ -37,7 +40,7 @@
     Script.Require("jQueryUI_Core");
     Script.Require("jQueryUI_Autocomplete");
     Style.Require("jQuery_Autocomplete");
-    
+
     <style type="text/css">
         .ui-autocomplete.ui-front {
             z-index: 9999;
@@ -96,8 +99,8 @@
                 //var x = ui.item;
                 //$("#@Html.FieldIdFor(model => model.Map.LocationInfo)").val(ui.item.name);
                 $("#@Html.FieldIdFor(model => model.Map.LocationAddress)").val(ui.item.label);
-                $("#@Html.FieldIdFor(model => model.Map.Latitude)").val(ui.item.lat.replace(".", ","));
-                $("#@Html.FieldIdFor(model => model.Map.Longitude)").val(ui.item.lon.replace(".", ","));
+                $("#@Html.FieldIdFor(model => model.Map.Latitude)").val(ui.item.lat.replace(".", "@decimalSeparator").replace(",", "@decimalSeparator"));
+                $("#@Html.FieldIdFor(model => model.Map.Longitude)").val(ui.item.lon.replace(".", "@decimalSeparator").replace(",", "@decimalSeparator"));
                 //return false;
 
                 map = initializeMap(ui.item.lon, ui.item.lat, ui.item.value, ui.item.label, map);
