@@ -50,7 +50,7 @@ namespace Laser.Orchard.Mobile.Services {
             INotifier notifier,
             ShellSettings shellSetting,
             ITransactionManager transactionManager
-            
+
          ) {
             _orchardServices = orchardServices;
             T = NullLocalizer.Instance;
@@ -90,8 +90,12 @@ namespace Laser.Orchard.Mobile.Services {
                 var notificationrecords = _pushNotificationRepository.Fetch(x => x.Produzione && x.Validated).ToList();
                 foreach (PushNotificationRecord rec in notificationrecords) {
                     rec.MobileContactPartRecord_Id = EnsureContactId(rec.UUIdentifier, idmaster);
-                    _pushNotificationRepository.Update(rec);
-                    _transactionManager.RequireNew();
+                    if (rec.MobileContactPartRecord_Id > 0) {
+                        _pushNotificationRepository.Update(rec);
+                        _transactionManager.RequireNew();
+                    } else {
+                        Logger.Log(OrchardLogging.LogLevel.Error, null, T("Invalid device: {0}", rec.UUIdentifier).Text);
+                    }
                 }
                 _pushNotificationRepository.Flush();
                 _notifier.Add(NotifyType.Information, T("Linked {0} device To Master contact", notificationrecords.Count().ToString()));
@@ -120,8 +124,7 @@ namespace Laser.Orchard.Mobile.Services {
                     if (udr.UUIdentifier == uuidPrecedente) {
                         _userDeviceRecord.Delete(udr);
                         _transactionManager.RequireNew();
-                    }
-                    else {
+                    } else {
                         uuidPrecedente = udr.UUIdentifier;
                     }
                 }
@@ -153,19 +156,20 @@ namespace Laser.Orchard.Mobile.Services {
 
                 oldPush.MobileContactPartRecord_Id = EnsureContactId(oldPush.UUIdentifier);
                 _pushNotificationRepository.Update(oldPush);
-            }
-            else {
+            } else {
                 pushElement.Id = 0;
                 pushElement.DataInserimento = adesso;
                 pushElement.DataModifica = adesso;
                 pushElement.MobileContactPartRecord_Id = EnsureContactId(pushElement.UUIdentifier);
-                
-                // se è un nuovo dispositivo, registra anche host, prefix e machineName dell'ambiente corrente
-                pushElement.RegistrationUrlHost = _shellSetting.RequestUrlHost ?? "";
-                pushElement.RegistrationUrlPrefix = _shellSetting.RequestUrlPrefix ?? "";
-                pushElement.RegistrationMachineName = System.Environment.MachineName ?? "";
 
-                _pushNotificationRepository.Create(pushElement);
+                if (pushElement.MobileContactPartRecord_Id > 0) {
+                    // se è un nuovo dispositivo, registra anche host, prefix e machineName dell'ambiente corrente
+                    pushElement.RegistrationUrlHost = _shellSetting.RequestUrlHost ?? "";
+                    pushElement.RegistrationUrlPrefix = _shellSetting.RequestUrlPrefix ?? "";
+                    pushElement.RegistrationMachineName = System.Environment.MachineName ?? "";
+
+                    _pushNotificationRepository.Create(pushElement);
+                }
             }
 
             // cerca eventuali record corrispondenti in UserDevice e fa sì che ce ne sia uno solo relativo al nuovo UUIdentifier (quello con l'Id più recente)
@@ -175,8 +179,7 @@ namespace Laser.Orchard.Mobile.Services {
             foreach (var record in elencoNuovi) {
                 if (my_disp == null) {
                     my_disp = record;
-                }
-                else {
+                } else {
                     _userDeviceRecord.Delete(record);
                 }
             }
@@ -188,8 +191,7 @@ namespace Laser.Orchard.Mobile.Services {
                         my_disp = record;
                         my_disp.UUIdentifier = pushElement.UUIdentifier;
                         _userDeviceRecord.Update(my_disp);
-                    }
-                    else {
+                    } else {
                         _userDeviceRecord.Delete(record);
                     }
                 }
@@ -219,9 +221,8 @@ namespace Laser.Orchard.Mobile.Services {
                         contactId = masterContact.Id;
                     }
                 }
-            }
-            catch (Exception ex) {
-                string message = string.Format("EnsureContactId - Exception occurred: {0} \r\n    in {1}", ex.Message, ex.StackTrace);
+            } catch (Exception ex) {
+                string message = string.Format("EnsureContactId (uuIdentifier: {0}) - Exception occurred: {1} \r\n    in {2}", uuIdentifier, ex.Message, ex.StackTrace);
                 Logger.Log(OrchardLogging.LogLevel.Error, null, message, null);
             }
             return contactId;
@@ -249,8 +250,7 @@ namespace Laser.Orchard.Mobile.Services {
                         contactId = masterContactId;
                     }
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 string message = string.Format("EnsureContactId(string, int) - Exception occurred: {0} \r\n    in {1}", ex.Message, ex.StackTrace);
                 Logger.Log(OrchardLogging.LogLevel.Error, null, message, null);
             }
@@ -313,7 +313,7 @@ namespace Laser.Orchard.Mobile.Services {
 
         public void ReassignDevices(string oldMachineName, string newMachineName) {
             var devicesToReassign = _pushNotificationRepository.Fetch(x => x.RegistrationMachineName == oldMachineName);
-            foreach(var device in devicesToReassign) {
+            foreach (var device in devicesToReassign) {
                 device.RegistrationMachineName = newMachineName;
             }
         }
