@@ -299,8 +299,14 @@ namespace Laser.Orchard.Mobile.Services {
                 count = _pushNotificationRepository.Count(x => true);
                 partialList = _pushNotificationRepository.Table.Skip(startIndex).Take(length);
             } else {
-                count = _pushNotificationRepository.Count(x => x.UUIdentifier.Contains(texttosearch));
-                partialList = _pushNotificationRepository.Fetch(x => x.UUIdentifier.Contains(texttosearch)).Skip(startIndex).Take(length);
+                count = _pushNotificationRepository
+                    .Count(x => x.UUIdentifier.Contains(texttosearch) ||    
+                        x.Token.Contains(texttosearch));
+                partialList = _pushNotificationRepository
+                    .Fetch(x => x.UUIdentifier.Contains(texttosearch) ||
+                        x.Token.Contains(texttosearch))
+                    .Skip(startIndex)
+                    .Take(length);
             }
             return new Tuple<IEnumerable<PushNotificationRecord>, int>(partialList, count);
         }
