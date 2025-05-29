@@ -35,7 +35,7 @@ namespace Laser.Orchard.Maps {
                 .SetUrl("googlemapsapiloader.js?key=" + apiKey + languageQueryStringForGoogleMaps)
                 .AddAttribute("googlemapsloader", "googlemapsloader");
             manifest.DefineScript("GoogleMapsAPI_callback")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeMap")
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.59&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeMap")
                 .AddAttribute("async", "async")
                 .AddAttribute("defer", "defer");
             manifest.DefineScript("GoogleMapsAPIMarkerSpiderfier_callback")
@@ -45,7 +45,7 @@ namespace Laser.Orchard.Maps {
 
             // Obsolete script call for Places libraries
             manifest.DefineScript("GoogleMapsPlacesLib")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=places");
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.59&key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=places");
 
             // New script call for Places libraries
             manifest.DefineScript("GoogleMapsAPIPlaces")
@@ -54,7 +54,7 @@ namespace Laser.Orchard.Maps {
 
             // Obsolete script call for Geometry libraries
             manifest.DefineScript("GoogleMapsGeometryLib")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=geometry");
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.59&key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=geometry");
 
             // New script call for Geometry libraries
             manifest.DefineScript("GoogleMapsAPIGeometry")
