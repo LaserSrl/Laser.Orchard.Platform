@@ -1446,7 +1446,9 @@ namespace Laser.Orchard.Mobile.Services {
                 }
                 var innerEx = new StringBuilder();
                 Exception inner = null;
+                var notFoundError = false;
                 foreach (var ie in notificationFailureException.InnerExceptions) {
+                    notFoundError = notFoundError || ie.Message.Contains("HTTP Error: NotFound");
                     innerEx.AppendFormat("\r\n\t{0}", ie.Message);
                     innerEx.AppendFormat("\r\n\t\t{0}", (ie.StackTrace ?? "").Replace("\r\n", "\r\n\t\t"));
                     inner = ie.InnerException;
@@ -1457,6 +1459,17 @@ namespace Laser.Orchard.Mobile.Services {
                     }
                 }
                 LogInfo(string.Format("Failure: {0} token: {1} -> {2} - InnerExceptions: {3}\r\n\t-> {4}", notification.GetType().Name, token, notificationFailureException.Message, innerEx.ToString(), notification.ToString()));
+
+                // If token is not found (specific error from Firebase call), token must be set as not valid, to be sure a notification will never be sent again to it
+                // Google specifics related to token validity: https://firebase.google.com/docs/cloud-messaging/manage-tokens#detect-invalid-token-responses-from-the-fcm-backend
+                if (notFoundError) {
+                    var pnr = _pushNotificationRepository.Fetch(p => p.Token.Equals(token)).FirstOrDefault();
+                    if (pnr != null) {
+                        pnr.Validated = false;
+                        _pushNotificationRepository.Update(pnr);
+                    }
+                }
+
                 _sentRecords.AddOrUpdate(token, new SentRecord(), (key, record) => {
                     record.Outcome = "ko";
                     return record;
