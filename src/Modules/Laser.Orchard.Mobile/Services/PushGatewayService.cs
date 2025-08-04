@@ -64,6 +64,7 @@ namespace Laser.Orchard.Mobile.Services {
         private ConcurrentDictionary<string, SentRecord> _sentRecords;
         private ConcurrentBag<DeviceChange> _deviceChanges;
         private ConcurrentBag<DeviceChange> _deviceExpired;
+        private List<string> _tokenToInvalidate;
 
         public PushGatewayService(
             IPushNotificationService pushNotificationService,
@@ -950,6 +951,21 @@ namespace Laser.Orchard.Mobile.Services {
                 _sentRepository.Flush();
             }
             _transactionManager.RequireNew();
+
+            // Invalidate tokens not found for current batch of notifications.
+            foreach (var t in _tokenToInvalidate) {
+                try {
+                    var pnr = _pushNotificationRepository.Fetch(p => p.Token.Equals(t)).FirstOrDefault();
+                    if (pnr != null) {
+                        pnr.Validated = false;
+                        _pushNotificationRepository.Update(pnr);
+                    }
+                } catch (Exception ex) {
+                    LogError(string.Format("UpdateDevicesAndOutcomesOnDb - Invalidate token error (token: {0}): " + ex.Message + " StackTrace: " + ex.StackTrace, t));
+                }
+                _pushNotificationRepository.Flush();
+            }
+            _transactionManager.RequireNew();
         }
         private int CountSentOnDb(int contentId) {
             int result = 0;
@@ -1066,6 +1082,7 @@ namespace Laser.Orchard.Mobile.Services {
             int offset = 0;
             int size = pushSettings.PushSendBufferSize == 0 ? 50 : pushSettings.PushSendBufferSize;
             while (offset < listdispositivo.Count) {
+                _tokenToInvalidate = new List<string>();
                 InitializeRecipients(listdispositivo, offset, size, pushMessage.idContent, repeatable, pushSettings);
                 if (!pushSettings.CommitSentOnly) {
                     InitializeRecipientsOnDb();
@@ -1463,11 +1480,8 @@ namespace Laser.Orchard.Mobile.Services {
                 // If token is not found (specific error from Firebase call), token must be set as not valid, to be sure a notification will never be sent again to it
                 // Google specifics related to token validity: https://firebase.google.com/docs/cloud-messaging/manage-tokens#detect-invalid-token-responses-from-the-fcm-backend
                 if (notFoundError) {
-                    var pnr = _pushNotificationRepository.Fetch(p => p.Token.Equals(token)).FirstOrDefault();
-                    if (pnr != null) {
-                        pnr.Validated = false;
-                        _pushNotificationRepository.Update(pnr);
-                    }
+                    // Add the token to the list of token to invalidate.
+                    _tokenToInvalidate.Add(token);
                 }
 
                 _sentRecords.AddOrUpdate(token, new SentRecord(), (key, record) => {
