@@ -84,9 +84,6 @@ namespace Laser.Orchard.Questionnaires.Controllers {
             }
         }
         private Response ExecPost(List<AnswerWithResultViewModel> Risps, string QuestionnaireContext = "") {
-#if DEBUG
-            Logger.Error(Request.Headers.ToString());
-#endif
             int QuestionId = 0;
 
             if (_orchardServices.Authorizer.Authorize(Permissions.SubmitQuestionnaire)) {
