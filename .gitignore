@@ -192,3 +192,4 @@ src/Orchard.Azure/Orchard.Azure.CloudService/Staging/
 */.vs/*
 src/Rebracer.xml
 .vs
+/.vs
